@@ -1,0 +1,47 @@
+@startuml state
+title PLCMonitor – Verbindungs- und Laufzeit-Zustände
+
+state "RUN()" as RUN {
+  [*] --> Loop
+
+  state "Nicht verbunden" as NOTCONN {
+    [*] --> Idle
+    Idle --> Creating : start() / destroy(); UA_Client_new()
+    Creating --> Configuring : UA_Client_getConfig(); UA_ClientConfig_setDefault()
+    Configuring --> SecSetup : set SecurityPolicy+Mode; load cert/key; setDefaultEncryption()
+    SecSetup --> Connecting : UA_Client_connectUsername()
+    Connecting --> WaitActivated : on GOOD
+    Connecting --> Error : on BAD
+
+    state WaitActivated {
+      [*] --> Waiting
+      Waiting --> Activated : UA_Client_run_iterate();\nUA_Client_getState()==ACTIVATED
+      Waiting --> Timeout : timeout
+    }
+
+    WaitActivated --> ResolveNs : on Activated
+    ResolveNs --> Subscribing : UA_Client_NamespaceGetIndex()
+    Subscribing --> READY : CreateSubscription();\nCreateMonitoredItem()
+    Timeout --> Reconnect
+    Error --> Reconnect
+    Reconnect --> Creating : backoff + recreate client
+  }
+
+  state "Bereit/Online" as READY {
+    [*] --> Pump
+    Pump --> Pump : UA_Client_run_iterate()\n(publish/keepalive)
+    Pump --> DataChange : on DataChange callback
+    DataChange --> Pump
+    Pump --> ReadNow : readBoolNow()
+    ReadNow --> Pump
+  }
+
+  NOTCONN --> READY : Subscription erstellt
+  READY --> NOTCONN : ServiceFault / BadSecureChannelClosed / Disconnect
+
+  Loop --> Loop : Sleep/Iterate
+}
+
+[*] --> RUN
+RUN --> [*] : stop()/destroy()
+@enduml

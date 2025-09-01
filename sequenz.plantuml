@@ -1,0 +1,30 @@
+@startuml seq
+title Threads & Log-Quellen
+
+participant "main() Thread" as Main
+participant "PLCMonitor::run() Thread" as Mon
+participant "open62541\n(UA_Client)" as UA
+participant "OPC UA Server" as Srv
+
+Main -> Mon: PLCMonitor.start()\n(spawn Thread)\n-> returns
+activate Mon
+
+Mon -> UA: UA_Client_connectUsername()
+UA -> Srv: SecureChannel + Create/ActivateSession
+Srv --> UA: OK
+Mon -> UA: CreateSubscription + MonitoredItem
+
+loop alle ~50ms
+  Mon -> UA: UA_Client_run_iterate(50)
+  UA -> Srv: Publish/KeepAlive
+  alt DataChange vorhanden
+    UA --> Mon: DataChange Callback
+    Mon -> Mon: onDataChange()\nprint "[Sub] TriggerD2 -> ..."\n(app logger zeigt tid=Mon)
+  else KeepAlive/Timeout
+    UA --> Mon: interne Logs\n("Inactivity for Subscription ...")
+  end
+end
+
+== Parallel ==
+Main -> Main: while(g_run) sleep_for(200ms)\n(keine UA-Aufrufe)
+@enduml
