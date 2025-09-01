@@ -8,6 +8,7 @@
 *.a
 *.o
 *.obj
+*.pdb
 
 # CMake-spezifische Cache-Dateien
 CMakeCache.txt
