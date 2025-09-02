@@ -3,6 +3,13 @@
 #include <thread>
 #include <cstdio>
 #include <fstream>
+#include <iostream>
+#include <open62541/client.h>
+#include <open62541/client_config_default.h>
+
+// NEU hinzufügen:
+#include <open62541/client_subscriptions.h>
+#include <open62541/client_highlevel.h>
 
 PLCMonitor::PLCMonitor(Options o) : opt_(std::move(o)) {}
 PLCMonitor::~PLCMonitor() { disconnect(); }
@@ -35,7 +42,7 @@ bool PLCMonitor::connect() {
     UA_ClientConfig_setDefault(cfg); // Basisdefaults setzen (timeouts etc.). :contentReference[oaicite:1]{index=1}
 
     // Optional: Publish-Queue etc.
-    cfg->outStandingPublishRequests = 4;                                  // :contentReference[oaicite:2]{index=2}
+    cfg->outStandingPublishRequests = 5;                                  // :contentReference[oaicite:2]{index=2}
     cfg->securityMode = UA_MESSAGESECURITYMODE_SIGNANDENCRYPT;            // Sign&Encrypt
     cfg->securityPolicyUri = UA_STRING_ALLOC(
         const_cast<char*>("http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256"));
@@ -139,5 +146,219 @@ bool PLCMonitor::readInt16At(const std::string& nodeIdStr,
                     val.data != nullptr;
     if(ok) out = *static_cast<UA_Int16*>(val.data);
     UA_Variant_clear(&val);
+    return ok;
+
+}
+// PLCMonitor.cpp  (Ergänzungen)
+
+bool PLCMonitor::subscribeInt16(const std::string& nodeIdStr, UA_UInt16 nsIndex,
+                                double samplingMs, UA_UInt32 queueSize, Int16ChangeCallback cb) {
+    if(!client_) return false;
+    onInt16Change_ = std::move(cb);
+
+    // Subscription nur einmal anlegen
+    if(subId_ == 0) {
+        UA_CreateSubscriptionRequest sReq = UA_CreateSubscriptionRequest_default();
+        sReq.requestedPublishingInterval = 20.0;
+        sReq.requestedMaxKeepAliveCount  = 20;
+        sReq.requestedLifetimeCount      = 60;
+
+        UA_CreateSubscriptionResponse sResp =
+            UA_Client_Subscriptions_create(client_, sReq, /*subCtx*/this, nullptr, nullptr);
+        if(sResp.responseHeader.serviceResult != UA_STATUSCODE_GOOD) return false;
+        subId_ = sResp.subscriptionId;
+        std::cout << "revised publish = " << sResp.revisedPublishingInterval << " ms\n";
+    }
+
+    UA_MonitoredItemCreateRequest monReq =
+        UA_MonitoredItemCreateRequest_default(
+            UA_NODEID_STRING_ALLOC(nsIndex, const_cast<char*>(nodeIdStr.c_str())));
+    monReq.requestedParameters.samplingInterval = samplingMs;
+    monReq.requestedParameters.queueSize        = queueSize;
+    monReq.requestedParameters.discardOldest    = UA_TRUE;
+
+    UA_MonitoredItemCreateResult monRes =
+        UA_Client_MonitoredItems_createDataChange(
+            client_, subId_, UA_TIMESTAMPSTORETURN_SOURCE, monReq,
+            this, &PLCMonitor::dataChangeHandler, nullptr);
+
+    UA_NodeId_clear(&monReq.itemToMonitor.nodeId);
+
+    if(monRes.statusCode != UA_STATUSCODE_GOOD) return false;
+    monIdInt16_ = monRes.monitoredItemId;
+    std::cout << "revised sampling (int16) = "
+              << monRes.revisedSamplingInterval
+              << " ms, revised queue = " << monRes.revisedQueueSize << "\n";
+    return true;
+}
+
+bool PLCMonitor::subscribeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex,
+                               double samplingMs, UA_UInt32 queueSize, BoolChangeCallback cb) {
+    if(!client_) return false;
+    onBoolChange_ = std::move(cb);
+
+    // Falls noch keine Subscription existiert: anlegen (gleich wie bei subscribeInt16)
+    if(subId_ == 0) {
+        UA_CreateSubscriptionRequest sReq = UA_CreateSubscriptionRequest_default();
+        sReq.requestedPublishingInterval = 20.0;
+        sReq.requestedMaxKeepAliveCount  = 20;
+        sReq.requestedLifetimeCount      = 60;
+
+        UA_CreateSubscriptionResponse sResp =
+            UA_Client_Subscriptions_create(client_, sReq, /*subCtx*/this, nullptr, nullptr);
+        if(sResp.responseHeader.serviceResult != UA_STATUSCODE_GOOD)
+            return false;
+        subId_ = sResp.subscriptionId;
+        std::cout << "revised publish = " << sResp.revisedPublishingInterval << " ms\n";
+    }
+
+    // Monitored Item für BOOL anlegen
+    UA_MonitoredItemCreateRequest monReq =
+        UA_MonitoredItemCreateRequest_default(
+            UA_NODEID_STRING_ALLOC(nsIndex, const_cast<char*>(nodeIdStr.c_str())));
+    monReq.requestedParameters.samplingInterval = samplingMs;
+    monReq.requestedParameters.queueSize        = queueSize;
+    monReq.requestedParameters.discardOldest    = UA_TRUE;
+
+    UA_MonitoredItemCreateResult monRes =
+        UA_Client_MonitoredItems_createDataChange(
+            client_, subId_, UA_TIMESTAMPSTORETURN_SOURCE, monReq,
+            this, &PLCMonitor::dataChangeHandler, nullptr);
+
+    UA_NodeId_clear(&monReq.itemToMonitor.nodeId);
+
+    if(monRes.statusCode != UA_STATUSCODE_GOOD)
+        return false;
+
+    monIdBool_ = monRes.monitoredItemId;
+    std::cout << "revised sampling (bool) = "
+              << monRes.revisedSamplingInterval
+              << " ms, revised queue = " << monRes.revisedQueueSize << "\n";
+    return true;
+}
+
+void PLCMonitor::unsubscribe() {
+    if(client_ && subId_) {
+        UA_Client_Subscriptions_deleteSingle(client_, subId_);
+    }
+    subId_ = 0;
+    monIdInt16_ = 0;
+    monIdBool_  = 0;
+    onInt16Change_ = nullptr;
+}
+
+// static
+void PLCMonitor::dataChangeHandler(UA_Client*,
+                                   UA_UInt32 /*subId*/, void* subCtx,
+                                   UA_UInt32 monId, void* monCtx,
+                                   UA_DataValue* value) {
+    PLCMonitor* self = static_cast<PLCMonitor*>(monCtx ? monCtx : subCtx);
+    if(!self || !value || !value->hasValue) return;
+
+    // Overflow-Info (optional)
+    if(value->hasStatus && (value->status & UA_STATUSCODE_INFOBITS_OVERFLOW)) {
+        std::cout << "[MI " << monId << "] queue OVERFLOW\n";
+    }
+
+    // INT16
+    if(self->onInt16Change_ &&
+       UA_Variant_isScalar(&value->value) &&
+       value->value.type == &UA_TYPES[UA_TYPES_INT16] &&
+       value->value.data) {
+        UA_Int16 v = *static_cast<UA_Int16*>(value->value.data);
+        self->onInt16Change_(v, *value);
+        return;
+    }
+
+    // BOOL
+    if(self->onBoolChange_ &&
+       UA_Variant_isScalar(&value->value) &&
+       value->value.type == &UA_TYPES[UA_TYPES_BOOLEAN] &&
+       value->value.data) {
+        UA_Boolean b = *static_cast<UA_Boolean*>(value->value.data);
+        self->onBoolChange_(b, *value);
+        return;
+    }
+}
+bool PLCMonitor::writeBool(const std::string& nodeIdStr, UA_UInt16 ns, bool value) {
+    if(!client_) return false;
+
+    UA_NodeId nid = UA_NODEID_STRING_ALLOC(ns, const_cast<char*>(nodeIdStr.c_str()));
+
+    UA_Variant v; UA_Variant_init(&v);
+    UA_Boolean b = value;
+
+    // Serverseitig wird kopiert; wir geben *unsere* Kopie wieder frei:
+    UA_Variant_setScalarCopy(&v, &b, &UA_TYPES[UA_TYPES_BOOLEAN]);
+
+    UA_StatusCode rc = UA_Client_writeValueAttribute(client_, nid, &v);
+
+    UA_Variant_clear(&v);
+    UA_NodeId_clear(&nid);
+    return rc == UA_STATUSCODE_GOOD;
+}
+
+bool PLCMonitor::readSnapshot(const std::vector<std::pair<UA_UInt16,std::string>>& nodes,
+                              std::vector<SnapshotItem>& out,
+                              UA_TimestampsToReturn ttr, double maxAgeMs) {
+    if(!client_ || nodes.empty()) return false;
+
+    // 1) ReadValueId-Array allozieren
+    const size_t N = nodes.size();
+    UA_ReadValueId* rvids =
+        (UA_ReadValueId*)UA_Array_new(N, &UA_TYPES[UA_TYPES_READVALUEID]);
+    if(!rvids) return false;
+
+    for(size_t i=0; i<N; ++i) {
+        UA_ReadValueId_init(&rvids[i]);
+        rvids[i].nodeId = UA_NODEID_STRING_ALLOC(
+            nodes[i].first, const_cast<char*>(nodes[i].second.c_str()));
+        rvids[i].attributeId = UA_ATTRIBUTEID_VALUE;
+        // rvids[i].indexRange, dataEncoding bleiben leer
+    }
+
+    // 2) ReadRequest vorbereiten
+    UA_ReadRequest req; UA_ReadRequest_init(&req);
+    req.nodesToRead       = rvids;
+    req.nodesToReadSize   = (UA_UInt32)N;
+    req.timestampsToReturn= ttr;                // z.B. SOURCE
+    req.maxAge            = (UA_Double)(maxAgeMs); // 0 = always fresh
+
+    // 3) Service aufrufen
+    UA_ReadResponse resp = UA_Client_Service_read(client_, req);
+
+    bool ok = (resp.responseHeader.serviceResult == UA_STATUSCODE_GOOD &&
+               resp.resultsSize == req.nodesToReadSize);
+
+    if(ok) {
+        out.clear();
+        out.reserve(N);
+        for(size_t i=0; i<N; ++i) {
+            SnapshotItem it;
+            it.nodeIdStr = nodes[i].second;
+            it.ns        = nodes[i].first;
+            UA_DataValue_init(&it.dv);
+            // Deep copy, damit wir Response danach gefahrlos freigeben können
+            if(UA_DataValue_copy(&resp.results[i], &it.dv) != UA_STATUSCODE_GOOD) {
+                ok = false;
+                // teilweises Aufräumen weiter unten
+                break;
+            }
+            out.push_back(std::move(it));
+        }
+    }
+
+    // 4) Aufräumen
+    UA_ReadResponse_clear(&resp);   // gibt intern allokierte Ressourcen frei
+    // NodeIds aus rvids freigeben
+    for(size_t i=0; i<N; ++i)
+        UA_NodeId_clear(&rvids[i].nodeId);
+    UA_Array_delete(rvids, N, &UA_TYPES[UA_TYPES_READVALUEID]);
+
+    // Falls copy oben irgendwo scheiterte: bereits kopierte DataValues freigeben
+    if(!ok) {
+        for(auto& it : out) UA_DataValue_clear(&it.dv);
+        out.clear();
+    }
     return ok;
 }

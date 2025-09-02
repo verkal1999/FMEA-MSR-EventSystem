@@ -1,10 +1,12 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <open62541/client_config_default.h>
 #include <open62541/client_highlevel.h>
 #include <open62541/plugin/log_stdout.h>
 #include <open62541/util.h>
 #include <open62541/client.h>
+#include <functional>
 
 class PLCMonitor {
 public:
@@ -18,6 +20,38 @@ public:
         UA_UInt16    nsIndex   = 4;  // Namespace-Index
         std::string  nodeIdStr = "OPCUA.Z1"; // Standard-Knoten
     };
+
+    struct SnapshotItem {
+    std::string nodeIdStr;
+    UA_UInt16   ns;
+    UA_DataValue dv; // deep-copied; caller must clear
+    };
+
+    bool readSnapshot(const std::vector<std::pair<UA_UInt16,std::string>>& nodes,
+                    std::vector<SnapshotItem>& out,
+                    UA_TimestampsToReturn ttr = UA_TIMESTAMPSTORETURN_SOURCE,
+                    double maxAgeMs = 0.0);
+
+    // Callback: liefert den neuen INT16-Wert und die komplette UA_DataValue (z. B. für Timestamps)
+    using Int16ChangeCallback = std::function<void(UA_Int16, const UA_DataValue&)>;
+    //zusätzlicher Bool-Callback
+    using BoolChangeCallback  = std::function<void(UA_Boolean, const UA_DataValue&)>;
+
+     // Subscription auf INT16-Node
+    // samplingMs: schneller als der SPS-Inkrement-Takt wählen
+    // queueSize : >1, um schnelle Änderungen nicht zu verlieren
+    bool subscribeInt16(const std::string& nodeIdStr,
+                        UA_UInt16 nsIndex,
+                        double samplingMs,
+                        UA_UInt32 queueSize,
+                        Int16ChangeCallback cb);
+    bool subscribeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex,
+                       double samplingMs, UA_UInt32 queueSize, BoolChangeCallback cb);
+
+    // Optional: abmelden (hier simpel – wird auch durch disconnect() erledigt)
+    void unsubscribe();
+
+    // ...
 
     explicit PLCMonitor(Options o);
     ~PLCMonitor();
@@ -38,6 +72,9 @@ public:
     // Zugriff auf den Roh-Client (falls nötig)
     UA_Client* raw() const { return client_; }
 
+    //Schreibzugriff auf bool1
+    bool writeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex, bool v);
+
 private:
     static bool loadFileToByteString(const std::string& path, UA_ByteString &out);
 
@@ -46,4 +83,13 @@ private:
 
     PLCMonitor(const PLCMonitor&) = delete;
     PLCMonitor& operator=(const PLCMonitor&) = delete;
+
+     // ...
+    UA_UInt32 subId_ {0};
+    UA_UInt32 monIdInt16_ {0};
+    UA_UInt32 monIdBool_  {0};
+    Int16ChangeCallback onInt16Change_;
+    BoolChangeCallback  onBoolChange_;
+
+    static void dataChangeHandler(UA_Client*, UA_UInt32, void*, UA_UInt32, void*, UA_DataValue*);
 };
