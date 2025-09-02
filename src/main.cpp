@@ -6,15 +6,18 @@
 #include <limits>
 #include <vector>
 #include <atomic>
+#include <optional>
 
 static volatile std::sig_atomic_t g_run = 1;
 static void onSig(int) { g_run = 0; }
 std::atomic<bool> g_snapshotRequested{false};
 
+
 int main() {
     std::signal(SIGINT,  onSig);
     std::signal(SIGTERM, onSig);
     int pendingBool2 = -1;
+    int D2True = 1;
     UA_Int16 prev = std::numeric_limits<UA_Int16>::lowest();
     PLCMonitor::Options opt;
     opt.endpoint       = "opc.tcp://DESKTOP-LNJR8E0:4840";
@@ -24,8 +27,8 @@ int main() {
     opt.keyDerPath     = "client_key.der";
     opt.applicationUri = "urn:DESKTOP-LNJR8E0:Test:opcua-client";
     opt.nsIndex        = 4;
-    opt.nodeIdStr      = "OPCUA.Z1";
-
+    //opt.nodeIdStr      = "OPCUA.Z1";
+    std::optional<std::chrono::steady_clock::time_point> ackOffAt;
     PLCMonitor mon(opt);
     if(!mon.connect()) {
         std::cerr << "Connect failed\n";
@@ -36,26 +39,8 @@ int main() {
     // === NEU: Subscription statt Polling ===
     const double   samplingMs = 0.0;   // Server revidiert auf fastest practical
     const UA_UInt32 queueSz   = 256;
-    bool okSub = mon.subscribeInt16(opt.nodeIdStr, opt.nsIndex, samplingMs, queueSz,
-    [&pendingBool2, &prev](UA_Int16 v, const UA_DataValue& dv) {
-        // pos. Flanke auf 5 -> true
-        if (v == 5 && prev != 5) pendingBool2 = 1;
-        // 5 -> 6 -> false
-        if (prev == 5 && v == 6) pendingBool2 = 0;
-        prev = v;
-
-        // optional: Logging
-        std::cout << "[Z1] = " << v;
-        if(dv.hasSourceTimestamp) std::cout << " (ts=" << dv.sourceTimestamp/10000 << " ms)";
-        std::cout << "\n";
-    });
-    if(!okSub) {
-        std::cerr << "Subscribe failed\n";
-        mon.disconnect();
-        return 1;
-    }
     bool okD2 = mon.subscribeBool("OPCUA.TriggerD2", opt.nsIndex, 0.0, 8,
-    [&mon,&opt](UA_Boolean b, const UA_DataValue& dv){
+    [&mon,&opt,&D2True](UA_Boolean b, const UA_DataValue& dv){
         std::cout << "[TriggerD2] = " << (b ? "TRUE" : "FALSE");
         if(dv.hasSourceTimestamp) {
             UA_DateTime ts = dv.sourceTimestamp;
@@ -64,7 +49,13 @@ int main() {
         std::cout << std::endl;
 
         // Wenn TRUE: Snapshot lesen
-        if(b) g_snapshotRequested.store(true, std::memory_order_relaxed);
+        if(b) {
+            g_snapshotRequested.store(true, std::memory_order_relaxed);
+            D2True = 1;
+        } else
+        {
+            D2True = 0;
+        }
     });
     // Hauptloop: nur noch iterieren, damit Publish/Callbacks verarbeitet werden
     // --- Phase 1: Normalbetrieb ---
@@ -83,8 +74,26 @@ int main() {
                 }
             }
         }
+        // Ack-Puls NICHT blockierend:
+        if (D2True == 1 && !ackOffAt.has_value()) {
+            if (mon.writeBool("OPCUA.DiagnoseFinished", opt.nsIndex, true))
+                std::cout << "-> DiagnoseFinished = TRUE\n";
+            else
+                std::cerr << "Write DiagnoseFinished=TRUE FAILED\n";
 
-        // >>> Snapshot außerhalb des Eventloops ausführen <<<
+            // Pulsbreite robust > SPS-Taskzeit (z. B. 250 ms)
+            ackOffAt = std::chrono::steady_clock::now() + std::chrono::milliseconds(250);
+            D2True = 0; // „Puls läuft“
+        }
+
+        if (ackOffAt && std::chrono::steady_clock::now() >= *ackOffAt) {
+            if (mon.writeBool("OPCUA.DiagnoseFinished", opt.nsIndex, false))
+                std::cout << "-> DiagnoseFinished = FALSE (pulse end)\n";
+            else
+                std::cerr << "Write DiagnoseFinished=FALSE FAILED\n";
+            ackOffAt.reset();
+        }
+        // Snapshot außerhalb des Eventloops ausführen
         if (g_snapshotRequested.exchange(false, std::memory_order_relaxed)) {
             std::vector<std::pair<UA_UInt16,std::string>> nodes = {
                 {opt.nsIndex, "OPCUA.Z1"},
