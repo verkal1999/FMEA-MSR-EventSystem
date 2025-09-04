@@ -1,30 +1,73 @@
 @startuml seq
-title Threads & Log-Quellen
+title OPC UA Client ↔ TwinCAT OPC UA Server ↔ TwinCAT PLC (MAIN)
 
-participant "main() Thread" as Main
-participant "PLCMonitor::run() Thread" as Mon
-participant "open62541\n(UA_Client)" as UA
-participant "OPC UA Server" as Srv
+actor User as U
+participant "main()" as Main
+participant "PLCMonitor" as Mon
+participant "TaskManager\n(worker thread)" as TM
+participant "TwinCAT OPC UA Server\n(opc.tcp://DESKTOP-LNJR8E0:4840)" as UAS
+participant "TwinCAT PLC\n(Runtime Task: MAIN)" as PLC
 
-Main -> Mon: PLCMonitor.start()\n(spawn Thread)\n-> returns
-activate Mon
+== Initialisierung ==
+U -> Main : Programmstart
+Main -> Mon : new PLCMonitor(opts)\nconnect()
+Mon -> UAS  : UA_Client_connectUsername()\n(Session + SecureChannel)
+UAS --> Mon : Session ACTIVATED
+note right of UAS
+  UAS ist mit PLC-Variablen/FBs verknüpft
+  (z. B. VAR \"OPCUA.TriggerD2\",
+   FB \"MAIN.fbJob\", Methode \"M_Methode1\")
+end note
 
-Mon -> UA: UA_Client_connectUsername()
-UA -> Srv: SecureChannel + Create/ActivateSession
-Srv --> UA: OK
-Mon -> UA: CreateSubscription + MonitoredItem
+Main -> Mon : subscribeBool(\"OPCUA.TriggerD2\", ns=4,\n sampling=50ms, queue=8)
+Mon -> UAS  : CreateSubscription + CreateMonitoredItem
+UAS -> PLC  : interne Bindung des Watch auf PLC-Variable
+UAS --> Mon : revisedIntervals
 
-loop alle ~50ms
-  Mon -> UA: UA_Client_run_iterate(50)
-  UA -> Srv: Publish/KeepAlive
-  alt DataChange vorhanden
-    UA --> Mon: DataChange Callback
-    Mon -> Mon: onDataChange()\nprint "[Sub] TriggerD2 -> ..."\n(app logger zeigt tid=Mon)
-  else KeepAlive/Timeout
-    UA --> Mon: interne Logs\n("Inactivity for Subscription ...")
-  end
+== Hauptschleife ==
+loop while(g_run)
+  Main -> Mon : runIterate(20ms)
+  Mon <-> UAS : Publish/KeepAlive
 end
 
-== Parallel ==
-Main -> Main: while(g_run) sleep_for(200ms)\n(keine UA-Aufrufe)
+== Datenänderungen von der PLC ==
+group TriggerD2 wechselt
+  PLC -> PLC : Zyklenlogik setzt TriggerD2
+  PLC --> UAS : interner Var-Update
+  UAS --> Mon : DataChange(TriggerD2, ts)
+  Mon --> Main: onBoolChange(value)
+end
+
+alt TriggerD2 = TRUE  // Task starten
+  Main -> Main : new TaskManager(..., onFinished)
+  create TM
+  Main -> TM : ctor() → worker-Thread startet
+  activate TM
+
+  == Task-Thread: eigener OPC UA Client ==
+  TM -> UAS : UA_Client_connectUsername()\n(separate Session)
+  TM -> UAS : Call obj=\"MAIN.fbJob\",\n  meth=\"MAIN.fbJob.M_Methode1\",\n  in: x=0
+  UAS -> PLC : FB-Aufruf: fbJob.M_Methode1(x=0)
+  PLC --> UAS : Rückgabe y : INT32
+  UAS --> TM  : CallResult(y)
+
+  ' Diagnoseflag per Client setzen (PLC liest es ein)
+  TM -> UAS : Write \"OPCUA.DiagnoseFinished\" := TRUE
+  UAS -> PLC : Variable schreiben (TRUE)
+  TM -> UAS : Write \"OPCUA.DiagnoseFinished\" := FALSE
+  UAS -> PLC : Variable schreiben (FALSE)
+  PLC -> PLC : RTRIG mit Fortsetzung
+
+  TM -> Main : onFinished(ok=TRUE, y)
+  deactivate TM
+  Main -> TM : dtor (Thread join) → disconnect()
+  destroy TM
+else TriggerD2 = FALSE
+  Main -> Main : kein Taskstart
+end
+
+== Shutdown ==
+U -> Main : SIGINT/SIGTERM
+Main -> Mon : unsubscribe() + disconnect()
+Mon -> UAS  : DeleteSubscription + UA_Client_disconnect()
 @enduml

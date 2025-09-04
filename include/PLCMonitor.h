@@ -7,9 +7,21 @@
 #include <open62541/util.h>
 #include <open62541/client.h>
 #include <functional>
+#include <queue>
+#include <mutex>
 
 class PLCMonitor {
 public:
+    using UaFn = std::function<void()>;
+    void post(UaFn fn);
+    void processPosted(size_t max = 16);
+
+    // Wrapper für deinen OPC-UA Methodenaufruf (Beispiel: x:Int32 -> y:Int32)
+    bool callMethode1(UA_UInt16 nsIndex,
+                      const std::string& objectIdStr,
+                      const std::string& methodIdStr,
+                      UA_Int32 x, UA_Int32& yOut);
+
     struct Options {
         std::string endpoint;        // z.B. "opc.tcp://DESKTOP-XYZ:4840"
         std::string username;        // OPC UA Username
@@ -76,6 +88,10 @@ public:
     bool writeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex, bool v);
 
 private:
+    std::mutex qmx_;
+    std::queue<UaFn> q_;
+
+    // client_, subId_ usw. existieren ja schon
     static bool loadFileToByteString(const std::string& path, UA_ByteString &out);
 
     Options    opt_;

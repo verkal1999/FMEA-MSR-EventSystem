@@ -8,7 +8,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # (bleibt) open62541-Optionen und OpenSSL
 set(UA_ENABLE_SUBSCRIPTIONS ON CACHE BOOL "" FORCE)
 set(UA_ENABLE_SUBSCRIPTION_EVENTS ON CACHE BOOL "" FORCE)
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE STRING "" FORCE)
+#set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" CACHE STRING "" FORCE)
+if(MSVC)
+  # /MD (Release) und /MDd (Debug)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+endif()
 set(UA_ENABLE_ENCRYPTION OPENSSL CACHE STRING "" FORCE)
 set(UA_ENABLE_OPENSSL    ON      CACHE BOOL   "" FORCE)
 set(UA_ENABLE_MBEDTLS    OFF     CACHE BOOL   "" FORCE)
@@ -24,6 +28,7 @@ add_executable(opcua_client)
 target_sources(opcua_client PRIVATE
   src/main.cpp
   src/PLCMonitor.cpp
+  src/TaskManager.cpp
 )
 
 # Header-Verzeichnis für dieses Ziel

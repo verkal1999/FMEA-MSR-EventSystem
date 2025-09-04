@@ -362,3 +362,18 @@ bool PLCMonitor::readSnapshot(const std::vector<std::pair<UA_UInt16,std::string>
     }
     return ok;
 }
+
+// Arbeit mit TaskManager
+void PLCMonitor::post(UaFn fn) {
+    std::lock_guard<std::mutex> lk(qmx_);
+    q_.push(std::move(fn));
+}
+void PLCMonitor::processPosted(size_t max) {
+    for(size_t i=0; i<max; ++i) {
+        UaFn fn;
+        { std::lock_guard<std::mutex> lk(qmx_);
+          if(q_.empty()) break;
+          fn = std::move(q_.front()); q_.pop(); }
+        fn(); // läuft im gleichen Thread, in dem du runIterate() aufrufst
+    }
+}
