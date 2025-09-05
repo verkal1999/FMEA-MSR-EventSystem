@@ -21,14 +21,13 @@ find_package(OpenSSL REQUIRED)
 # (bleibt) open62541 als Subprojekt einbinden
 add_subdirectory(open62541)   # bewährter Weg laut open62541/CMake Quick-Hinweisen :contentReference[oaicite:1]{index=1}
 
-# === NEU: Ziel + Quellen ===
 add_executable(opcua_client)
 
 # Deine Quellen gesammelt ans Ziel hängen (moderner, zielbasierter Stil)
 target_sources(opcua_client PRIVATE
   src/main.cpp
   src/PLCMonitor.cpp
-  src/TaskManager.cpp
+  src/TaskForce.cpp
 )
 
 # Header-Verzeichnis für dieses Ziel

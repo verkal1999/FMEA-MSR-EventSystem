@@ -1,5 +1,5 @@
 #include "PLCMonitor.h"
-#include "TaskManager.h"
+#include "TaskForce.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -29,7 +29,7 @@ int main() {
     }
     std::cout << "Connected and session ACTIVATED.\n";
 
-    std::unique_ptr<TaskManager> task;
+    std::unique_ptr<TaskForce> task;
     std::atomic<bool> taskDone{false};
     std::atomic<bool> taskOk{false};
     std::atomic<UA_Int32> taskY{0};
@@ -45,7 +45,7 @@ int main() {
             }
             std::cout << std::endl;
             if(b && !task) {
-                task = std::make_unique<TaskManager>(
+                task = std::make_unique<TaskForce>(
                     opt, /*ns*/4,
                     "MAIN.fbJob",                 // Objekt
                     "MAIN.fbJob.M_Methode1",      // Methode (Job)
@@ -68,7 +68,7 @@ int main() {
         if(taskDone.exchange(false)) {
             std::cout << "[Task] finished, ok=" << (taskOk ? "TRUE":"FALSE")
                     << ", y=" << taskY.load() << "\n";
-            task.reset(); // TaskManager-Objekt zerstören -> Thread gejoint, Session geschlossen
+            task.reset(); // TaskForce-Objekt zerstören -> Thread gejoint, Session geschlossen
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }

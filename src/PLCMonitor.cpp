@@ -363,7 +363,7 @@ bool PLCMonitor::readSnapshot(const std::vector<std::pair<UA_UInt16,std::string>
     return ok;
 }
 
-// Arbeit mit TaskManager
+// Arbeit mit TaskForce
 void PLCMonitor::post(UaFn fn) {
     std::lock_guard<std::mutex> lk(qmx_);
     q_.push(std::move(fn));

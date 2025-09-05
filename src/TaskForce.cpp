@@ -1,4 +1,4 @@
-#include "TaskManager.h"
+#include "TaskForce.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -17,7 +17,7 @@ static bool loadFile(const std::string& path, UA_ByteString& out) {
     return (bool)f.read((char*)out.data, len);
 }
 
-TaskManager::TaskManager(const PLCMonitor::Options& opt,
+TaskForce::TaskForce(const PLCMonitor::Options& opt,
                          UA_UInt16 nsIndex,
                          std::string obj, std::string meth,
                          std::string diag, unsigned timeout,
@@ -28,17 +28,17 @@ TaskManager::TaskManager(const PLCMonitor::Options& opt,
   diagNode_(std::move(diag)),
   callTimeoutMs_(timeout),
   onFinished_(std::move(cb)) {
-    th_ = std::thread(&TaskManager::worker, this); // sofort starten
+    th_ = std::thread(&TaskForce::worker, this); // sofort starten
 }
 
-TaskManager::~TaskManager() {
+TaskForce::~TaskForce() {
     run_ = false;
     if(th_.joinable()) th_.join();
     disconnect();
 }
 
 
-bool TaskManager::connect() {
+bool TaskForce::connect() {
     disconnect();
 
     c_ = UA_Client_new();
@@ -61,7 +61,7 @@ bool TaskManager::connect() {
     // Zert + Key (DER) laden
     UA_ByteString cert = UA_BYTESTRING_NULL, key = UA_BYTESTRING_NULL;
     if(!loadFile(opt_.certDerPath, cert) || !loadFile(opt_.keyDerPath, key)) {
-        std::fprintf(stderr, "[TaskManager] Failed to load cert/key\n");
+        std::fprintf(stderr, "[TaskForce] Failed to load cert/key\n");
         UA_Client_delete(c_); c_ = nullptr; return false;
     }
 
@@ -70,7 +70,7 @@ bool TaskManager::connect() {
     UA_ByteString_clear(&cert);
     UA_ByteString_clear(&key);
     if(st != UA_STATUSCODE_GOOD) {
-        std::fprintf(stderr, "[TaskManager] Encryption setup failed: 0x%08x\n", st);
+        std::fprintf(stderr, "[TaskForce] Encryption setup failed: 0x%08x\n", st);
         UA_Client_delete(c_); c_ = nullptr; return false;
     }
 
@@ -82,7 +82,7 @@ bool TaskManager::connect() {
         st = UA_Client_connect(c_, opt_.endpoint.c_str());
 
     if(st != UA_STATUSCODE_GOOD) {
-        std::fprintf(stderr, "[TaskManager] Connect failed: 0x%08x\n", st);
+        std::fprintf(stderr, "[TaskForce] Connect failed: 0x%08x\n", st);
         UA_Client_delete(c_); c_ = nullptr; return false;
     }
 
@@ -91,11 +91,11 @@ bool TaskManager::connect() {
     return true;
 }
 
-void TaskManager::disconnect() {
+void TaskForce::disconnect() {
     if(c_) { UA_Client_disconnect(c_); UA_Client_delete(c_); c_ = nullptr; }
 }
 
-bool TaskManager::waitUntilActivated(int timeoutMs) {
+bool TaskForce::waitUntilActivated(int timeoutMs) {
     if(!c_) return false;
     auto t0 = std::chrono::steady_clock::now();
     for(;;) {
@@ -109,7 +109,7 @@ bool TaskManager::waitUntilActivated(int timeoutMs) {
     }
 }
 
-bool TaskManager::writeBool(const std::string& id, bool v) {
+bool TaskForce::writeBool(const std::string& id, bool v) {
     if(!c_) return false;
 
     UA_NodeId nid = UA_NODEID_STRING_ALLOC(ns_, const_cast<char*>(id.c_str()));
@@ -127,7 +127,7 @@ bool TaskManager::writeBool(const std::string& id, bool v) {
     return st == UA_STATUSCODE_GOOD;
 }
 
-bool TaskManager::callJobMethod(UA_Int32 x, UA_Int32& yOut) {
+bool TaskForce::callJobMethod(UA_Int32 x, UA_Int32& yOut) {
     if(!c_) return false;
     UA_NodeId obj  = UA_NODEID_STRING_ALLOC(ns_, const_cast<char*>(objNode_.c_str()));
     UA_NodeId meth = UA_NODEID_STRING_ALLOC(ns_, const_cast<char*>(methNode_.c_str()));
@@ -157,9 +157,9 @@ bool TaskManager::callJobMethod(UA_Int32 x, UA_Int32& yOut) {
     return ok;
 }
 
-//void TaskManager::notifyTrigger() { trig_.store(true, std::memory_order_relaxed); }
+//void TaskForce::notifyTrigger() { trig_.store(true, std::memory_order_relaxed); }
 
-bool TaskManager::callJob(UA_Int32 x, UA_Int32& yOut) {
+bool TaskForce::callJob(UA_Int32 x, UA_Int32& yOut) {
     if(!c_) return false;
     UA_Client_getConfig(c_)->timeout = callTimeoutMs_; // langer Call
     UA_NodeId obj  = UA_NODEID_STRING_ALLOC(ns_, const_cast<char*>(objNode_.c_str()));
@@ -180,10 +180,10 @@ bool TaskManager::callJob(UA_Int32 x, UA_Int32& yOut) {
     return ok;
 }
 
-void TaskManager::worker() {
+void TaskForce::worker() {
     if(!connect()) {
         state_ = State::Failed;
-        std::cout << "[TaskManager] Connect failed, State:: Failed" << std::endl;
+        std::cout << "[TaskForce] Connect failed, State:: Failed" << std::endl;
         if(onFinished_) onFinished_(false, 0);
         return;
     }

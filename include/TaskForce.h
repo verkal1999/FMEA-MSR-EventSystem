@@ -7,18 +7,18 @@
 #include <thread>
 #include <atomic>
 
-class TaskManager {
+class TaskForce {
 public:
     enum class State { Idle, Starting, Calling, Done, Failed };
     using FinishedCb = std::function<void(bool ok, UA_Int32 y)>;
-    TaskManager(const PLCMonitor::Options& opt,
+    TaskForce(const PLCMonitor::Options& opt,
                 UA_UInt16 nsIndex,
                 std::string objectNodeIdStr,     // z.B. "MAIN.fbJob"
                 std::string methodNodeIdStr,     // z.B. "MAIN.fbJob.M_Methode1"
                 std::string diagnoseFinishedId,  // z.B. "OPCUA.DiagnoseFinished"
                 unsigned callTimeoutMs,
                 FinishedCb onFinished);
-    ~TaskManager();
+    ~TaskForce();
 
     // Von deinem StateD2-Callback rufen
     void notifyTrigger();
