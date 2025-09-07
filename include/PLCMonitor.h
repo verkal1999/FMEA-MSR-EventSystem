@@ -9,11 +9,27 @@
 #include <functional>
 #include <queue>
 #include <mutex>
+#include <memory>
+#include <type_traits>
 
 class PLCMonitor {
 public:
     using UaFn = std::function<void()>;
     void post(UaFn fn);
+    template<class F,
+             class Decayed = std::decay_t<F>,
+             std::enable_if_t<!std::is_same_v<Decayed, UaFn>, int> = 0>
+    void post(F&& f) {
+        // 1) Callable F in shared_ptr „heben“, egal ob F move-only ist
+        auto fn = std::make_shared<Decayed>(std::forward<F>(f));
+
+        // 2) Copybares Job-Lambda bauen (captured nur shared_ptr)
+        UaFn job = [fn]() mutable { (*fn)(); };
+
+        // 3) In die bestehende Queue schieben
+        std::lock_guard<std::mutex> lk(qmx_);
+        q_.push(std::move(job));
+    }
     void processPosted(size_t max = 16);
 
     // Wrapper für deinen OPC-UA Methodenaufruf (Beispiel: x:Int32 -> y:Int32)
@@ -23,15 +39,17 @@ public:
                       UA_Int32 x, UA_Int32& yOut);
 
     struct Options {
-        std::string endpoint;        // z.B. "opc.tcp://DESKTOP-XYZ:4840"
-        std::string username;        // OPC UA Username
-        std::string password;        // OPC UA Password
-        std::string certDerPath;     // Pfad zu client_cert.der
-        std::string keyDerPath;      // Pfad zu client_key.der (PKCS#8, unverschlüsselt)
-        std::string applicationUri;  // MUSS zur SAN-URI im Client-Zertifikat passen
-        UA_UInt16    nsIndex   = 4;  // Namespace-Index
-        std::string  nodeIdStr = "OPCUA.Z1"; // Standard-Knoten
+        std::string endpoint;
+        std::string username;
+        std::string password;
+        std::string certDerPath;
+        std::string keyDerPath;
+        std::string applicationUri;
+        UA_UInt16   nsIndex = 2;
     };
+
+
+
 
     struct SnapshotItem {
     std::string nodeIdStr;
@@ -86,6 +104,18 @@ public:
 
     //Schreibzugriff auf bool1
     bool writeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex, bool v);
+
+       // A) "Factory": Options für deinen ua_test_server_secure.cpp
+    static Options TestServerDefaults(const std::string& clientCertDer,
+                                      const std::string& clientKeyDer,
+                                      const std::string& endpoint = "opc.tcp://localhost:4840");
+
+    // B) One-liner: setzt o.g. Defaults auf *diese* Instanz und verbindet
+    bool connectToSecureTestServer(const std::string& clientCertDer,
+                                   const std::string& clientKeyDer,
+                                   const std::string& endpoint = "opc.tcp://localhost:4840");
+    
+    bool watchTriggerD2(double samplingMs = 0.0, UA_UInt32 queueSize = 10);
 
 private:
     std::mutex qmx_;

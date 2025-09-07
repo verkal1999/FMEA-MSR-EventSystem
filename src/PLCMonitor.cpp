@@ -95,6 +95,11 @@ bool PLCMonitor::connect() {
 
 void PLCMonitor::disconnect() {
     if(client_) {
+        // --- NEW: Subscription vor Disconnect löschen (sauberer) ---
+        if(subId_) {
+            UA_Client_Subscriptions_deleteSingle(client_, subId_);   // open62541-API
+            subId_ = 0; monIdInt16_ = 0; monIdBool_ = 0;
+        }
         UA_Client_disconnect(client_);
         UA_Client_delete(client_);
         client_ = nullptr;
@@ -376,4 +381,40 @@ void PLCMonitor::processPosted(size_t max) {
           fn = std::move(q_.front()); q_.pop(); }
         fn(); // läuft im gleichen Thread, in dem du runIterate() aufrufst
     }
+}
+//------------------------------------------------------------------------------------------------------
+//Für TestServer-Verbindung
+// >>> Am Dateiende oder bei den anderen Methoden ergänzen <<<
+
+PLCMonitor::Options
+PLCMonitor::TestServerDefaults(const std::string& clientCertDer,
+                               const std::string& clientKeyDer,
+                               const std::string& endpoint) {
+    Options o;
+    o.endpoint       = endpoint;           // ua_test_server_secure.cpp: Port 4850, localhost
+    o.username       = "user";             // serverseitig aktiv (Username/Password)
+    o.password       = "pass";             // siehe Server-Setup
+    o.certDerPath    = clientCertDer;      // Client-Zertifikat (DER)
+    o.keyDerPath     = clientKeyDer;       // Client-Key (DER)
+    o.applicationUri = "urn:example:open62541:TestClient";
+    o.nsIndex        = 2;                  // reine Session ist ns-agnostisch; 2 als sinniger Default
+    return o;
+}
+
+bool PLCMonitor::connectToSecureTestServer(const std::string& clientCertDer,
+                                           const std::string& clientKeyDer,
+                                           const std::string& endpoint) {
+    // Options auf Testserver-Defaults setzen und normale connect()-Logik nutzen
+    opt_ = TestServerDefaults(clientCertDer, clientKeyDer, endpoint);
+    return connect(); // nutzt bereits Basic256Sha256 + Sign&Encrypt + Username/Pass + Zert/Key
+}
+
+bool PLCMonitor::watchTriggerD2(double samplingMs, UA_UInt32 queueSize) {
+    // ns=1; s=TriggerD2 kommt aus deinem Testserver
+    return subscribeBool("TriggerD2", /*ns*/1, samplingMs, queueSize,
+        [](bool b, const UA_DataValue& dv){
+            std::cout << "[Client] TriggerD2: "
+                      << (b ? "TRUE" : "FALSE")
+                      << "  (status=0x" << std::hex << dv.status << std::dec << ")\n";
+        });
 }

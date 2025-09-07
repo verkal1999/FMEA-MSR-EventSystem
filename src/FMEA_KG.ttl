@@ -1,0 +1,885 @@
+@prefix : <http://www.semanticweb.org/alexanderverkhov/ontologies/2023/11/FMEA#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/alexanderverkhov/ontologies/2023/11/FMEA#> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_createsRisk
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_createsRisk> rdf:type owl:ObjectProperty ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesDetection
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesDetection> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesFrequency
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesFrequency> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesMonitoring
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesMonitoring> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
+                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesOccurence
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesOccurence> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRisk
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRisk> rdf:type owl:ObjectProperty ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ;
+                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> rdf:type owl:ObjectProperty .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesSeverity
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesSeverity> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
+                                                                   rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
+                                                                      rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForFinalUser
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForFinalUser> rdf:type owl:ObjectProperty ;
+                                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
+                                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForNextLevel
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForNextLevel> rdf:type owl:ObjectProperty ;
+                                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
+                                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                                   rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForCustomerFactory
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForCustomerFactory> rdf:type owl:ObjectProperty ;
+                                                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
+                                                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory> rdf:type owl:ObjectProperty ;
+                                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
+                                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_examinesElement
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_examinesElement> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> ;
+                                                                   rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasDetectionCriterion
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasDetectionCriterion> rdf:type owl:ObjectProperty ;
+                                                                         rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
+                                                                         rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForCustomerPlant
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForCustomerPlant> rdf:type owl:ObjectProperty ;
+                                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> ;
+                                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForFinalUser
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForFinalUser> rdf:type owl:ObjectProperty ;
+                                                                                rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> ;
+                                                                                rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                                rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> rdf:type owl:ObjectProperty ;
+                                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> ;
+                                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFunction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFunction> rdf:type owl:ObjectProperty ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
+                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasNextProcessStep
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasNextProcessStep> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> ;
+                                                                      rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasRiskAssessment
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasRiskAssessment> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
+                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_is4MProcessCauseElementOf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_is4MProcessCauseElementOf> rdf:type owl:ObjectProperty ;
+                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
+                                                                             rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isDForAP
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isDForAP> rdf:type owl:ObjectProperty ;
+                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> ;
+                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isFForMSRAP
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isFForMSRAP> rdf:type owl:ObjectProperty ;
+                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
+                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMForMSRAP
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMForMSRAP> rdf:type owl:ObjectProperty ;
+                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
+                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMitigatedRiskOf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMitigatedRiskOf> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
+                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isOForAP
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isOForAP> rdf:type owl:ObjectProperty ;
+                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> ;
+                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForAP
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForAP> rdf:type owl:ObjectProperty ;
+                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForMSRAP
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForMSRAP> rdf:type owl:ObjectProperty ;
+                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSuperElementOf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSuperElementOf> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
+                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> ;
+                                                               rdfs:range [ rdf:type rdfs:Datatype ;
+                                                                            owl:oneOf [ rdf:type rdf:List ;
+                                                                                        rdf:first "H" ;
+                                                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                                                   rdf:first "L" ;
+                                                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                                                              rdf:first "M" ;
+                                                                                                              rdf:rest rdf:nil
+                                                                                                            ]
+                                                                                                 ]
+                                                                                      ]
+                                                                          ] .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating_inf> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> ;
+                                                                   rdfs:range [ rdf:type rdfs:Datatype ;
+                                                                                owl:oneOf [ rdf:type rdf:List ;
+                                                                                            rdf:first "H" ;
+                                                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                                                       rdf:first "L" ;
+                                                                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                                                                  rdf:first "M" ;
+                                                                                                                  rdf:rest rdf:nil
+                                                                                                                ]
+                                                                                                     ]
+                                                                                          ]
+                                                                              ] .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasActionDescription
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasActionDescription> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ;
+                                                                        rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasBooleanValue
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasBooleanValue> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> ;
+                                                                   rdfs:range xsd:boolean .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasCurrentKnowedgeState
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasCurrentKnowedgeState> rdf:type owl:DatatypeProperty ;
+                                                                           rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
+                                                                           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> ;
+                                                              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating_inf> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> ;
+                                                                  rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> ;
+                                                               rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
+                                                                        rdfs:comment "Hier sind die Sensorwerte, die jeder Sensor haben kann. Bisher sind nur Dezimale und Boolean-Werte verfügbar, da das die sind, die hier gebraucht werden." .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExactDecValue
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExactDecValue> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
+                                                                    rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> ;
+                                                              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating_inf> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> ;
+                                                                  rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeDescription
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeDescription> rdf:type owl:DatatypeProperty ;
+                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                                        rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound> rdf:type owl:DatatypeProperty ;
+                                                                 rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
+                                                                 rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
+                                                              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating_inf> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
+                                                                  rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> ;
+                                                                  rdfs:range [ rdf:type rdfs:Datatype ;
+                                                                               owl:oneOf [ rdf:type rdf:List ;
+                                                                                           rdf:first "H" ;
+                                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                                      rdf:first "L" ;
+                                                                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                                                                 rdf:first "M" ;
+                                                                                                                 rdf:rest rdf:nil
+                                                                                                               ]
+                                                                                                    ]
+                                                                                         ]
+                                                                             ] .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating_inf> rdf:type owl:DatatypeProperty ;
+                                                                      rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> ;
+                                                                      rdfs:range [ rdf:type rdfs:Datatype ;
+                                                                                   owl:oneOf [ rdf:type rdf:List ;
+                                                                                               rdf:first "H" ;
+                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                          rdf:first "L" ;
+                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                     rdf:first "M" ;
+                                                                                                                     rdf:rest rdf:nil
+                                                                                                                   ]
+                                                                                                        ]
+                                                                                             ]
+                                                                                 ] .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
+                                                               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActMethodId
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActMethodId> rdf:type owl:DatatypeProperty ;
+                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActObjId
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActObjId> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> ;
+                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
+                                                                  rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> ;
+                                                              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating_inf> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> ;
+                                                                  rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRationaleDescription
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRationaleDescription> rdf:type owl:DatatypeProperty ;
+                                                                           rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency> ;
+                                                                           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskDescription
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskDescription> rdf:type owl:DatatypeProperty ;
+                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
+                                                                      rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskID
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskID> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
+                                                             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant> rdf:type owl:DatatypeProperty ;
+                                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                                              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant_inf> rdf:type owl:DatatypeProperty ;
+                                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                                                  rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser> rdf:type owl:DatatypeProperty ;
+                                                                          rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                          rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                                          rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser_inf> rdf:type owl:DatatypeProperty ;
+                                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                                              rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant> rdf:type owl:DatatypeProperty ;
+                                                                         rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                         rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                                         rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant_inf
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant_inf> rdf:type owl:DatatypeProperty ;
+                                                                             rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
+                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
+                                                                             rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactMethodId
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactMethodId> rdf:type owl:DatatypeProperty ;
+                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId> ;
+                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
+                                                                       rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactObjId
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactObjId> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
+                                                                    rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit> rdf:type owl:DatatypeProperty ;
+                                                           rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> ;
+                                                           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound> rdf:type owl:DatatypeProperty ;
+                                                                 rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
+                                                                 rdfs:range xsd:decimal .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMan
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMan> rdf:type owl:Class ;
+                                                                   rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMaterial
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMaterial> rdf:type owl:Class ;
+                                                                        rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMethod
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMethod> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Actors
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Actors> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA-MSR
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA-MSR> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> rdf:type owl:Class ;
+                                                                         rdfs:comment """Beinhaltet Kriterien für die Detektion von Fehlern wie bspw. Sensorwerte. Es wird angenommen, dass jedes Kriterium durch einen Sensor gemessen werden muss, aus diesem Grund wird der SystemTimer hier auch als Sensor modelliert, der die Zeit misst.
+
+Logik: Detection Actions, die zu Systemreaktionen führen sollen und daher automatisiert ablaufen, müssen zwangsläufig Kriterien besitzen, mit denen sie den Fehler mithilfe von Sensorwerten messen.
+
+Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers zu ermitteln.""" ,
+                                                                                      "Wwird nur eingesetzt, sobald ein kritischer Fehler auftaucht, aber noch keine Fehlerreaktion vorhanden ist. Hier werden alle möglichen Detektionsmerkmale und wie (durch welche Sensoren/Aktoren und welche OPCUA-Werte) sie getestet werden können, aufgeführt." .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> rdf:type owl:Class ;
+                                                                        rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> rdf:type owl:Class ;
+                                                                 rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
+                                                                       rdfs:comment "Für das Anwendungsbeispiel schon alles hinterlegt in der PLC. Neue Methoden in dieser Klasse sind für das Reasoning von Fehlerdiagnosen gedacht" .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA-MSR
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA-MSR> rdf:type owl:Class ;
+                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
+                                                                     rdfs:comment "Elements in PFMEA like Process Steps" .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_StructureElement
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_StructureElement> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> ;
+                                                                     rdfs:comment "Intersection mit Function? Denn eigentlich müssen ja diese System Reactions auch als Functions für eine Maschine hinterlegt sein, sonst sind sie per se nicht ausführbar." .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/CSkill_PunchingProcess
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/CSkill_PunchingProcess> rdf:type owl:NamedIndividual ,
+                                                                                <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> rdf:type owl:NamedIndividual ,
+                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_createsRisk> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> """{
+  \"rows\": [
+    { \"id\": \"ns=4;s=OPCUA.bool1\",  \"t\": \"bool\", \"v\": true }
+  ]
+}""" .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> rdf:type owl:NamedIndividual ,
+                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> rdf:type owl:NamedIndividual ,
+                                                                                  <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> rdf:type owl:NamedIndividual ,
+                                                                         <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction> rdf:type owl:NamedIndividual ,
+                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
+                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
+                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasDetectionCriterion> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1> ,
+                                                                                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1> rdf:type owl:NamedIndividual ,
+                                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
+                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> ;
+                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasBooleanValue> "false"^^xsd:boolean .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1> rdf:type owl:NamedIndividual ,
+                                                                                 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
+                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer> ;
+                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound> 0.001 ;
+                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit> "s" ;
+                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound> 5.007 .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1> rdf:type owl:NamedIndividual ,
+                                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine1> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine2
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine2> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> rdf:type owl:NamedIndividual ,
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk2
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk2> rdf:type owl:NamedIndividual ,
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/RobotWithVacuumGripper
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/RobotWithVacuumGripper> rdf:type owl:NamedIndividual ,
+                                                                                <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> rdf:type owl:NamedIndividual ,
+                                                                   <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA02
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA02> rdf:type owl:NamedIndividual ,
+                                                                   <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltBackwardWithA01
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltBackwardWithA01> rdf:type owl:NamedIndividual ,
+                                                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltForwardWithA01
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltForwardWithA01> rdf:type owl:NamedIndividual ,
+                                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadDownWithA02
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadDownWithA02> rdf:type owl:NamedIndividual ,
+                                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadUpWithA02
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadUpWithA02> rdf:type owl:NamedIndividual ,
+                                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS01
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS01> rdf:type owl:NamedIndividual ,
+                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS02
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS02> rdf:type owl:NamedIndividual ,
+                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS01
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS01> rdf:type owl:NamedIndividual ,
+                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS02
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS02> rdf:type owl:NamedIndividual ,
+                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> rdf:type owl:NamedIndividual ,
+                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                           <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> rdf:type owl:NamedIndividual ,
+                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
+                                                           <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+owl:topDataProperty rdfs:comment "Alle Date Properties, die sich hier befinden, können im weiteren Ausblick in Klassen umgewandelt werden und somit für weitere Zwecke benutzt werden. Aufgrund des Umfangs dieser Arbeit muss hier aber leider mit Data Properties gearbeitet werden." .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

@@ -3,6 +3,11 @@
 #include <chrono>
 #include <thread>
 #include <fstream>
+#include <pybind11/embed.h>
+#include "PythonRuntime.h"
+#include <nlohmann/json.hpp>
+#include "PythonWorker.h"
+namespace py = pybind11;
 
 // Lokaler Loader (identisch vom Prinzip wie in PLCMonitor.cpp)
 static bool loadFile(const std::string& path, UA_ByteString& out) {
@@ -183,17 +188,74 @@ bool TaskForce::callJob(UA_Int32 x, UA_Int32& yOut) {
 void TaskForce::worker() {
     if(!connect()) {
         state_ = State::Failed;
-        std::cout << "[TaskForce] Connect failed, State:: Failed" << std::endl;
         if(onFinished_) onFinished_(false, 0);
         return;
     }
 
-    state_ = State::Calling;
-    std::cout << "State:: Calling" << std::endl;
-    UA_Int32 y = 0;
-    const bool ok = callJob(/*x*/0, y);
+    // --- Python-Aufruf ausschließlich im PythonWorker-Thread ---
+    std::string srows;
+    try {
+        srows = PythonWorker::instance().call([&]() -> std::string {
+            // Wir befinden uns hier IM Python-Thread und halten den GIL
+            py::module_ sys = py::module_::import("sys");
+            py::list path = sys.attr("path").cast<py::list>();
+            path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
 
-    // DiagnoseFinished-Puls
+            py::module_ kg  = py::module_::import("KG_Interface"); // Dateiname == Modulname
+            py::object cls  = kg.attr("KGInterface");
+            py::object kgi  = cls(
+                R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src\FMEA_KG.ttl)",
+                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/",
+                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_",
+                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_",
+                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_"
+            );
+            std::string interruptedSkill = "TestSkill1";
+            return py::str(kgi.attr("getFailureModeParameters")(interruptedSkill));
+        });
+    }
+    catch (const std::exception& e) {
+        std::cerr << "[KG] PythonWorker error: " << e.what() << "\n";
+        // Du kannst hier entscheiden, ob du abbrichst oder mit leeren rows weitermachst
+        srows = R"({"rows":[]})";
+    }
+
+    nlohmann::json rowsJson;
+    try {
+        rowsJson = nlohmann::json::parse(srows);
+    } catch (...) {
+        rowsJson = nlohmann::json::object({{"rows", nlohmann::json::array()}});
+    }
+
+    state_ = State::Calling;
+    std::cout << "State:: Calling\n";
+
+    // (Dein Printer-Thread bleibt unverändert – er arbeitet nur mit rowsJson/Strings)
+    run_ = true;
+    std::thread printer([this, rowsJson]() {
+        while (run_) {
+            try {
+                if (rowsJson.contains("rows"))
+                    for (const auto& r : rowsJson["rows"]) {
+                        const std::string id = r.value("id", "");
+                        const std::string t  = r.value("t", "string");
+                        std::string v;
+                        if (r.contains("v")) {
+                            if (r["v"].is_boolean())     v = r["v"].get<bool>() ? "true" : "false";
+                            else if (r["v"].is_number()) v = std::to_string(r["v"].get<double>());
+                            else if (r["v"].is_string()) v = r["v"].get<std::string>();
+                            else                          v = "<unsupported>";
+                        }
+                        std::cout << "[KG] " << id << " (" << t << ") = " << v << "\n";
+                    }
+            } catch (...) {}
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        }
+    });
+
+    UA_Int32 y = 0;
+    const bool ok = callJob(/*x*/0, y); // blockiert bis Job fertig
+
     writeBool(diagNode_, true);
     std::this_thread::sleep_for(std::chrono::milliseconds(200));
     writeBool(diagNode_, false);
@@ -202,6 +264,9 @@ void TaskForce::worker() {
 
     state_ = ok ? State::Done : State::Failed;
     std::cout << (ok ? "State::Done" : "State::Failed") << '\n';
-    disconnect(); // Session schließen
-    run_ = false; // Thread endet jetzt
+
+    run_ = false;
+    if (printer.joinable()) printer.join();
+
+    disconnect();
 }
