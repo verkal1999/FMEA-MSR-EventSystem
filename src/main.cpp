@@ -5,6 +5,8 @@
 #include "EventBus.h"
 #include "ReactionManager.h"
 #include <atomic>
+#include "PythonRuntime.h"
+#include "AckLogger.h"
 
 int main() {
     auto opt = PLCMonitor::TestServerDefaults(
@@ -12,14 +14,14 @@ int main() {
         "./certificates/client_key.der",
         "opc.tcp://localhost:4850"
     );
-
+    PythonRuntime::ensure_started();
     PLCMonitor mon(opt);
     if(!mon.connect()) { std::cerr << "[Client] connect() failed\n"; return 1; }
     std::cout << "[Client] connected\n";
 
     EventBus bus;
-    auto taskMgr = std::make_shared<ReactionManager>(mon);
-    auto subTM   = bus.subscribe_scoped(EventType::evD2, taskMgr, 4); // <-- Prio 4 + RAII
+    auto rm   = std::make_shared<ReactionManager>(mon, bus);
+    auto subTM   = bus.subscribe_scoped(EventType::evD2, rm, 4); // <-- Prio 4 + RAII
 
     // Rising-Edge-Erkennung auf TriggerD2
     std::atomic<bool> d2Prev{false};

@@ -1,15 +1,17 @@
-// PythonRuntime.h
 #pragma once
 #include <pybind11/embed.h>
+#include <memory>
 #include <mutex>
+
 namespace py = pybind11;
 
-class PythonRuntime {
-public:
-    static void ensureStarted() {
-        static PythonRuntime inst; (void)inst;
+struct PythonRuntime {
+    static void ensure_started() {
+        static std::once_flag flag;
+        std::call_once(flag, []{
+            guard_ = std::make_unique<py::scoped_interpreter>(); // Py_Initialize + GIL-Setup
+        });
     }
 private:
-    py::scoped_interpreter guard_; // startet Interpreter einmal pro Prozess
-    PythonRuntime() : guard_{} {}
+    static std::unique_ptr<py::scoped_interpreter> guard_;
 };

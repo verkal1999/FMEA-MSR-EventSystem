@@ -1,18 +1,15 @@
 #pragma once
 #include "ReactiveObserver.h"
-#include <memory>
-#include <string>
 
-class PLCMonitor; // Forward
+class PLCMonitor;
+class EventBus;
 
-class ReactionManager : public ReactiveObserver,
-                    public std::enable_shared_from_this<ReactionManager> {
+class ReactionManager : public ReactiveObserver {
 public:
-    explicit ReactionManager(PLCMonitor& mon) : mon_(mon) {}
-
-    // Einheitlicher Callback-Name
+    ReactionManager(PLCMonitor& mon, EventBus& bus) : mon_(mon), bus_(bus) {}
     void onMethod(const Event& ev) override;
 
 private:
     PLCMonitor& mon_;
+    EventBus&   bus_;
 };

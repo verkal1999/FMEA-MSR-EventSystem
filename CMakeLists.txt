@@ -33,7 +33,9 @@ add_executable(opcua_client
   src/PLCMonitor.cpp
   src/EventBus.cpp
   src/ReactionManager.cpp   # ← falls umbenannt
-  # src/TaskManager.cpp     # ← alternativ, falls alter Name
+  src/PythonRuntime.cpp
+  src/CommandForce.cpp
+  src/CommandForceFactory.cpp
 )
 
 target_sources(opcua_client PRIVATE
@@ -41,6 +43,9 @@ target_sources(opcua_client PRIVATE
   include/ReactiveObserver.h
   include/EventBus.h
   include/ReactionManager.h   # oder TaskManager.h
+  include/Plan.h
+  include/CommandForce.h
+  include/CommandForceFactory.h
 )
 
 # Includes (eigene + open62541 generated)
@@ -71,4 +76,12 @@ add_custom_command(TARGET opcua_client POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_if_different
           "${CMAKE_SOURCE_DIR}/certificates/client_key.der"
           "$<TARGET_FILE_DIR:opcua_client>/certificates/client_key.der"
+)
+
+# Absoluten Quellpfad als Define einbacken (mit Forward Slashes)
+file(TO_CMAKE_PATH "${CMAKE_SOURCE_DIR}/src" KG_SRC_DIR_CMAKE)
+file(TO_CMAKE_PATH "${CMAKE_SOURCE_DIR}/src/FMEA_KG.ttl" KG_TTL_CMAKE)
+target_compile_definitions(opcua_client PRIVATE
+  KG_SRC_DIR="${KG_SRC_DIR_CMAKE}"
+  KG_TTL_PATH="${KG_TTL_CMAKE}"
 )
