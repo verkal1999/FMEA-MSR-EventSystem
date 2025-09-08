@@ -20,6 +20,7 @@ opt Initialisierung
   Main -> Mon : connect()
   create Bus
   create RM
+  Main -> RM : init(Bus, Mon, PyRt, "http://localhost:5000")
   Main -> Bus : subscribe(evD2, RM, prio 4)
   create Ack
   Main -> Bus : subscribe(evReactionPlanned, Ack, 1)
