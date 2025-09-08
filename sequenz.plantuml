@@ -1,40 +1,74 @@
-@startuml EventFluss
-title Eventfluss: TriggerD2 → evD2 → DiagnoseFinished (TestServer)
+@startuml Sequence
 
-participant Main
-participant PLCMonitor as PLC
-participant EventBus as Bus
-participant ReactionManager as RM
-participant TestServer
 
-Main -> PLC: construct & connect()
-Main -> Bus: construct
-Main -> RM: construct(PLC)
-Main -> Bus: subscribe(evD2, RM, prio=4)
-Main -> PLC: subscribeBool("TriggerD2", ns=1, …)
-PLC -> TestServer: CreateSubscription + MonitoredItem(TriggerD2)
+skinparam style strictuml
 
-loop runtime
-  Main -> PLC: runIterate(50)
-  TestServer --> PLC: DataChange(TriggerD2=TRUE)
-  activate PLC
-  PLC -> Bus: post(evD2)
-  deactivate PLC
+actor "OPC UA Server" as Server
+participant "main.cpp\nMain Thread" as Main
+participant "PLCMonitor" as Mon
+participant "EventBus" as Bus
+participant "ReactionManager" as RM
+participant "PythonRuntime" as PyRt
+participant "KG_Interface.py\nKGInterface" as KG
+participant "CommandForceFactory" as CFF
+participant "CommandForce" as CF
+participant "AckLogger" as Ack
 
-  Main -> PLC: processPosted(16)\n(exekutiert ältere Jobs)
-  Main -> Bus: process(16)
-  activate Bus
-  Bus -> RM: onMethod(evD2)
-  activate RM
-  RM -> PLC: post( writeBool(\"DiagnoseFinished\", TRUE) )
-  deactivate RM
-  deactivate Bus
-
-  ' Job wird im nächsten Zyklus ausgeführt:
-  Main -> PLC: runIterate(50)
-  Main -> PLC: processPosted(16)
-  activate PLC
-  PLC -> TestServer: Write DiagnoseFinished=TRUE
-  deactivate PLC
+opt Initialisierung
+  Main -> PyRt : ensure_started()
+  create Mon
+  Main -> Mon : connect()
+  create Bus
+  create RM
+  Main -> Bus : subscribe(evD2, RM, prio 4)
+  create Ack
+  Main -> Bus : subscribe(evReactionPlanned, Ack, 1)
+  Main -> Bus : subscribe(evReactionDone, Ack, 1)
+  Main -> Mon : subscribeBool("OPCUA.TriggerD2", ns=4, cb)
 end
+
+loop Hauptschleife
+  Main -> Mon : runIterate(50)
+  Main -> Mon : processPosted(16)
+  Main -> Bus : process(16)
+end
+
+== Flankenereignis D2 ==
+
+Server -> Mon : DataChange: TriggerD2 = TRUE
+Mon -> Main : Callback(b = true)
+Main -> Bus : post(evD2)
+
+Bus -> RM : dispatch evD2
+
+RM -> KG : getFailureModeParameters("TestSkill1")
+KG --> RM : rows JSON
+RM -> Bus : post(evReactionPlanned(plan))
+Bus -> Ack : dispatch evReactionPlanned
+
+RM -> CFF : create(UseMonitor, Mon)
+CFF --> RM : CommandForce
+RM -> CF : execute(plan mit PulseBool("OPCUA.DiagnoseFinished", ns=4, 100 ms))
+
+group PulseBool
+  CF -> Mon : post( writeBool("OPCUA.DiagnoseFinished", ns=4, true) )
+  par Main Loop
+    Main -> Mon : processPosted()
+    Mon -> Server : Write Value TRUE
+  end
+
+  CF -> CF : separater Thread sleep(100 ms)
+
+  CF -> Mon : post( writeBool("OPCUA.DiagnoseFinished", ns=4, false) )
+  par Main Loop
+    Main -> Mon : processPosted()
+    Mon -> Server : Write Value FALSE
+  end
+end
+
+CF --> RM : rc = 1
+
+RM -> Bus : post(evReactionDone(rc))
+Bus -> Ack : dispatch evReactionDone
+
 @enduml

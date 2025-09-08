@@ -6,6 +6,7 @@
 /// Du kannst hier später beliebig erweitern (CallMethod-Args als JSON, etc.).
 enum class OpType {
     WriteBool,
+    PulseBool,
     WriteInt32,
     CallMethod,
     WaitMs,

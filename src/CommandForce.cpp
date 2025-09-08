@@ -24,6 +24,47 @@ int CommandForce::execute(const Plan& p) {
             });
             break;
         }
+        case OpType::PulseBool: {
+        // Pulsbreite in Millisekunden: aus op.timeoutMs oder Default 100 ms
+        const int widthMs = (op.timeoutMs > 0) ? op.timeoutMs : 100;
+
+        // Optional: Preclear (LOW setzen, um sicher always eine steigende Flanke zu erzeugen)
+        // Falls gewünscht, aus op.arg ableiten, z. B. "preclear"
+        const bool doPreclear = (op.arg == "preclear");
+
+        PLCMonitor* pm = &mon_;   // robust in Threads verwenden
+        const auto nodeId = op.nodeId;
+        const auto ns     = op.ns;
+
+        if (doPreclear) {
+            pm->post([pm, nodeId, ns]{
+                const bool wr = pm->writeBool(nodeId, ns, false);
+                std::cout << "[CommandForce] PulseBool PRECLEAR " << nodeId
+                        << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
+            });
+            // Kleine Entprell-/SPS-Zeit, damit LOW sicher ankommt
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        }
+
+        // HIGH setzen (steigende Flanke auslösen)
+        pm->post([pm, nodeId, ns]{
+            const bool wr = pm->writeBool(nodeId, ns, true);
+            std::cout << "[CommandForce] PulseBool HI " << nodeId
+                    << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
+        });
+
+        // Asynchron nach widthMs wieder auf LOW
+        std::thread([pm, nodeId, ns, widthMs]{
+            std::this_thread::sleep_for(std::chrono::milliseconds(widthMs));
+            pm->post([pm, nodeId, ns]{
+                const bool wr = pm->writeBool(nodeId, ns, false);
+                std::cout << "[CommandForce] PulseBool LO " << nodeId
+                        << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
+            });
+        }).detach();
+
+        break;
+    }
 
         case OpType::WriteInt32: {
             // TODO: Implementiere writeInt32 in PLCMonitor, dann hier aktivieren

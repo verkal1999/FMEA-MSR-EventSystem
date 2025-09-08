@@ -46,6 +46,9 @@ target_sources(opcua_client PRIVATE
   include/Plan.h
   include/CommandForce.h
   include/CommandForceFactory.h
+  include/Acks.h
+  include/AckLogger.h
+  include/Correlation.h
 )
 
 # Includes (eigene + open62541 generated)

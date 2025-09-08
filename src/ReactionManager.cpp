@@ -43,13 +43,13 @@ void ReactionManager::onMethod(const Event& ev) {
     // 2) Plan aus KG bauen (Minimalbeispiel)
     Plan plan;
     plan.correlationId = makeCorrelationId("evD2"); // <<— NEU
-    plan.resourceId    = "Station.Sortieren";       // optional, befülle aus KG
+    plan.resourceId    = "Station";       // optional, befülle aus KG
     plan.ops.push_back(Operation{
-           OpType::WriteBool,   // type
-          "DiagnoseFinished",  // nodeId
-            1,                   // nsF
+           OpType::PulseBool,   // type
+          "OPCUA.DiagnoseFinished",  // nodeId
+            4,                   // nsF
             "true",              // arg
-            0                    // timeoutMs
+            100                    // timeoutMs
         });
 
     // 3) Ack: ReactionPlanned posten
