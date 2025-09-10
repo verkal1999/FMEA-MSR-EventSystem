@@ -1,0 +1,251 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide empty members
+
+' ========= Events & Bus (aus vorherigem Stand) =========
+enum EventType {
+  evD2
+  evReactionPlanned
+  evReactionDone
+}
+
+class Event {
+  +type: EventType
+  +ts: steady_clock::time_point
+  +payload: std::any
+}
+
+interface ReactiveObserver {
+  +onMethod(ev: Event)
+}
+
+class EventBus {
+  +subscribe(t: EventType, obs: ReactiveObserver, priority=1): SubscriptionToken
+  +subscribe_scoped(...): Subscription
+  +unsubscribe(tok: SubscriptionToken): void
+  +post(ev: Event): void
+  +post_now(ev: Event): void
+  +process(maxEvents=32): void
+  +clear_queue(): void
+  --
+  -q_: deque<Event>
+  -listeners_: unordered_map<EventType,vector<Entry>>
+}
+
+class SubscriptionToken {
+  +type: EventType
+  +id: uint64
+  +operator bool(): bool
+}
+
+class Subscription {
+  +token(): SubscriptionToken
+  +unsubscribe(): void
+  --
+  -bus_: EventBus*
+  -tok_: SubscriptionToken
+}
+
+EventBus o-- Subscription
+Subscription --> EventBus
+EventBus ..> ReactiveObserver
+EventBus ..> Event
+Event --> EventType
+
+' ========= Acks & Logger =========
+class ReactionPlannedAck {
+  +correlationId: string
+  +resourceId: string
+  +summary: string
+}
+
+class ReactionDoneAck {
+  +correlationId: string
+  +rc: int
+  +summary: string
+}
+
+class AckLogger {
+  +onMethod(ev: Event): void
+}
+
+AckLogger -|> ReactiveObserver
+AckLogger ..> ReactionPlannedAck
+AckLogger ..> ReactionDoneAck
+
+' ========= Plans & Commands =========
+enum OpType {
+  WriteBool
+  PulseBool
+  WriteInt32
+  CallMethod
+  WaitMs
+  ReadCheck
+  BlockResource
+  RerouteOrders
+  UnblockResource
+}
+
+class Operation {
+  +type: OpType
+  +nodeId: string
+  +ns: ushort
+  +arg: string
+  +timeoutMs: int
+  --
+  +callObjNodeId: string
+  +callMethNodeId: string
+  +callNsObj: ushort
+  +callNsMeth: ushort
+}
+
+class Plan {
+  +correlationId: string
+  +resourceId: string
+  +ops: vector<Operation>
+  +abortRequired: bool
+  +degradeAllowed: bool
+}
+
+interface ICommandForce {
+  +execute(p: Plan): int
+}
+
+class IOrderQueue {
+  +blockResource(resId: string): bool
+  +reroute(resId: string, criteriaJson: string): bool
+  +unblockResource(resId: string): bool
+}
+
+class CommandForce {
+  +execute(p: Plan): int
+  --
+  -mon_: PLCMonitor&
+  -oq_: IOrderQueue*
+}
+
+CommandForce ..|> ICommandForce
+CommandForce --> IOrderQueue
+
+class CommandForceFactory {
+  +create(k: Kind, mon: PLCMonitor&, oq: IOrderQueue*): unique_ptr<ICommandForce>
+}
+
+CommandForceFactory ..> PLCMonitor
+CommandForceFactory ..> ICommandForce
+
+' ========= PLC/OPC UA Monitor =========
+class PLCMonitor {
+  +post(fn): void
+  +processPosted(max=16): void
+  --
+  +connect(): bool
+  +disconnect(): void
+  +runIterate(timeoutMs=0): UA_StatusCode
+  +waitUntilActivated(timeoutMs=3000): bool
+  --
+  +callMethode1(nsIndex, objectIdStr, methodIdStr, x, yOut): bool
+  +readInt16At(nodeIdStr, nsIndex, out): bool
+  +writeBool(nodeIdStr, nsIndex, v): bool
+  --
+  +subscribeInt16(...): bool
+  +subscribeBool(...): bool
+  +unsubscribe(): void
+  --
+  +readSnapshot(...): bool
+  +TestServer_snapshotAllAsync(...): future<vector<SnapshotEntry>>
+  +TestServer_snapshotAllSync(...): vector<SnapshotEntry>
+  +TestServer_snapshotAllSync_impl(...): bool
+  --
+  +TestServerDefaults(...): Options
+  +connectToSecureTestServer(...): bool
+  +watchTriggerD2(...): bool
+  +raw(): UA_Client*
+  --
+  class Options {
+    +endpoint: string
+    +username: string
+    +password: string
+    +certDerPath: string
+    +keyDerPath: string
+    +applicationUri: string
+    +nsIndex: UA_UInt16
+  }
+  class SnapshotItem {
+    +nodeIdStr: string
+    +ns: UA_UInt16
+    +dv: UA_DataValue
+  }
+  class SnapshotEntry {
+    +nodeIdText: string
+    +browsePath: string
+    +displayName: string
+    +nodeClass: UA_NodeClass
+    +dataType: string
+    +value: string
+    +status: UA_StatusCode
+  }
+  struct Queue {
+  -q_: queue<UaFn>
+  -qmx_: mutex
+  -client_: UA_Client*
+  -subId_: UA_UInt32
+  -monIdInt16_: UA_UInt32
+  -monIdBool_: UA_UInt32
+}
+
+' ========= Python Runtime =========
+class PythonRuntime {
+  {static}+ensure_started(): void
+  --
+  {static}-guard_: unique_ptr<py::scoped_interpreter>
+}
+
+' ========= Neu: ReactionManager / ReactiveObserver / TaskForce =========
+class ReactionManager {
+  +onMethod(ev: Event): void
+  --
+  -mon_: PLCMonitor&
+  -bus_: EventBus&
+}
+
+ReactionManager -|> ReactiveObserver
+ReactionManager --> PLCMonitor
+ReactionManager --> EventBus
+
+class TaskForce {
+  +enum State { Idle, Starting, Calling, Done, Failed }
+  +notifyTrigger(): void
+  +state() const: State
+  --
+  -c_: UA_Client*                   ' eigene Session
+  -opt_: PLCMonitor::Options
+  -ns_: UA_UInt16
+  -objNode_: string
+  -methNode_: string
+  -diagNode_: string
+  -callTimeoutMs_: unsigned
+  -onFinished_: FinishedCb
+  -th_: thread
+  -run_: atomic<bool>
+  -state_: atomic<State>
+  --
+  +TaskForce(opt: PLCMonitor::Options, ns: UA_UInt16,
+             objectNodeIdStr: string, methodNodeIdStr: string,
+             diagnoseFinishedId: string, callTimeoutMs: unsigned,
+             onFinished: FinishedCb)
+  +~TaskForce()
+  -worker(): void
+  -connect(): bool
+  -disconnect(): void
+  -callJob(x: UA_Int32, yOut: UA_Int32&): bool
+  -waitUntilActivated(timeoutMs: int): bool
+  -callJobMethod(x: UA_Int32, yOut: UA_Int32&): bool
+  -writeBool(nodeIdStr: string, value: bool): bool
+}
+
+TaskForce ..> PLCMonitor::Options  : uses
+TaskForce ..> PLCMonitor           : UA types/raw() context
+ReactiveObserver <|-- ReactionManager
+
+@enduml

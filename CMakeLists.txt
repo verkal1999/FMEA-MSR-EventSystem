@@ -43,6 +43,9 @@ target_sources(opcua_client PRIVATE
   include/ReactiveObserver.h
   include/EventBus.h
   include/ReactionManager.h   # oder TaskManager.h
+  include/PythonWorker.h
+  include/PythonRuntime.h
+  include/PLCMonitor.h
   include/Plan.h
   include/CommandForce.h
   include/CommandForceFactory.h

@@ -30,6 +30,10 @@ bool loadFile(const std::string& path, UA_ByteString& out) {
     }
     return true;
 }
+static void clearRefList(std::vector<UA_ReferenceDescription> &v) {
+    for (auto &rd : v) UA_ReferenceDescription_clear(&rd);
+    v.clear();
+}
 
 // ---- helpers: UA_String/NodeId → std::string
 inline std::string uaToStdString(const UA_String &s) {
@@ -85,6 +89,84 @@ std::string variantToString(const UA_Variant *v, std::string &outTypeName) {
         return "<array>";
     }
 }
+// Builtin-Typname aus DataType-NodeId (nur ns=0 sauber mappbar)
+// Builtin-Typname aus DataType-NodeId (nur ns=0 sauber mappbar)
+static std::string typeNameFromNodeId(const UA_NodeId &typeId) {
+    if (typeId.namespaceIndex == 0) {
+        for (size_t i = 0; i < UA_TYPES_COUNT; ++i)
+            if (UA_NodeId_equal(&UA_TYPES[i].typeId, &typeId))
+                return std::string(UA_TYPES[i].typeName);
+    }
+    return nodeIdToString(typeId); // Fallback: volle NodeId (benutzerdefiniert)
+}
+
+// browsed eine Ebene FORWARD/Hierarchical und liefert Response (direkt nutzen)
+static bool browseOne(UA_Client* c, const UA_NodeId &start, UA_BrowseResponse &out) {
+    UA_BrowseDescription bd; UA_BrowseDescription_init(&bd);
+    bd.nodeId = start;
+    bd.resultMask = UA_BROWSERESULTMASK_ALL;
+    bd.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HIERARCHICALREFERENCES);
+    bd.includeSubtypes = true;
+    bd.browseDirection = UA_BROWSEDIRECTION_FORWARD;
+
+    UA_BrowseRequest req; UA_BrowseRequest_init(&req);
+    req.nodesToBrowse = &bd;
+    req.nodesToBrowseSize = 1;
+    req.requestedMaxReferencesPerNode = 0;
+
+    out = UA_Client_Service_browse(c, req);
+    return UA_StatusCode_isGood(out.responseHeader.serviceResult) && out.resultsSize == 1;
+}
+
+// sucht direkten Child-Folder mit gegebenem BrowseName (exakter Name)
+static bool findChildByBrowseName(UA_Client* c, const UA_NodeId& parent,
+                                  const char* name, UA_NodeId &outNode) {
+    UA_BrowseResponse br; UA_BrowseResponse_init(&br);
+    if(!browseOne(c, parent, br)) return false;
+    bool ok = false;
+    const auto &res = br.results[0];
+    for (size_t i = 0; i < res.referencesSize; ++i) {
+        const auto &r = res.references[i];
+        if (!r.browseName.name.length) continue;
+        std::string bn = uaToStdString(r.browseName.name);
+        if (bn == name) {
+            ok = (UA_NodeId_copy(&r.nodeId.nodeId, &outNode) == UA_STATUSCODE_GOOD);
+            break;
+        }
+    }
+    UA_BrowseResponse_clear(&br);
+    return ok;
+}
+
+// Input/OutputArguments-Property finden
+static bool findMethodProperty(UA_Client* c, const UA_NodeId &method,
+                               const char* propName, UA_NodeId &outProp) {
+    UA_BrowseDescription bd; UA_BrowseDescription_init(&bd);
+    bd.nodeId          = method;
+    bd.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HASPROPERTY);
+    bd.includeSubtypes = true;
+    bd.browseDirection = UA_BROWSEDIRECTION_FORWARD;
+    bd.resultMask      = UA_BROWSERESULTMASK_ALL;
+
+    UA_BrowseRequest req; UA_BrowseRequest_init(&req);
+    req.nodesToBrowse = &bd;
+    req.nodesToBrowseSize = 1;
+
+    UA_BrowseResponse resp = UA_Client_Service_browse(c, req);
+    bool ok = false;
+    if (resp.resultsSize) {
+        for (size_t i = 0; i < resp.results[0].referencesSize; ++i) {
+            const auto &r = resp.results[0].references[i];
+            if (!r.browseName.name.length) continue;
+            if (uaToStdString(r.browseName.name) == propName) {
+                ok = (UA_NodeId_copy(&r.nodeId.nodeId, &outProp) == UA_STATUSCODE_GOOD);
+                break;
+            }
+        }
+    }
+    UA_BrowseResponse_clear(&resp);
+    return ok;
+}
 
 // Browsed **eine** Ebene (FORWARD, HierarchicalReferences) unterhalb von 'start'.
 UA_StatusCode browseOneDeep(UA_Client *client,
@@ -92,35 +174,427 @@ UA_StatusCode browseOneDeep(UA_Client *client,
                             std::vector<UA_ReferenceDescription> &out) {
     out.clear();
 
+    UA_BrowseDescription bd; UA_BrowseDescription_init(&bd);
+    bd.nodeId          = start;
+    bd.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HIERARCHICALREFERENCES);
+    bd.includeSubtypes = true;
+    bd.browseDirection = UA_BROWSEDIRECTION_FORWARD;
+
+    UA_BrowseRequest brq; UA_BrowseRequest_init(&brq);
+    brq.nodesToBrowse = &bd;
+    brq.nodesToBrowseSize = 1;
+    brq.requestedMaxReferencesPerNode = 0;
+
+    UA_BrowseResponse brs = UA_Client_Service_browse(client, brq);
+    UA_StatusCode rc = brs.responseHeader.serviceResult;
+
+    if (rc == UA_STATUSCODE_GOOD && brs.resultsSize > 0) {
+        const auto &res = brs.results[0];
+        out.reserve(res.referencesSize);
+        for (size_t i = 0; i < res.referencesSize; ++i) {
+            UA_ReferenceDescription tmp; UA_ReferenceDescription_init(&tmp);
+            if (UA_ReferenceDescription_copy(&res.references[i], &tmp) == UA_STATUSCODE_GOOD)
+                out.push_back(tmp);
+        }
+    }
+
+    UA_BrowseResponse_clear(&brs);
+    return rc;
+}
+static bool resolveBrowsePathToNode(UA_Client* client,
+                                    const std::vector<UA_QualifiedName>& qnames,
+                                    UA_NodeId& outTarget /* deep copy */) {
+    UA_NodeId_clear(&outTarget);
+    if (!client || qnames.empty())
+        return false;
+
+    UA_BrowsePath bp;
+    UA_BrowsePath_init(&bp);
+    bp.startingNode = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER); // ns=0;i=85
+
+    // RelativePath mit HierarchicalReferences (inkl. Subtypen)
+    std::vector<UA_RelativePathElement> elems(qnames.size());
+    for (size_t i = 0; i < qnames.size(); ++i) {
+        UA_RelativePathElement_init(&elems[i]);
+        elems[i].referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HIERARCHICALREFERENCES);
+        elems[i].isInverse       = false;
+        elems[i].includeSubtypes = true;
+        elems[i].targetName      = qnames[i]; // <-- der richtige UA_QualifiedName
+    }
+    UA_RelativePath rp;
+    UA_RelativePath_init(&rp);
+    rp.elements     = elems.data();
+    rp.elementsSize = static_cast<UA_UInt32>(elems.size());
+    bp.relativePath = rp;
+
+    UA_TranslateBrowsePathsToNodeIdsRequest req;
+    UA_TranslateBrowsePathsToNodeIdsRequest_init(&req);
+    req.browsePaths     = &bp;
+    req.browsePathsSize = 1;
+
+    UA_TranslateBrowsePathsToNodeIdsResponse resp =
+        UA_Client_Service_translateBrowsePathsToNodeIds(client, req);
+
+    bool ok = false;
+    if (resp.responseHeader.serviceResult == UA_STATUSCODE_GOOD &&
+        resp.resultsSize == 1 &&
+        UA_StatusCode_isGood(resp.results[0].statusCode) &&
+        resp.results[0].targetsSize > 0) {
+        ok = (UA_NodeId_copy(&resp.results[0].targets[0].targetId.nodeId, &outTarget)
+              == UA_STATUSCODE_GOOD);
+    }
+
+    UA_TranslateBrowsePathsToNodeIdsResponse_clear(&resp);
+    return ok;
+}
+
+    static std::string ltextToStd(const UA_LocalizedText &lt) {
+        return uaToStdString(lt.text);
+    }
+
+static void dumpChildrenOf(UA_Client* c, const UA_NodeId& node, const char* title) {
+    // BrowseDescription wie in browseOneDeep – keine Heap-Arrays nötig
     UA_BrowseDescription bd;
     UA_BrowseDescription_init(&bd);
-    bd.nodeId = start;
+    bd.nodeId = node;
     bd.resultMask = UA_BROWSERESULTMASK_ALL;
     bd.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HIERARCHICALREFERENCES);
     bd.includeSubtypes = true;
     bd.browseDirection = UA_BROWSEDIRECTION_FORWARD;
 
-    UA_BrowseRequest brq;
-    UA_BrowseRequest_init(&brq);
-    brq.nodesToBrowse = &bd;
-    brq.nodesToBrowseSize = 1;
-    brq.requestedMaxReferencesPerNode = 0; // Server entscheidet
+    UA_BrowseRequest req; UA_BrowseRequest_init(&req);
+    req.nodesToBrowse = &bd;
+    req.nodesToBrowseSize = 1;
+    req.requestedMaxReferencesPerNode = 0;
 
-    UA_BrowseResponse brs = UA_Client_Service_browse(client, brq);
+    UA_BrowseResponse resp = UA_Client_Service_browse(c, req);
 
-    if (brs.responseHeader.serviceResult == UA_STATUSCODE_GOOD && brs.resultsSize > 0) {
-        auto &res = brs.results[0];
-        out.reserve(res.referencesSize);
-        for (size_t i = 0; i < res.referencesSize; ++i)
-            out.push_back(res.references[i]);
+    std::cout << "[BrowseDump] " << title << " children:\n";
+    if (resp.resultsSize) {
+        const auto &res = resp.results[0];
+        for (size_t j = 0; j < res.referencesSize; ++j) {
+            const auto &r  = res.references[j];
+            const auto &bn = r.browseName;
+
+            // sichere Konvertierung (UA_String -> std::string)
+            const std::string browseName = uaToStdString(bn.name);
+            const std::string dispName   = uaToStdString(r.displayName.text);
+
+            std::cout << "  - nodeId="     << nodeIdToString(r.nodeId.nodeId)
+                      << "  browseName="   << browseName
+                      << "  (ns="         << bn.namespaceIndex << ")"
+                      << "  displayName="  << dispName
+                      << "  class="        << (int)r.nodeClass
+                      << "\n";
+            if (browseName == "OPCUA") {
+                std::cout << "    -> found OPCUA folder\n";
+            }
+        }
+    }
+    UA_BrowseResponse_clear(&resp);
+}
+static std::string friendlyTypeName(UA_Client* c, const UA_NodeId &typeId) {
+    // ns=0: direkter Builtin-Name
+    if (typeId.namespaceIndex == 0) {
+        for (size_t i = 0; i < UA_TYPES_COUNT; ++i)
+            if (UA_NodeId_equal(&UA_TYPES[i].typeId, &typeId))
+                return std::string(UA_TYPES[i].typeName);
+        return "ns=0:" + nodeIdToString(typeId); // Fallback
     }
 
-    UA_StatusCode rc = brs.responseHeader.serviceResult;
-    UA_BrowseResponse_clear(&brs);
-    return rc;
+    // 2) DisplayName des Alias-Typs
+    std::string aliasName;
+    UA_LocalizedText dlt; UA_LocalizedText_init(&dlt);
+    if (UA_Client_readDisplayNameAttribute(c, typeId, &dlt) == UA_STATUSCODE_GOOD)
+        aliasName = uaToStdString(dlt.text);
+    UA_LocalizedText_clear(&dlt);
+
+    // 3) Inverse HasSubtype (-> Supertyp) einmal oder mehrfach folgen
+    UA_NodeId cur; UA_NodeId_init(&cur);
+    UA_NodeId_copy(&typeId, &cur);
+
+    std::string baseName;
+    for (int steps = 0; steps < 8; ++steps) { // kleine Obergrenze genügt
+        UA_BrowseDescription bd; UA_BrowseDescription_init(&bd);
+        bd.nodeId          = cur;
+        bd.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE);
+        bd.browseDirection = UA_BROWSEDIRECTION_INVERSE;   // nach oben
+        bd.includeSubtypes = UA_FALSE;
+        bd.resultMask      = UA_BROWSERESULTMASK_ALL;
+
+        UA_BrowseRequest req; UA_BrowseRequest_init(&req);
+        req.nodesToBrowse = &bd;
+        req.nodesToBrowseSize = 1;
+
+        UA_BrowseResponse resp = UA_Client_Service_browse(c, req);
+        if (!resp.resultsSize || resp.results[0].referencesSize == 0) {
+            UA_BrowseResponse_clear(&resp);
+            break;
+        }
+
+        // Nimm den ersten Supertyp
+        const auto &sup = resp.results[0].references[0].nodeId.nodeId;
+        if (sup.namespaceIndex == 0) {
+            // Builtin-Name auflösen
+            baseName = friendlyTypeName(c, sup);
+            UA_BrowseResponse_clear(&resp);
+            break;
+        } else {
+            UA_NodeId tmp; UA_NodeId_init(&tmp);
+            UA_NodeId_copy(&sup, &tmp);
+            UA_BrowseResponse_clear(&resp);
+            UA_NodeId_clear(&cur);
+            cur = tmp;
+        }
+    }
+    UA_NodeId_clear(&cur);
+
+    if (!aliasName.empty() && !baseName.empty() && aliasName != baseName)
+        return aliasName + " (-> " + baseName + ")";
+    if (!aliasName.empty())
+        return aliasName;
+
+    // Fallback: rohe NodeId
+    return nodeIdToString(typeId);
+}
+// Signatur-String aus InputArguments/OutputArguments bauen
+static std::string methodSignature(UA_Client* c, const UA_NodeId &method) {
+    auto readArgList = [&](const char* prop) {
+        std::vector<std::string> out;
+        UA_NodeId propId; UA_NodeId_init(&propId);
+        if (!findMethodProperty(c, method, prop, propId)) return out;
+
+        UA_Variant v; UA_Variant_init(&v);
+        if (UA_Client_readValueAttribute(c, propId, &v) == UA_STATUSCODE_GOOD &&
+            UA_Variant_hasArrayType(&v, &UA_TYPES[UA_TYPES_ARGUMENT])) {
+            auto args = static_cast<UA_Argument*>(v.data);
+            for (size_t i = 0; i < v.arrayLength; ++i)
+                out.push_back(friendlyTypeName(c, args[i].dataType));
+        }
+        UA_Variant_clear(&v);
+        UA_NodeId_clear(&propId);
+        return out;
+    };
+    auto join = [](const std::vector<std::string>& xs){
+        std::string s; for(size_t i=0;i<xs.size();++i){ if(i) s += ", "; s += xs[i]; } return s;
+    };
+    auto ins  = readArgList("InputArguments");
+    auto outs = readArgList("OutputArguments");
+    return "in: [" + join(ins) + "], out: [" + join(outs) + "]";
+}
+} // namespace (helpers)
+// === Ende Namespace helpers ================================================
+
+//=== PLCMonitor Inventory Methoden =========================================
+bool PLCMonitor::readBoolAt(const std::string& nodeIdStr,
+                            UA_UInt16 nsIndex,
+                            bool& out) const {
+    if(!client_) return false;
+
+    UA_NodeId nid = UA_NODEID_STRING_ALLOC(nsIndex, const_cast<char*>(nodeIdStr.c_str()));
+    UA_Variant val; UA_Variant_init(&val);
+
+    UA_StatusCode st = UA_Client_readValueAttribute(client_, nid, &val);
+    UA_NodeId_clear(&nid);
+
+    const bool ok = (st == UA_STATUSCODE_GOOD) &&
+                    UA_Variant_isScalar(&val) &&
+                    val.type == &UA_TYPES[UA_TYPES_BOOLEAN] &&
+                    val.data != nullptr;
+    if (ok) out = (*static_cast<UA_Boolean*>(val.data)) != 0;
+    UA_Variant_clear(&val);
+    return ok;
 }
 
-} // namespace (helpers)
+// Optional: generisch als String + Typname (nutzt deine variantToString)
+bool PLCMonitor::readAsString(const std::string& nodeIdStr,
+                              UA_UInt16 nsIndex,
+                              std::string& outValue,
+                              std::string& outTypeName) const {
+    if (!client_) return false;
+
+    UA_NodeId nid = UA_NODEID_STRING_ALLOC(nsIndex,
+                          const_cast<char*>(nodeIdStr.c_str()));
+    UA_Variant val; UA_Variant_init(&val);
+    UA_StatusCode st = UA_Client_readValueAttribute(client_, nid, &val);
+    UA_NodeId_clear(&nid);
+
+    if (st != UA_STATUSCODE_GOOD) { UA_Variant_clear(&val); return false; }
+    outValue = variantToString(&val, outTypeName); // deine Helper-Funktion
+    UA_Variant_clear(&val);
+    return true;
+}
+
+bool PLCMonitor::dumpPlcInventory(std::vector<InventoryRow>& out, const char* plcNameContains) {
+    out.clear();
+    if (!client_) return false;
+
+    // 1) /Objects durchsehen und PLC-Zweig finden (Namespace aus NodeId verwenden!)
+    const UA_NodeId objects = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
+    UA_BrowseResponse br; UA_BrowseResponse_init(&br);
+    if(!browseOne(client_, objects, br)) { UA_BrowseResponse_clear(&br); return false; }
+
+    UA_NodeId plcNode; UA_NodeId_init(&plcNode);
+    UA_UInt16 nsPLC = 0;
+    const auto &res = br.results[0];
+    for (size_t i = 0; i < res.referencesSize; ++i) {
+        const auto &r = res.references[i];
+        if (!r.browseName.name.length) continue;
+        const std::string bn = uaToStdString(r.browseName.name);
+        const std::string dn = uaToStdString(r.displayName.text);
+
+        // ExpandedNodeId zerlegen (kann nsUri/serverIndex tragen)
+        const UA_ExpandedNodeId &xn = r.nodeId;
+        const UA_UInt16 idNs = xn.nodeId.namespaceIndex;
+        const std::string idStr = nodeIdToString(xn.nodeId);
+        std::string nsUri;
+        if (xn.namespaceUri.length)
+            nsUri = uaToStdString(xn.namespaceUri);
+
+        std::cout << "[Inventory][candidate]"
+                << " browseName='" << bn << "'"
+                << " (bn.ns=" << r.browseName.namespaceIndex << ")"
+                << " displayName='" << dn << "'"
+                << " nodeClass=" << (int)r.nodeClass
+                << " targetId=" << idStr
+                << " (id.ns=" << idNs << ")"
+                << " serverIndex=" << xn.serverIndex;
+        if (!nsUri.empty())
+            std::cout << " nsUri=" << nsUri;
+        std::cout << "\n";
+
+        // Hinweis, wenn Name-NS und NodeId-NS nicht übereinstimmen (ist häufig ok)
+        if (r.browseName.namespaceIndex != idNs) {
+            std::cout << "  [note] browseName.ns (" << r.browseName.namespaceIndex
+                    << ") != targetId.ns (" << idNs
+                    << ") -> für weitere Schritte immer die NodeId nutzen.\n";
+        }
+        if (bn.find(plcNameContains ? plcNameContains : "PLC") != std::string::npos) {
+            if (UA_NodeId_copy(&r.nodeId.nodeId, &plcNode) == UA_STATUSCODE_GOOD) {
+                nsPLC = r.browseName.namespaceIndex;
+            }
+            break;
+        }
+    }
+    UA_BrowseResponse_clear(&br);
+    if (nsPLC == 0) {
+        std::cout << "[Inventory] Kein PLC-Zweig gefunden.\n";
+        return false;
+    }
+
+    // 2) OPCUA- und MAIN-Folder im PLC-Zweig holen
+    UA_NodeId opcuaFolder; UA_NodeId_init(&opcuaFolder);
+    UA_NodeId mainFolder;  UA_NodeId_init(&mainFolder);
+    (void)findChildByBrowseName(client_, plcNode, "OPCUA", opcuaFolder);
+    (void)findChildByBrowseName(client_, plcNode, "MAIN",  mainFolder);
+
+    // 3a) Variablen unter OPCUA einsammeln (rekursiv: eine Ebene runter + Unterobjekte)
+    if (opcuaFolder.namespaceIndex == nsPLC) {
+        std::vector<UA_NodeId> stack;
+
+        // WICHTIG: den Start-Knoten *deep* kopieren, damit opcuaFolder separat freigegeben werden kann
+        {
+            UA_NodeId root; UA_NodeId_init(&root);
+            if (UA_NodeId_copy(&opcuaFolder, &root) == UA_STATUSCODE_GOOD)
+                stack.push_back(root);
+        }
+
+        while (!stack.empty()) {
+            // flache Kopie vom Top-Element ist ok; der *Owner* bleibt das Element im Stack
+            UA_NodeId cur = stack.back();
+            stack.pop_back();
+
+            UA_BrowseResponse br2; UA_BrowseResponse_init(&br2);
+            if (!browseOne(client_, cur, br2)) {
+                UA_BrowseResponse_clear(&br2);
+                UA_NodeId_clear(&cur);   // cur *besitzt* jetzt die Heap-Daten des ehem. Stack-Elements
+                continue;
+            }
+
+            for (size_t j = 0; j < br2.results[0].referencesSize; ++j) {
+                const auto &r1 = br2.results[0].references[j];
+
+                // Vorsicht: target ist nur innerhalb der Lebenszeit von br2 gültig (by-value/shallow)
+                UA_NodeId target = r1.nodeId.nodeId;
+
+                // Unterordner (OBJECT/VIEW) in den Stack legen — IMMER deep kopieren!
+                if (r1.nodeClass == UA_NODECLASS_OBJECT || r1.nodeClass == UA_NODECLASS_VIEW) {
+                    UA_NodeId next; UA_NodeId_init(&next);
+                    if (UA_NodeId_copy(&target, &next) == UA_STATUSCODE_GOOD)
+                        stack.push_back(next);
+                }
+
+                // Variablen erfassen
+                if (r1.nodeClass == UA_NODECLASS_VARIABLE && target.namespaceIndex == nsPLC) {
+                    UA_NodeId dt; UA_NodeId_init(&dt);
+                    std::string dtype = "?";
+                    if (UA_Client_readDataTypeAttribute(client_, target, &dt) == UA_STATUSCODE_GOOD) {
+                        dtype = friendlyTypeName(client_, dt);
+                    }
+                    UA_NodeId_clear(&dt); // IMMER freigeben, unabhängig vom Status
+
+                    out.push_back(InventoryRow{
+                        "Variable",
+                        nodeIdToString(target),
+                        dtype
+                    });
+                }
+            }
+
+            UA_BrowseResponse_clear(&br2);
+            UA_NodeId_clear(&cur); // genau 1x freigeben
+        }
+    }
+
+    // 3b) Methoden unter MAIN: erst Objekte (z. B. MAIN.fbJob), darunter Methoden
+    if (mainFolder.namespaceIndex == nsPLC) {
+        UA_BrowseResponse br3; UA_BrowseResponse_init(&br3);
+        if (browseOne(client_, mainFolder, br3)) {
+            for (size_t i = 0; i < br3.results[0].referencesSize; ++i) {
+                const auto &rObj = br3.results[0].references[i];
+                if (rObj.nodeClass != UA_NODECLASS_OBJECT) continue;
+
+                // Das Objekt selbst optional auch listen
+                out.push_back(InventoryRow{
+                    "Object",
+                    nodeIdToString(rObj.nodeId.nodeId),
+                    "-"
+                });
+
+                // Methoden darunter
+                UA_BrowseResponse br4; UA_BrowseResponse_init(&br4);
+                if (browseOne(client_, rObj.nodeId.nodeId, br4)) {
+                    for (size_t k = 0; k < br4.results[0].referencesSize; ++k) {
+                        const auto &rM = br4.results[0].references[k];
+                        if (rM.nodeClass != UA_NODECLASS_METHOD) continue;
+                        const UA_NodeId methId = rM.nodeId.nodeId; // by value
+
+                        out.push_back(InventoryRow{
+                            "Method",
+                            nodeIdToString(methId),
+                            methodSignature(client_, methId)
+                        });
+                    }
+                }
+                UA_BrowseResponse_clear(&br4);
+            }
+        }
+        UA_BrowseResponse_clear(&br3);
+    }
+
+    UA_NodeId_clear(&opcuaFolder);
+    UA_NodeId_clear(&mainFolder);
+    UA_NodeId_clear(&plcNode);
+    return true;
+}
+
+void PLCMonitor::printInventoryTable(const std::vector<InventoryRow>& rows) const {
+    std::cout << "\nNodeClass | NodeId | Datentyp/Signatur\n";
+    std::cout << "--------- | ------ | ------------------\n";
+    for (const auto &r : rows)
+        std::cout << r.nodeClass << " | " << r.nodeId << " | " << r.dtypeOrSig << "\n";
+}
+
 
 // ==== PLCMonitor – Basics ====================================================
 PLCMonitor::PLCMonitor(Options o) : opt_(std::move(o)) {}
@@ -132,6 +606,7 @@ bool PLCMonitor::loadFileToByteString(const std::string& path, UA_ByteString &ou
 
 bool PLCMonitor::connect() {
     disconnect();
+    running_.store(true, std::memory_order_release);
 
     client_ = UA_Client_new();
     if(!client_) return false;
@@ -194,6 +669,9 @@ void PLCMonitor::disconnect() {
         UA_Client_delete(client_);
         client_ = nullptr;
     }
+    running_.store(false, std::memory_order_release);
+    { std::lock_guard<std::mutex> lk(qmx_); while(!q_.empty()) q_.pop(); }
+    { std::lock_guard<std::mutex> lk(tmx_); timers_.clear(); }
 }
 
 UA_StatusCode PLCMonitor::runIterate(int timeoutMs) {
@@ -376,69 +854,13 @@ void PLCMonitor::dataChangeHandler(UA_Client*,
     }
 }
 
-// ==== ReadSnapshot (mehrere Knoten) =========================================
-bool PLCMonitor::readSnapshot(const std::vector<std::pair<UA_UInt16,std::string>>& nodes,
-                              std::vector<SnapshotItem>& out,
-                              UA_TimestampsToReturn ttr, double maxAgeMs) {
-    if(!client_ || nodes.empty()) return false;
-
-    const size_t N = nodes.size();
-    UA_ReadValueId* rvids =
-        (UA_ReadValueId*)UA_Array_new(N, &UA_TYPES[UA_TYPES_READVALUEID]);
-    if(!rvids) return false;
-
-    for(size_t i=0; i<N; ++i) {
-        UA_ReadValueId_init(&rvids[i]);
-        rvids[i].nodeId = UA_NODEID_STRING_ALLOC(
-            nodes[i].first, const_cast<char*>(nodes[i].second.c_str()));
-        rvids[i].attributeId = UA_ATTRIBUTEID_VALUE;
-    }
-
-    UA_ReadRequest req; UA_ReadRequest_init(&req);
-    req.nodesToRead       = rvids;
-    req.nodesToReadSize   = (UA_UInt32)N;
-    req.timestampsToReturn= ttr;
-    req.maxAge            = (UA_Double)(maxAgeMs);
-
-    UA_ReadResponse resp = UA_Client_Service_read(client_, req);
-
-    bool ok = (resp.responseHeader.serviceResult == UA_STATUSCODE_GOOD &&
-               resp.resultsSize == req.nodesToReadSize);
-
-    if(ok) {
-        out.clear();
-        out.reserve(N);
-        for(size_t i=0; i<N; ++i) {
-            SnapshotItem it;
-            it.nodeIdStr = nodes[i].second;
-            it.ns        = nodes[i].first;
-            UA_DataValue_init(&it.dv);
-            if(UA_DataValue_copy(&resp.results[i], &it.dv) != UA_STATUSCODE_GOOD) {
-                ok = false;
-                break;
-            }
-            out.push_back(std::move(it));
-        }
-    }
-
-    UA_ReadResponse_clear(&resp);
-    for(size_t i=0; i<N; ++i)
-        UA_NodeId_clear(&rvids[i].nodeId);
-    UA_Array_delete(rvids, N, &UA_TYPES[UA_TYPES_READVALUEID]);
-
-    if(!ok) {
-        for(auto& it : out) UA_DataValue_clear(&it.dv);
-        out.clear();
-    }
-    return ok;
-}
-
 // ==== Task-Queue =============================================================
 void PLCMonitor::post(UaFn fn) {
     std::lock_guard<std::mutex> lk(qmx_);
     q_.push(std::move(fn));
 }
 void PLCMonitor::processPosted(size_t max) {
+    processTimers();
     for(size_t i=0; i<max; ++i) {
         UaFn fn;
         { std::lock_guard<std::mutex> lk(qmx_);
@@ -446,6 +868,31 @@ void PLCMonitor::processPosted(size_t max) {
           fn = std::move(q_.front()); q_.pop(); }
         fn(); // läuft im gleichen Thread, in dem du runIterate() aufrufst
     }
+    // ggf. neu fällig gewordene Timer nachziehen
+    processTimers();
+}
+void PLCMonitor::postDelayed(int delayMs, UaFn fn) {
+    auto due = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
+    std::lock_guard<std::mutex> lk(tmx_);
+    timers_.push_back(TimedFn{due, std::move(fn)});
+}
+
+void PLCMonitor::processTimers() {
+    std::vector<UaFn> dueFns;
+    {
+        std::lock_guard<std::mutex> lk(tmx_);
+        const auto now = std::chrono::steady_clock::now();
+        auto it = timers_.begin();
+        while (it != timers_.end()) {
+            if (it->due <= now) {
+                dueFns.push_back(std::move(it->fn));
+                it = timers_.erase(it);
+            } else {
+                ++it;
+            }
+        }
+    }
+    for (auto &f : dueFns) f();
 }
 
 // ==== Testserver-Komfort =====================================================
@@ -480,106 +927,60 @@ bool PLCMonitor::watchTriggerD2(double samplingMs, UA_UInt32 queueSize) {
         });
 }
 
-// ==== Snapshot: Browse+Read aller Variablen =================================
-bool PLCMonitor::TestServer_snapshotAllSync_impl(std::vector<SnapshotEntry>& out,
-                                                 int nsFilter,
-                                                 unsigned maxDepth,
-                                                 unsigned /*maxRefsPerNode*/) {
-    out.clear();
-    if (!client_) {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Snapshot: no client");
-        return false;
-    }
+//== Remote Method Call ========================================================
 
-    struct StackItem { UA_NodeId id; std::string path; unsigned depth; };
-    std::vector<StackItem> stack;
+bool PLCMonitor::callJob(const std::string& objNodeId,
+                         const std::string& methNodeId,
+                         UA_Int32 x, UA_Int32& yOut,
+                         unsigned timeoutMs)
+{
+    std::mutex m; std::condition_variable cv;
+    bool done=false, ok=false; UA_Int32 yTmp=0;
 
-    // Start bei /Objects
-    StackItem root;
-    UA_NodeId_init(&root.id);
-    root.id = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
-    root.path = "/Objects";
-    root.depth = 0;
-    stack.push_back(root);
+    // UA-Operation *im Monitor-Thread* ausführen
+    post([&, objNodeId, methNodeId, x, timeoutMs]{
+        UA_NodeId obj  = UA_NODEID_STRING_ALLOC(opt_.nsIndex, const_cast<char*>(objNodeId.c_str()));
+        UA_NodeId meth = UA_NODEID_STRING_ALLOC(opt_.nsIndex, const_cast<char*>(methNodeId.c_str()));
 
-    while (!stack.empty()) {
-        StackItem cur = stack.back();
-        stack.pop_back();
+        UA_Variant in[1]; UA_Variant_init(&in[0]);
+        // KOPIE in den Variant (erlaubt const-Quelle)
+        (void)UA_Variant_setScalarCopy(&in[0], &x, &UA_TYPES[UA_TYPES_INT32]);
 
-        // eine Ebene browsen
-        std::vector<UA_ReferenceDescription> refs;
-        UA_StatusCode brc = browseOneDeep(client_, cur.id, refs);
-        if (brc != UA_STATUSCODE_GOOD)
-            continue;
+        // (Optional) temporär den Service-Timeout anpassen
+        UA_ClientConfig *cfg = UA_Client_getConfig(client_);
+        UA_UInt32 oldTo = cfg->timeout;
+        cfg->timeout = timeoutMs;
 
-        for (const auto &rd : refs) {
-            // Namespace-Filter (optional)
-            if (nsFilter >= 0 && static_cast<int>(rd.nodeId.nodeId.namespaceIndex) != nsFilter)
-                continue;
+        size_t outSz = 0; UA_Variant* out = nullptr;
+        UA_StatusCode st = UA_Client_call(client_, obj, meth, 1, in, &outSz, &out);
 
-            const UA_NodeId &target = rd.nodeId.nodeId;
-            const std::string dn    = uaToStdString(rd.displayName.text);
+        cfg->timeout = oldTo; // zurücksetzen
 
-            SnapshotEntry e;
-            e.nodeIdText  = nodeIdToString(target);
-            e.displayName = dn;
-            e.browsePath  = cur.path + "/" + dn;
-            e.nodeClass   = rd.nodeClass;
-            e.status      = UA_STATUSCODE_GOOD;
-            e.dataType.clear();
-            e.value.clear();
+        // Aufräumen der Inputs
+        UA_Variant_clear(&in[0]);
+        UA_NodeId_clear(&obj);
+        UA_NodeId_clear(&meth);
 
-            // Wenn Variable → Wert lesen
-            if (rd.nodeClass == UA_NODECLASS_VARIABLE) {
-                UA_Variant val;
-                UA_Variant_init(&val);
-
-                UA_StatusCode rc = UA_Client_readValueAttribute(client_, target, &val);
-                e.status = rc;
-
-                if (rc == UA_STATUSCODE_GOOD && UA_Variant_isScalar(&val)) {
-                    std::string typeName;
-                    e.value    = variantToString(&val, typeName);
-                    e.dataType = std::move(typeName);
-                }
-
-                UA_Variant_clear(&val);
-            }
-
-            out.push_back(std::move(e));
-
-            // Tiefer gehen nur bei OBJECT/VIEW (kein UA_NODECLASS_FOLDER!)
-            if (cur.depth < maxDepth &&
-               (rd.nodeClass == UA_NODECLASS_OBJECT || rd.nodeClass == UA_NODECLASS_VIEW)) {
-                StackItem next;
-                UA_NodeId_init(&next.id);
-                UA_NodeId_copy(&target, &next.id);
-                next.path  = out.back().browsePath; // bereits berechnet
-                next.depth = cur.depth + 1;
-                stack.push_back(std::move(next));
-            }
+        if (st == UA_STATUSCODE_GOOD && outSz >= 1 &&
+            UA_Variant_isScalar(&out[0]) &&
+            out[0].type == &UA_TYPES[UA_TYPES_INT32] && out[0].data)
+        {
+            yTmp = *static_cast<UA_Int32*>(out[0].data);
+            ok = true;
         }
-        // cur.id ist hier Numeric Id → kein clear nötig
-    }
 
-    return true;
-}
+        if (out)
+            UA_Array_delete(out, outSz, &UA_TYPES[UA_TYPES_VARIANT]);
 
-std::vector<PLCMonitor::SnapshotEntry>
-PLCMonitor::TestServer_snapshotAllSync(int nsFilter, int maxDepth, std::size_t maxRefsPerNode) {
-    std::vector<SnapshotEntry> out;
-    TestServer_snapshotAllSync_impl(out,
-                                    nsFilter,
-                                    static_cast<unsigned>(maxDepth),
-                                    static_cast<unsigned>(maxRefsPerNode));
-    return out;
-}
-
-std::future<std::vector<PLCMonitor::SnapshotEntry>>
-PLCMonitor::TestServer_snapshotAllAsync(int nsFilter, unsigned maxDepth, unsigned maxRefsPerNode) {
-    return std::async(std::launch::async, [this, nsFilter, maxDepth, maxRefsPerNode]() {
-        std::vector<SnapshotEntry> out;
-        TestServer_snapshotAllSync_impl(out, nsFilter, maxDepth, maxRefsPerNode);
-        return out;
+        { std::lock_guard<std::mutex> lk(m); done = true; }
+        cv.notify_one();
     });
+
+    // Hier (Aufrufer-Thread) warten wir auf das Ergebnis, während der Main-Loop weiterpumpt.
+    std::unique_lock<std::mutex> lk(m);
+    if (cv.wait_for(lk, std::chrono::milliseconds(timeoutMs + 500)) == std::cv_status::timeout)
+        return false;
+
+    if (ok) yOut = yTmp;
+    return ok;
 }

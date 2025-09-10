@@ -20,9 +20,10 @@ opt Initialisierung
   Main -> Mon : connect()
   create Bus
   create RM
-  Main -> RM : init(Bus, Mon, PyRt, "http://localhost:5000")
+  Main -> RM : create
   Main -> Bus : subscribe(evD2, RM, prio 4)
   create Ack
+  Main -> Ack : crerate
   Main -> Bus : subscribe(evReactionPlanned, Ack, 1)
   Main -> Bus : subscribe(evReactionDone, Ack, 1)
   Main -> Mon : subscribeBool("OPCUA.TriggerD2", ns=4, cb)
@@ -46,10 +47,12 @@ RM -> KG : getFailureModeParameters("TestSkill1")
 KG --> RM : rows JSON
 RM -> Bus : post(evReactionPlanned(plan))
 Bus -> Ack : dispatch evReactionPlanned
-
+create CFF
 RM -> CFF : create(UseMonitor, Mon)
 CFF --> RM : CommandForce
-RM -> CF : execute(plan mit PulseBool("OPCUA.DiagnoseFinished", ns=4, 100 ms))
+RM -> CFF : execute(plan mit PulseBool("OPCUA.DiagnoseFinished", ns=4, 100 ms))
+create CF
+CFF->> CF : create(Plan)
 
 group PulseBool
   CF -> Mon : post( writeBool("OPCUA.DiagnoseFinished", ns=4, true) )

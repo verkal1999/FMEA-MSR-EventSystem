@@ -62,6 +62,14 @@ public:
                       UA_Int32 x, UA_Int32& yOut);
 
     bool readInt16At(const std::string& nodeIdStr, UA_UInt16 nsIndex, UA_Int16 &out) const;
+    // Liest eine boolsche Variable (identifier string, also z.B. "OPCUA.bool1", plus Namespace)
+   // PLCMonitor.h (public)
+    bool readBoolAt(const std::string& nodeIdStr, UA_UInt16 nsIndex, bool& out) const;
+
+
+    // Optional: generische Ausgabe als String (falls du später mehr Typen vergleichen willst)
+    bool readAsString(const std::string& nodeIdStr, UA_UInt16 nsIndex,
+                    std::string& outValue, std::string& outTypeName) const;
     bool writeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex, bool v);
 
     // ---------- Subscriptions ----------
@@ -81,39 +89,6 @@ public:
                        BoolChangeCallback cb);
 
     void unsubscribe();
-
-    // ---------- Snapshots (einfaches Read mehrerer Knoten) ----------
-    struct SnapshotItem {
-        std::string  nodeIdStr;
-        UA_UInt16    ns;
-        UA_DataValue dv; // deep-copied; caller must clear
-    };
-
-    bool readSnapshot(const std::vector<std::pair<UA_UInt16,std::string>>& nodes,
-                      std::vector<SnapshotItem>& out,
-                      UA_TimestampsToReturn ttr = UA_TIMESTAMPSTORETURN_SOURCE,
-                      double maxAgeMs = 0.0);
-
-    // ---------- Snapshots (Testserver – strukturierte Ausgabe + Browse) ----------
-    struct SnapshotEntry {
-        std::string   nodeIdText;   // NodeId als String (z. B. "ns=1;s=MyVar")
-        std::string   browsePath;   // Pfad ab /Objects
-        std::string   displayName;  // DisplayName des Targets
-        UA_NodeClass  nodeClass;    // Variable, Object, View, ...
-        std::string   dataType;     // z. B. "Double", "Int16"
-        std::string   value;        // Wert als Text (falls Variable)
-        UA_StatusCode status;       // Status der Read-Operation
-    };
-
-    std::future<std::vector<SnapshotEntry>>
-    TestServer_snapshotAllAsync(int nsFilter = 1, unsigned maxDepth = 5, unsigned maxRefsPerNode = 200);
-
-    std::vector<SnapshotEntry>
-    TestServer_snapshotAllSync(int nsFilter = 1, int maxDepth = 5, std::size_t maxRefsPerNode = 200);
-
-    bool TestServer_snapshotAllSync_impl(std::vector<SnapshotEntry>& out,
-                                         int nsFilter, unsigned maxDepth, unsigned maxRefsPerNode);
-
     // ---------- Komfort für deinen Secure-Testserver ----------
     static Options TestServerDefaults(const std::string& clientCertDer,
                                       const std::string& clientKeyDer,
@@ -128,9 +103,33 @@ public:
     // Low-level Zugriff (falls nötig)
     UA_Client* raw() const { return client_; }
 
+    // Alles für Inventory
+    struct InventoryRow {
+    std::string nodeClass;   // "Variable", "Method", "Object"
+    std::string nodeId;      // "ns=4;s=OPCUA.DiagnoseFinished", ...
+    std::string dtypeOrSig;  // z. B. "Boolean" oder "in: [Int32], out: [Int32]"
+    };
+
+    // public:
+    bool dumpPlcInventory(std::vector<InventoryRow>& out, const char* plcNameContains = "PLC");
+    void printInventoryTable(const std::vector<InventoryRow>& rows) const;
+
+    void postDelayed(int delayMs, UaFn fn);
+    void processTimers();
+    bool callJob(const std::string& objNodeId,
+             const std::string& methNodeId,
+             UA_Int32 x, UA_Int32& yOut,
+             unsigned timeoutMs);
 private:
     std::mutex qmx_;
     std::queue<UaFn> q_;
+
+    using UaFn = std::function<void()>;
+    struct TimedFn { std::chrono::steady_clock::time_point due; UaFn fn; };
+
+    std::mutex tmx_;
+    std::vector<TimedFn> timers_;
+    std::atomic<bool> running_{false};
 
     static bool loadFileToByteString(const std::string& path, UA_ByteString &out);
 

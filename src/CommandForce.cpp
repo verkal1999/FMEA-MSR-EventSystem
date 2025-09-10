@@ -53,15 +53,12 @@ int CommandForce::execute(const Plan& p) {
                     << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
         });
 
-        // Asynchron nach widthMs wieder auf LOW
-        std::thread([pm, nodeId, ns, widthMs]{
-            std::this_thread::sleep_for(std::chrono::milliseconds(widthMs));
-            pm->post([pm, nodeId, ns]{
-                const bool wr = pm->writeBool(nodeId, ns, false);
-                std::cout << "[CommandForce] PulseBool LO " << nodeId
-                        << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
-            });
-        }).detach();
+        // Nach widthMs wieder auf LOW – sauber über Monitor-Timer
+        pm->postDelayed(widthMs, [pm, nodeId, ns]{
+            const bool wr = pm->writeBool(nodeId, ns, false);
+            std::cout << "[CommandForce] PulseBool LO " << nodeId
+                    << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
+        });
 
         break;
     }
