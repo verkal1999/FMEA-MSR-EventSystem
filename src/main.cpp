@@ -68,7 +68,7 @@ int main() {
         py::module_::import("KG_Interface");
         std::cout << "[KG] warm-up import done\n";
     });
-    
+
     PLCMonitor::Options opt;
     opt.endpoint       = "opc.tcp://DESKTOP-LNJR8E0:4840";
     opt.username       = "Admin";
@@ -88,6 +88,7 @@ int main() {
     // 6) EventBus + ReactionManager + Logger + Abos
     EventBus bus;
     auto rm        = std::make_shared<ReactionManager>(mon, bus);
+    rm->setLogLevel(ReactionManager::LogLevel::Verbose);
     auto subD2     = bus.subscribe_scoped(EventType::evD2, rm, 4);
     auto ackLogger = std::make_shared<AckLogger>();
     auto subPlan   = bus.subscribe_scoped(EventType::evReactionPlanned, ackLogger, 1);

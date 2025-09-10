@@ -16,34 +16,30 @@ class KGInterface:
         self.graph.parse(ontology_path, format="turtle")
 
     def getFailureModeParameters(self, interruptedSkill: str) -> str:
-        """Gibt NUR rows-JSON zurück: [{id,t,v}, ...]
-           v ist der Literalwert als String; t ist ein grober Typ (string|int|double|bool)."""
-        searchSkillIri = self.ont_iri + ('' if self.ont_iri.endswith(('#','/')) else '#') + interruptedSkill
+        """Gibt rows-JSON zurück: [{"potFM","FMParam","t","v"} ...]"""
+        base_sep = '' if self.ont_iri.endswith(('#','/')) else '#'
+        searchSkillIri = self.ont_iri + base_sep + interruptedSkill
+
         query = f"""
             PREFIX cl: <{self.class_prefix}>
             PREFIX op: <{self.op_prefix}>
             PREFIX dp: <{self.dp_prefix}>
-            SELECT DISTINCT ?FMParam
+            SELECT DISTINCT ?potFM ?FMParam
             WHERE {{
-                ?potFM a cl:FailureMode .
-                <{searchSkillIri}> a cl:Function .
-                ?potFM op:preventsFunction <{searchSkillIri}>;
+                ?potFM a cl:FailureMode ;
+                       op:preventsFunction <{searchSkillIri}> ;
                        dp:hasFailureModeParams ?FMParam .
+                <{searchSkillIri}> a cl:Function .
             }}
         """
         res = self.graph.query(query)
 
         rows = []
-        for (fmparam,) in res:
-            # fmparam ist eine IRI; Lese dazu (optional) den aktuellen Wert, wenn im KG als Datenwert gespeichert.
-            # Falls die Werte NICHT im KG stehen, kannst du hier nur "id" liefern.
-            node_id = str(fmparam)
-
-            # Dummy: t/v als "unbekannt", wenn kein konkreter Wert im KG steht.
-            # Wenn du im KG z. B. dp:nodeValue / dp:nodeType ablegst, kannst du die hier mit einem weiteren Graph-Lookup holen.
-            t = "string"
-            v = ""
-
-            rows.append({"id": node_id, "t": t, "v": v})
+        for row in res:  # row ist rdflib.query.ResultRow
+            potFM = str(row["potFM"])    # URIRef → str
+            fmparam = str(row["FMParam"])
+            # Platzhalter für Typ/Wert (falls später im KG abgelegt):
+            #print(f"potFM: {potFM}    FMParam: {fmparam}")
+            rows.append({"potFM": potFM, "FMParam": fmparam, "t": "string", "v": ""})
 
         return json.dumps({"rows": rows}, ensure_ascii=False)
