@@ -1,78 +1,88 @@
-@startuml Sequence
+@startuml
+title Reaction flow: TriggerD2 → KG check → SystemReaction plan → Execute
 
-
-skinparam style strictuml
-
-actor "OPC UA Server" as Server
-participant "main.cpp\nMain Thread" as Main
+actor "OPC UA Server\n(PLC)" as PLC
 participant "PLCMonitor" as Mon
 participant "EventBus" as Bus
 participant "ReactionManager" as RM
-participant "PythonRuntime" as PyRt
-participant "KG_Interface.py\nKGInterface" as KG
+participant "PythonWorker\n(KG_Interface)" as KG
 participant "CommandForceFactory" as CFF
 participant "CommandForce" as CF
 participant "AckLogger" as Ack
 
-opt Initialisierung
-  Main -> PyRt : ensure_started()
-  create Mon
-  Main -> Mon : connect()
-  create Bus
-  create RM
-  Main -> RM : create
-  Main -> Bus : subscribe(evD2, RM, prio 4)
-  create Ack
-  Main -> Ack : crerate
-  Main -> Bus : subscribe(evReactionPlanned, Ack, 1)
-  Main -> Bus : subscribe(evReactionDone, Ack, 1)
-  Main -> Mon : subscribeBool("OPCUA.TriggerD2", ns=4, cb)
-end
+== Subscription ==
+PLC -> Mon: subscribeBool(ns=4;s=TriggerD2)
 
-loop Hauptschleife
-  Main -> Mon : runIterate(50)
-  Main -> Mon : processPosted(16)
-  Main -> Bus : process(16)
-end
+== Event ==
+PLC -> Mon: DataChange: TriggerD2 = true
+Mon -> Bus: post(evD2)
+Bus -> RM: onMethod(evD2)
+activate RM
 
-== Flankenereignis D2 ==
-
-Server -> Mon : DataChange: TriggerD2 = TRUE
-Mon -> Main : Callback(b = true)
-Main -> Bus : post(evD2)
-
-Bus -> RM : dispatch evD2
-
-RM -> KG : getFailureModeParameters("TestSkill1")
-KG --> RM : rows JSON
-RM -> Bus : post(evReactionPlanned(plan))
-Bus -> Ack : dispatch evReactionPlanned
-create CFF
-RM -> CFF : create(UseMonitor, Mon)
-CFF --> RM : CommandForce
-RM -> CFF : execute(plan mit PulseBool("OPCUA.DiagnoseFinished", ns=4, 100 ms))
-create CF
-CFF->> CF : create(Plan)
-
-group PulseBool
-  CF -> Mon : post( writeBool("OPCUA.DiagnoseFinished", ns=4, true) )
-  par Main Loop
-    Main -> Mon : processPosted()
-    Mon -> Server : Write Value TRUE
-  end
-
-  CF -> CF : separater Thread sleep(100 ms)
-
-  CF -> Mon : post( writeBool("OPCUA.DiagnoseFinished", ns=4, false) )
-  par Main Loop
-    Main -> Mon : processPosted()
-    Mon -> Server : Write Value FALSE
+== Inventory snapshot & logging ==
+RM -> Mon: dumpPlcInventory("PLC1")
+Mon --> RM: rows (nodeIds, types)
+loop for each row
+  alt t == bool
+    RM -> Mon: readBoolAt(ns,id)
+    Mon --> RM: value
+  else t == string
+    RM -> Mon: readStringAt(ns,id)
+    Mon --> RM: value
+  else t == int16
+    RM -> Mon: readInt16At(ns,id)
+    Mon --> RM: value
+  else t == float/double
+    RM -> Mon: readFloatAt/readDoubleAt(ns,id)
+    Mon --> RM: value
   end
 end
+RM -> RM: logInventoryVariables()
 
-CF --> RM : rc = 1
+== KG-Abgleich (Worker-Thread) ==
+RM -> KG: getFailureModeParameters(lastExecutedSkill)
+KG --> RM: JSON rows (id, t, v)
+RM -> RM: normalizeKgPotFM()\nnormalizeKgResponse()\ncompareAgainstCache()
 
-RM -> Bus : post(evReactionDone(rc))
-Bus -> Ack : dispatch evReactionDone
+alt >=1 passende potFM
+  RM -> KG: getSystemreactionForFailureMode(foundFM)
+  KG --> RM: sysReact IRI + params (JSON/Zeilen)
+  RM -> RM: createPlanFromSystemReaction...\n(Plan mit Operations)
+  loop for op in Plan
+    alt op.type == CallMethod
+      RM -> Mon: callJob(jobId, methodId,\ninputs[], outputs[])
+      Mon --> RM: rc
+    else op.type == PulseBool
+      RM -> CFF: makePulseBool(nodeId, ns, value, timeout)
+      CFF --> RM: CF
+      RM -> CF: execute()
+      activate CF
+      CF -> Mon: PulseBool(nodeId, ns, value)
+      Mon --> CF: OK
+      CF --> RM: rc
+      deactivate CF
+    end
+  end
+else keine Übereinstimmung
+  note right of RM
+    Fallback-Plan:
+    PulseBool OPCUA.DiagnoseFinished
+  end note
+  RM -> CFF: makePulseBool("OPCUA.DiagnoseFinished",4,true,100ms)
+  CFF --> RM: CF
+  RM -> CF: execute()
+  activate CF
+  CF -> Mon: PulseBool(DiagnoseFinished)
+  Mon --> CF: OK
+  CF --> RM: rc
+  deactivate CF
+end
 
+== Acknowledge ==
+RM -> Bus: post(evReactionPlanned)
+Bus -> Ack: log PLANNED(corr, summary)
+RM -> Bus: post(evReactionDone, rc)
+Bus -> Ack: log DONE(corr, rc)
+
+deactivate RM
 @enduml
