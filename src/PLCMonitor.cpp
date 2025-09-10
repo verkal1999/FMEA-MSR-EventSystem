@@ -405,6 +405,75 @@ bool PLCMonitor::readBoolAt(const std::string& nodeIdStr,
     UA_Variant_clear(&val);
     return ok;
 }
+bool PLCMonitor::readFloatAt(const std::string& nodeIdStr,
+                             UA_UInt16 nsIndex,
+                             UA_Float &out) const {
+    if (!client_) return false;
+
+    UA_NodeId nid = UA_NODEID_STRING_ALLOC(nsIndex,
+                          const_cast<char*>(nodeIdStr.c_str()));
+    UA_Variant val; UA_Variant_init(&val);
+
+    UA_StatusCode st = UA_Client_readValueAttribute(client_, nid, &val);
+    UA_NodeId_clear(&nid);
+
+    const bool ok = (st == UA_STATUSCODE_GOOD) &&
+                    UA_Variant_isScalar(&val) &&
+                    val.type == &UA_TYPES[UA_TYPES_FLOAT] &&
+                    val.data != nullptr;
+    if (ok) out = *static_cast<UA_Float*>(val.data);
+    UA_Variant_clear(&val);
+    return ok;
+}
+
+bool PLCMonitor::readDoubleAt(const std::string& nodeIdStr,
+                              UA_UInt16 nsIndex,
+                              UA_Double &out) const {
+    if (!client_) return false;
+
+    UA_NodeId nid = UA_NODEID_STRING_ALLOC(nsIndex,
+                          const_cast<char*>(nodeIdStr.c_str()));
+    UA_Variant val; UA_Variant_init(&val);
+
+    UA_StatusCode st = UA_Client_readValueAttribute(client_, nid, &val);
+    UA_NodeId_clear(&nid);
+
+    const bool ok = (st == UA_STATUSCODE_GOOD) &&
+                    UA_Variant_isScalar(&val) &&
+                    val.type == &UA_TYPES[UA_TYPES_DOUBLE] &&
+                    val.data != nullptr;
+    if (ok) out = *static_cast<UA_Double*>(val.data);
+    UA_Variant_clear(&val);
+    return ok;
+}
+
+bool PLCMonitor::readStringAt(const std::string& nodeIdStr,
+                              UA_UInt16 nsIndex,
+                              std::string& out) const {
+    if (!client_)
+        return false;
+
+    UA_NodeId nid = UA_NODEID_STRING_ALLOC(nsIndex,
+                         const_cast<char*>(nodeIdStr.c_str()));
+    UA_Variant val; UA_Variant_init(&val);
+
+    UA_StatusCode st = UA_Client_readValueAttribute(client_, nid, &val);
+    UA_NodeId_clear(&nid);
+
+    const bool ok = (st == UA_STATUSCODE_GOOD) &&
+                    UA_Variant_isScalar(&val) &&
+                    val.type == &UA_TYPES[UA_TYPES_STRING] &&
+                    val.data != nullptr;
+
+    if (ok) {
+        const UA_String* s = static_cast<const UA_String*>(val.data);
+        // Hilfsfunktion oben im File vorhanden:
+        out = toStdString(*s);
+    }
+
+    UA_Variant_clear(&val);
+    return ok;
+}
 
 // Optional: generisch als String + Typname (nutzt deine variantToString)
 bool PLCMonitor::readAsString(const std::string& nodeIdStr,
@@ -937,16 +1006,22 @@ bool PLCMonitor::callJob(const std::string& objNodeId,
     std::mutex m; std::condition_variable cv;
     bool done=false, ok=false; UA_Int32 yTmp=0;
 
+    std::cout << "[PLCMonitor] callJob ENTER obj=\"" << objNodeId
+              << "\" meth=\"" << methNodeId
+              << "\" x=" << x << " timeout=" << timeoutMs << "ms\n";
+
     // UA-Operation *im Monitor-Thread* ausführen
     post([&, objNodeId, methNodeId, x, timeoutMs]{
+        std::cout << "[PLCMonitor] [ua] build NodeIds nsIndex=" << opt_.nsIndex
+                  << " obj=\"" << objNodeId << "\" meth=\"" << methNodeId << "\"\n";
+
         UA_NodeId obj  = UA_NODEID_STRING_ALLOC(opt_.nsIndex, const_cast<char*>(objNodeId.c_str()));
         UA_NodeId meth = UA_NODEID_STRING_ALLOC(opt_.nsIndex, const_cast<char*>(methNodeId.c_str()));
 
         UA_Variant in[1]; UA_Variant_init(&in[0]);
-        // KOPIE in den Variant (erlaubt const-Quelle)
         (void)UA_Variant_setScalarCopy(&in[0], &x, &UA_TYPES[UA_TYPES_INT32]);
+        std::cout << "[PLCMonitor] [ua] input[0]=int32:" << x << "\n";
 
-        // (Optional) temporär den Service-Timeout anpassen
         UA_ClientConfig *cfg = UA_Client_getConfig(client_);
         UA_UInt32 oldTo = cfg->timeout;
         cfg->timeout = timeoutMs;
@@ -956,10 +1031,11 @@ bool PLCMonitor::callJob(const std::string& objNodeId,
 
         cfg->timeout = oldTo; // zurücksetzen
 
-        // Aufräumen der Inputs
+        std::cout << "[PLCMonitor] [ua] UA_Client_call status=0x"
+                  << std::hex << st << std::dec << " outSz=" << outSz << "\n";
+
+        // Aufräumen Inputs
         UA_Variant_clear(&in[0]);
-        UA_NodeId_clear(&obj);
-        UA_NodeId_clear(&meth);
 
         if (st == UA_STATUSCODE_GOOD && outSz >= 1 &&
             UA_Variant_isScalar(&out[0]) &&
@@ -967,10 +1043,16 @@ bool PLCMonitor::callJob(const std::string& objNodeId,
         {
             yTmp = *static_cast<UA_Int32*>(out[0].data);
             ok = true;
+            std::cout << "[PLCMonitor] [ua] yOut=" << yTmp << "\n";
+        } else {
+            std::cout << "[PLCMonitor] [ua] no/invalid output variant\n";
         }
 
         if (out)
             UA_Array_delete(out, outSz, &UA_TYPES[UA_TYPES_VARIANT]);
+
+        UA_NodeId_clear(&obj);
+        UA_NodeId_clear(&meth);
 
         { std::lock_guard<std::mutex> lk(m); done = true; }
         cv.notify_one();
@@ -978,9 +1060,16 @@ bool PLCMonitor::callJob(const std::string& objNodeId,
 
     // Hier (Aufrufer-Thread) warten wir auf das Ergebnis, während der Main-Loop weiterpumpt.
     std::unique_lock<std::mutex> lk(m);
-    if (cv.wait_for(lk, std::chrono::milliseconds(timeoutMs + 500)) == std::cv_status::timeout)
+    if (cv.wait_for(lk, std::chrono::milliseconds(timeoutMs + 500)) == std::cv_status::timeout) {
+        std::cout << "[PLCMonitor] callJob TIMEOUT (>" << (timeoutMs+500) << "ms)\n";
         return false;
+    }
 
-    if (ok) yOut = yTmp;
+    if (ok) {
+        yOut = yTmp;
+        std::cout << "[PLCMonitor] callJob EXIT -> OK yOut=" << yOut << "\n";
+    } else {
+        std::cout << "[PLCMonitor] callJob EXIT -> FAIL\n";
+    }
     return ok;
 }

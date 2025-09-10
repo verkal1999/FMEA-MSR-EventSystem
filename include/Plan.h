@@ -17,7 +17,7 @@ enum class OpType {
 
 /// Eine einzelne Operation (Schritt) in einem Plan.
 struct Operation {
-    OpType        type = OpType::WriteBool;
+    OpType        type = OpType::CallMethod;
 
     // Allgemein (für Write*/ReadCheck):
     // NodeId als StringId (wie bei UA_NODEID_STRING[_ALLOC]); Namespace separat.

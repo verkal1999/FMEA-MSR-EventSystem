@@ -351,7 +351,16 @@
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> rdf:type owl:DatatypeProperty ;
                                                                         rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                        rdfs:range xsd:string .
+                                                                        rdfs:range xsd:string ;
+                                                                        rdfs:comment """Braucht das Format wie dort angegeben. Hier soll ein Sensorsnapshot entstehen, sodass alles vergleichen weden kann. Wird nur ein Wert so wie hier angegeben, wird auch nur dieser mit den Standardwerten im Programm verglichen.
+Späterer Plan ist, dass das mit den Default-Werten der einizelnen Skills befüllt wid, den diese FailureMode verhindert, wenn per se nichts drin ist.
+
+Format: 
+{
+  \"rows\": [
+    { \"id\": \"ns=4;s=OPCUA.bool1\",  \"t\": \"bool\", \"v\": true }
+  ]
+}""" .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound
@@ -522,6 +531,62 @@
                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> ;
                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
                                                                     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactParams
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactParams> rdf:type owl:DatatypeProperty ;
+                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
+                                                                     rdfs:range xsd:string ;
+                                                                     rdfs:comment """Buchstaben:
+- g: Gruppe, eine von meta, method, input, output
+
+- k: Schlüssel oder Parametername, z. B. speed, status
+
+- i: optionale Positionsnummer des Parameters, damit Reihenfolgen stabil sind
+
+- id: NodeId der zugehörigen OPC UA Variable oder Methode, wenn zutreffend
+
+ - t: Datentyp als String, z. B. bool, int32, double, string, nodeid, json
+
+- v: Wert in passendem JSON Typ
+
+- step: Ganzzahl 0..N-1 für die Reihenfolge der Methodenaufrufe in der Systemreaktion
+
+- seq: strikt monotone Ganzzahl (0,1,2,…) über alle Rows, damit du die exakte Ereignisreihenfolge rekonstruierst
+
+- callId: stabile ID (z. B. \"0\", \"1\" oder UUID) pro einzelner Methoden-Invocation innerhalb eines Steps (hilfreich, falls Retrys oder Teil-Events geloggt werden sollen)
+
+!!!Minimalregeln!!!!
+
+- Alle Rows, die zu einem Methodenaufruf gehören, teilen sich denselben step und callId.
+
+- seq steigt für jede Row; zum Re-Play einfach nach seq sortieren.
+
+- Pro Call mindestens:
+
+- eine method-Row mit der methodId
+
+- 0..n input-Rows
+
+- 0..m output-Rows
+
+- optionale meta-Rows (Start/Ende, ok/Fehler, Dauer)
+{
+  \"rows\": [
+    { \"seq\": 0,  \"step\": 0, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"jobId\",    \"t\": \"string\", \"v\": \"c1a7...\" },
+    { \"seq\": 1,  \"step\": 0, \"callId\": \"0\", \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeid\", \"id\": \"ns=4;s=OPCUA.MyUaMethodA\", \"v\": \"ns=4;s=OPCUA.MyUaMethodA\" },
+    { \"seq\": 2,  \"step\": 0, \"callId\": \"0\", \"g\": \"input\",  \"k\": \"speed\",    \"i\": 0, \"id\": \"ns=4;s=OPCUA.speed\", \"t\": \"int32\", \"v\": 120, \"uom\": \"rpm\" },
+    { \"seq\": 3,  \"step\": 0, \"callId\": \"0\", \"g\": \"input\",  \"k\": \"dir\",      \"i\": 1, \"id\": \"ns=4;s=OPCUA.dir\",   \"t\": \"int32\", \"v\": 1 },
+    { \"seq\": 4,  \"step\": 0, \"callId\": \"0\", \"g\": \"output\", \"k\": \"status\",   \"i\": 0, \"id\": \"ns=4;s=OPCUA.status\",\"t\": \"bool\",  \"v\": true },
+    { \"seq\": 5,  \"step\": 0, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"ok\",                     \"t\": \"bool\",   \"v\": true },
+    { \"seq\": 6,  \"step\": 0, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"duration_ms\",           \"t\": \"uint32\", \"v\": 37 },
+
+    { \"seq\": 7,  \"step\": 1, \"callId\": \"0\", \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeid\", \"id\": \"ns=4;s=OPCUA.MyUaMethodB\", \"v\": \"ns=4;s=OPCUA.MyUaMethodB\" },
+    { \"seq\": 8,  \"step\": 1, \"callId\": \"0\", \"g\": \"input\",  \"k\": \"timeout\",  \"i\": 0, \"id\": \"ns=4;s=OPCUA.timeout\",\"t\": \"uint32\",\"v\": 5000 },
+    { \"seq\": 9,  \"step\": 1, \"callId\": \"0\", \"g\": \"output\", \"k\": \"errorCode\",\"i\": 0, \"id\": \"ns=4;s=OPCUA.err\",    \"t\": \"uint16\",\"v\": 0 },
+    { \"seq\": 10, \"step\": 1, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"ok\",                     \"t\": \"bool\",   \"v\": true }
+  ]
+}""" .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit
@@ -766,7 +831,17 @@ Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers z
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1> rdf:type owl:NamedIndividual ,
-                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> .
+                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ,
+                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
+                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
+                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactParams> """{
+  \"rows\": [
+    { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob\" },
+    { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
+    { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
+    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"calc\"}
+  ]
+}""" .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1

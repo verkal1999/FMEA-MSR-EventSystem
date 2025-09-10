@@ -66,6 +66,12 @@ public:
    // PLCMonitor.h (public)
     bool readBoolAt(const std::string& nodeIdStr, UA_UInt16 nsIndex, bool& out) const;
 
+    bool readStringAt(const std::string& nodeIdStr, UA_UInt16 nsIndex, std::string& out) const;
+
+    bool readFloatAt (const std::string& nodeIdStr, UA_UInt16 nsIndex, UA_Float  &out) const;
+
+    bool readDoubleAt(const std::string& nodeIdStr, UA_UInt16 nsIndex, UA_Double &out) const;
+
 
     // Optional: generische Ausgabe als String (falls du später mehr Typen vergleichen willst)
     bool readAsString(const std::string& nodeIdStr, UA_UInt16 nsIndex,

@@ -43,3 +43,27 @@ class KGInterface:
             rows.append({"potFM": potFM, "FMParam": fmparam, "t": "string", "v": ""})
 
         return json.dumps({"rows": rows}, ensure_ascii=False)
+    
+    def getSystemreactionForFailureMode(self, FMIri: str) -> str:
+        query = f"""
+            PREFIX cl: <{self.class_prefix}>
+            PREFIX op: <{self.op_prefix}>
+            PREFIX dp: <{self.dp_prefix}>
+            SELECT DISTINCT ?sysReact ?SysReactParams
+            WHERE {{
+                <{FMIri}> a cl:FailureMode .
+                ?sysReact a cl:SystemReaction ;
+                        op:reactsOnFailureMode <{FMIri}> ;
+                        dp:hasSysReactParams ?SysReactParams .
+            }}
+        """
+        res = self.graph.query(query)
+
+        output_lines = []
+        for row in res:
+            sysR   = str(row["sysReact"])
+            params = str(row["SysReactParams"])
+            output_lines.append(sysR)
+            output_lines.append(params)
+
+        return "\n".join(output_lines)
