@@ -1,4 +1,4 @@
-@startuml
+@startuml Flow_with_Trigger
 title Reaction flow: TriggerD2 → KG check → SystemReaction plan → Execute
 
 actor "OPC UA Server\n(PLC)" as PLC

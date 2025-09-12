@@ -437,6 +437,12 @@ Format:
                                                                   rdfs:range xsd:string .
 
 
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
+                                                                   rdfs:range xsd:string .
+
+
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating> rdf:type owl:DatatypeProperty ;
                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;

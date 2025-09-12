@@ -8,19 +8,8 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
-
-#include "PLCMonitor.h"
-#include "EventBus.h"
-#include "ReactionManager.h"
-#include "AckLogger.h"
-//#include "PythonRuntime.h" // ← nur nutzen, wenn es KEINEN zweiten Interpreter startet!
-#include "PythonWorker.h"
-
 #include <pybind11/embed.h>
-#include <atomic>
-#include <chrono>
-#include <iostream>
-#include <thread>
+
 
 namespace py = pybind11;
 
@@ -45,7 +34,7 @@ int main() {
 
         // Hier den Ordner eintragen, der *KG_Interface.py* oder *KG_Interface/__init__.py* enthält:
         // Tipp: UTF-8 Literal + std::string vermeidet char*-Spezialfälle.
-        const std::string src_dir = u8R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)";
+        const std::string src_dir = R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)";
         path.insert(0, py::cast(src_dir));
 
         // 2) Optional: venv-Site-Packages hinzufügen (falls benutzt)
@@ -88,8 +77,10 @@ int main() {
     // 6) EventBus + ReactionManager + Logger + Abos
     EventBus bus;
     auto rm        = std::make_shared<ReactionManager>(mon, bus);
-    rm->setLogLevel(ReactionManager::LogLevel::Verbose);
+    rm->setLogLevel(ReactionManager::LogLevel::Info);
     auto subD2     = bus.subscribe_scoped(EventType::evD2, rm, 4);
+    auto subD1 = bus.subscribe_scoped(EventType::evD1, rm, 4);
+    auto subD3 = bus.subscribe_scoped(EventType::evD3, rm, 4);
     auto ackLogger = std::make_shared<AckLogger>();
     auto subPlan   = bus.subscribe_scoped(EventType::evReactionPlanned, ackLogger, 1);
     auto subDone   = bus.subscribe_scoped(EventType::evReactionDone,    ackLogger, 1);

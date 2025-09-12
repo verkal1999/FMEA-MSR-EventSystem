@@ -163,9 +163,23 @@ static std::string rm_fixParamsRawIfNeeded(std::string s) {
 } // namespace
 
 // ---------- ReactionManager ---------------------------------------------------
-ReactionManager::ReactionManager(PLCMonitor& mon, EventBus& bus)
-    : mon_(mon), bus_(bus)
-{}
+ReactionManager::ReactionManager(PLCMonitor& mon, EventBus& bus) : mon_(mon), bus_(bus) {
+    worker_ = std::jthread([this](std::stop_token st){
+        for (;;) {
+            std::function<void(std::stop_token)> job;
+            {
+                std::unique_lock<std::mutex> lk(job_mx_);
+                job_cv_.wait(lk, [&]{ return st.stop_requested() || !jobs_.empty(); });
+                if (st.stop_requested() && jobs_.empty()) break;
+                job = std::move(jobs_.front());
+                jobs_.pop();
+            }
+            try { job(st); } catch (const std::exception& e) {
+                log(LogLevel::Warn) << "[worker] job failed: " << e.what() << "\n";
+            }
+        }
+    });
+}
 
 const char* ReactionManager::toCStr(LogLevel lvl) const {
     switch (lvl) {
@@ -988,22 +1002,54 @@ void ReactionManager::executeMethodPlanAndAck(const Plan& plan) {
 
 
 void ReactionManager::onMethod(const Event& ev) {
-    if (ev.type == EventType::evD2) {
-        const auto corr = makeCorrelationId("evD2");
-        log(LogLevel::Info) << "onMethod ENTER evD2 corr=" << corr << "\n";
+    // Wir reagieren auf D1/D2/D3; andere Events ignorieren wir hier früh.
+    const char* evName = nullptr;
+    switch (ev.type) {
+        case EventType::evD1: evName = "evD1"; break;
+        case EventType::evD2: evName = "evD2"; break;
+        case EventType::evD3: evName = "evD3"; break;
+        default: return;
+    }
 
-        auto inv = buildInventorySnapshot("PLC1");
-        // alt: logBoolInventory(inv);5
-        logInventoryVariables(inv); // jetzt ALLES loggen (+ gecachte Werte)
+    const auto corr = makeCorrelationId(evName);
+    log(LogLevel::Info) << "onMethod ENTER " << evName << " corr=" << corr << "\n";
 
-        std::thread([this, corr, inv]() {
-            log(LogLevel::Info) << "[thread] corr=" << corr << " START\n";
+    // 1) Inventarsnapshot aufnehmen (inkl. Cache-Füllung/Logs)
+    auto inv = buildInventorySnapshot("PLC1");
+    logInventoryVariables(inv);
+
+    // 2) Job joinbar über Worker-Thread ausführen (kein detach!)
+    {
+        std::lock_guard<std::mutex> lk(job_mx_);
+        jobs_.push([this, corr, inv, evName](std::stop_token st) mutable {
+            log(LogLevel::Info) << "[worker] corr=" << corr << " (" << evName << ") START\n";
+                    // --- TIMER: Start + Helper -------------------------------------------
+            using clock = std::chrono::steady_clock;     // monoton, für Intervalle geeignet
+            const auto t0    = clock::now();
+            auto       tlast = t0;
+            auto lap = [&](const char* label) {
+                const auto now   = clock::now();
+                const auto step  = std::chrono::duration_cast<std::chrono::milliseconds>(now - tlast).count();
+                const auto total = std::chrono::duration_cast<std::chrono::milliseconds>(now - t0).count();
+                log(LogLevel::Info) << "[timer] corr=" << corr
+                                    << " " << label
+                                    << " step="  << step  << " ms"
+                                    << " total=" << total << " ms\n";
+                tlast = now;
+            };
+            lap("job-start");
+            // ---------------------------------------------------------------------
+
+            log(LogLevel::Info) << "[worker] corr=" << corr << " (" << evName << ") START\n";
+
+            // --- Python: FailureModeParameter für letzte Skill ermitteln ----------
             std::string srows;
             try {
-                log(LogLevel::Debug) << "[thread] calling PythonWorker...\n";
+                log(LogLevel::Debug) << "[worker] calling PythonWorker\n";
                 srows = PythonWorker::instance().call([&]() -> std::string {
-                    py::module_ sys = py::module_::import("sys");
-                    py::list path = sys.attr("path").cast<py::list>();
+                    namespace py = pybind11;
+                    py::module_ sys  = py::module_::import("sys");
+                    py::list    path = sys.attr("path").cast<py::list>();
                     path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
 
                     py::module_ kg  = py::module_::import("KG_Interface");
@@ -1015,74 +1061,76 @@ void ReactionManager::onMethod(const Event& ev) {
                         "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_",
                         "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_"
                     );
+
                     std::string interruptedSkill = getLastExecutedSkill(inv);
                     if (interruptedSkill.empty()) {
-                        // optionaler Fallback-Default, damit KG nicht mit "" arbeitet:
-                        interruptedSkill = "UnknownSkill";
+                        interruptedSkill = "MAIN.fbJob"; // Fallback
                         log(LogLevel::Warn) << "[skill] empty -> using default \"" << interruptedSkill << "\"\n";
                     }
                     auto pyres = kgi.attr("getFailureModeParameters")(interruptedSkill);
-                    return py::str(pyres);
+                    return std::string(py::str(pyres));
                 });
-                log(LogLevel::Info) << "[thread] PythonWorker OK json_len=" << srows.size()
+                log(LogLevel::Info) << "[worker] PythonWorker OK json_len=" << srows.size()
                                     << " preview=\"" << truncStr(srows) << "\"\n";
             } catch (const std::exception& e) {
-                log(LogLevel::Error) << "[thread] KG error: " << e.what() << "\n";
+                log(LogLevel::Error) << "[worker] KG error: " << e.what() << "\n";
                 srows = R"({"rows":[]})";
             }
+            lap("kg-params-ready"); 
+            if (st.stop_requested()) {
+                log(LogLevel::Warn) << "[worker] stop requested -> abort corr=" << corr << "\n";
+                return;
+            }
 
+            // --- 3) Neuer potFM-Pfad zuerst versuchen ----------------------------
             auto potCands = normalizeKgPotFM(srows);
             if (!potCands.empty()) {
                 std::vector<ComparisonReport> perRep;
-                // --- NEU: zuerst potFM-Layout versuchen
                 auto winners = selectPotFMByChecks(inv, potCands, &perRep);
+                lap("potFM-selected");  
+                if (winners.size() == 1) {
+                    const std::string foundFM = winners.front();
+                    log(LogLevel::Info) << "[potFM] foundFM=" << foundFM << " -> fetch Systemreaction\n";
+
+                    const std::string sysPayload = fetchSystemReactionForFM(foundFM);
+                    Plan sysPlan = createPlanFromSystemReactionJson(corr, sysPayload);
+                    log(LogLevel::Info) << "[sysreact] steps=" << sysPlan.ops.size() << "\n";
+                    lap("sysreact-plan-built");
+                    lap("before-exec"); 
+                    executeMethodPlanAndAck(sysPlan);        // inkl. Acks
+                    log(LogLevel::Info) << "[worker] corr=" << corr << " END (sysreact)\n";
+                    lap("exec-done");
+                    return;
+                }
 
                 if (winners.empty()) {
-                    log(LogLevel::Info) << "[potFM] kein FailureMode passt zu den aktuellen Werten.\n";
-                } else if (winners.size() == 1) {
-                        const std::string foundFM = winners.front();
-                        log(LogLevel::Info) << "[potFM] foundFM = " << foundFM << "\n";
-
-                        // 1) Systemreaction aus KG holen
-                        const std::string sysPayload = fetchSystemReactionForFM(foundFM);
-                        log(LogLevel::Debug) << "[sysreact] payload len=" << sysPayload.size() << "\n";
-
-                        // 2) Plan daraus bauen
-                        Plan sysPlan = createPlanFromSystemReactionJson(corr, sysPayload);
-                        log(LogLevel::Info) << "[sysreact] steps=" << sysPlan.ops.size() << "\n";
-
-                        // 3) Ausführen und ACKs schicken
-                        executeMethodPlanAndAck(sysPlan);
-
-                        return; // done – kein Fallback nötig
-                } else if (winners.size() > 1) {
-                        log(LogLevel::Warn) << "[potFM] Mehrdeutige Treffer (" << winners.size()
-                                            << ") -> Too many candidates\n";
-                        // -> ggf. Fallback tun (z. B. DiagnoseFinished-Puls), wie bisher
+                    log(LogLevel::Info) << "[potFM] kein FailureMode passt -> Fallback (Checks/DiagnoseFinished)\n";
                 } else {
-                        log(LogLevel::Warn) << "[potFM] Kein passender FailureMode -> Fallback\n";
-                        // -> ggf. Fallback tun, wie bisher
+                    log(LogLevel::Warn) << "[potFM] mehrdeutige Treffer (" << winners.size()
+                                        << ") -> Fallback (Checks/DiagnoseFinished)\n";
                 }
-                    
 
-                // Du kannst hier weiterhin deinen Plan feuern (unabhängig von foundFM),
-                // oder optional den Summary-Text anreichern:
-                auto plan = buildPlanFromComparison(corr,
-                            winners.size()==1
-                                ? ComparisonReport{true, {}}  // rein kosmetisch: „OK“
-                                : ComparisonReport{false,{}});
+                // kosmetische Checks-Info für Ack/Logger
+                auto plan = buildPlanFromComparison(
+                    corr, winners.size()==1 ? ComparisonReport{true,{}} : ComparisonReport{false,{}});
+                lap("fallback-plan-built");
+                lap("before-exec");
                 executePlanAndAck(plan, winners.size()==1);
-
-            } else {
-                // --- Fallback: altes Format (Einzel-zeilen mit id/t/v wie gehabt)
-                auto expects = normalizeKgResponse(srows);
-                auto rep     = compareAgainstCache(inv, expects);
-                auto plan    = buildPlanFromComparison(corr, rep);
-                executePlanAndAck(plan, rep.allOk);
+                log(LogLevel::Info) << "[worker] corr=" << corr << " END (fallback potFM)\n";
+                lap("exec-done");
+                return;
             }
-        }).detach();
 
-        log(LogLevel::Info) << "onMethod EXIT evD2 corr=" << corr << " (thread detached)\n";
-        return;
+            // --- 4) Altes Format (id/t/v Rows) – Fallback ------------------------
+            auto expects = normalizeKgResponse(srows);
+            auto rep     = compareAgainstCache(inv, expects);
+            auto plan    = buildPlanFromComparison(corr, rep);
+            executePlanAndAck(plan, rep.allOk);
+
+            log(LogLevel::Info) << "[worker] corr=" << corr << " END\n";
+        });
     }
+    job_cv_.notify_one();
+
+    log(LogLevel::Info) << "onMethod EXIT " << evName << " corr=" << corr << " (queued)\n";
 }

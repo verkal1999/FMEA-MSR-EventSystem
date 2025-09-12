@@ -8,6 +8,10 @@
 #include <atomic>
 #include <ostream>
 #include <nlohmann/json.hpp>
+#include <thread>              // std::jthread
+#include <queue>               // Job-Queue
+#include <functional>          // std::function
+#include <condition_variable>  // CV
 
 #include "PLCMonitor.h"
 #include "Plan.h"
@@ -47,8 +51,8 @@ public:
         std::vector<PLCMonitor::InventoryRow> rows;
         std::unordered_map<NodeKey, bool,        NodeKeyHash> bools;
         std::unordered_map<NodeKey, std::string, NodeKeyHash> strings;
-        std::unordered_map<NodeKey, int16_t,     NodeKeyHash> int16s;   // NEU
-        std::unordered_map<NodeKey, double,      NodeKeyHash> floats;   // NEU (Float & Double)
+        std::unordered_map<NodeKey, int16_t,     NodeKeyHash> int16s;
+        std::unordered_map<NodeKey, double,      NodeKeyHash> floats;
     };
 
     enum class KgValKind { Bool, Int16, Float64, String };
@@ -56,11 +60,10 @@ public:
     struct KgExpect {
         NodeKey   key;
         KgValKind kind{KgValKind::Bool};
-        // erwartete Werte (nur der zum kind passende wird genutzt)
         bool      expectedBool{false};
         int16_t   expectedI16{0};
         double    expectedF64{0.0};
-        std::string expectedStr; // derzeit ungenutzt im Vergleich
+        std::string expectedStr;
     };
 
     struct ComparisonItem {
@@ -80,18 +83,18 @@ public:
     };
 
     bool isEnabled(LogLevel lvl) const {
-    return static_cast<int>(lvl) <= logLevel_.load(std::memory_order_relaxed);
+        return static_cast<int>(lvl) <= logLevel_.load(std::memory_order_relaxed);
     };
 
 private:
     PLCMonitor& mon_;
     EventBus&   bus_;
 
-    // --- Correlation Guard
-    std::mutex corrMx_;
-    std::unordered_set<std::string> corrDone_;
-    bool markDone_(const std::string& id);
-    bool isDone_(const std::string& id);
+    // --- Hintergrund-Worker (joinbar) ----------------------------------------
+    std::jthread worker_;
+    std::mutex job_mx_;
+    std::condition_variable job_cv_;
+    std::queue<std::function<void(std::stop_token)>> jobs_;
 
     // --- Logger intern
     std::atomic<int> logLevel_{ static_cast<int>(LogLevel::Info) };
@@ -117,13 +120,11 @@ private:
     void  executePlanAndAck(const Plan& plan, bool checksOk);
 
     // 5) Logging/Dumps
-    void  logBoolInventory(const InventorySnapshot& inv) const; // bleibt
-    void  logInventoryVariables(const InventorySnapshot& inv) const; // alle Variablen + Typ + (cached value)
+    void  logBoolInventory(const InventorySnapshot& inv) const;
+    void  logInventoryVariables(const InventorySnapshot& inv) const;
 
     // 6) NodeId/Cache-Helfer
     bool  parseNodeId(const std::string& full, NodeKey& out) const;
-
-    // String-Cache helper (für lastExecutedSkill)
     std::string getStringFromCache(const InventorySnapshot& inv,
                                    UA_UInt16 ns, const std::string& id, bool* found = nullptr) const;
     std::string getLastExecutedSkill(const InventorySnapshot& inv) const;
@@ -131,8 +132,6 @@ private:
     // --- Systemreaction (aus KG) -> Plan/Execution ---
     std::string fetchSystemReactionForFM(const std::string& fmIri); // Python call
     Plan        createPlanFromSystemReactionJson(const std::string& corrId,
-                                                const std::string& payloadJson);
+                                                 const std::string& payloadJson);
     void        executeMethodPlanAndAck(const Plan& plan);
 };
-
-

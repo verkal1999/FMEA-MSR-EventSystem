@@ -1,0 +1,95 @@
+@startuml Flow
+title D1/D2/D3 Flow – High-Level Exception Handling mit EventBus, KG & OPC UA
+
+skinparam Shadowing false
+skinparam sequenceMessageAlign center
+hide footbox
+
+actor Operator
+participant "PLC (Beckhoff)" as PLC
+participant "EventBus" as BUS
+participant "FailureLogger\n(OccurredFailure)" as LOG
+participant "Diagnoser\n(KGQuerier + Monitor)" as DIAG
+participant "Knowledge Graph\n(FMEA-KG)" as KG
+participant "SystemReactionExecutor" as SRE
+participant "RiskAssessor" as RISK
+participant "TaskManager / SkillOA" as TM
+
+== Fehlerfeststellung ==
+PLC -> PLC: Erkennung: "Fehler liegt vor"
+note right of PLC
+  Über OPC UA steht die Variable\nLastExecutedSkill: string
+  (zuletzt ausgeführter Skill).
+end note
+PLC -> BUS: Emit Event: Enter D{1|2|3}\n+ payload { LastExecutedSkill, snapshot }
+
+alt D1 (Not-Aus)
+  BUS -> PLC: Command: SafeStop()
+  BUS -> Operator: Notify: E-Stop active (D1)
+  ... keine OccurredFailure-Schreibung in diesem Flow ...
+  return System steht sicher
+
+else D2 (Diagnose angefordert)
+  BUS -> LOG: writeOccurredFailure(payload)
+  BUS -> DIAG: DiagnoseStart(LastExecutedSkill, snapshot)
+
+  DIAG -> PLC: Read OPC UA: LastExecutedSkill
+  DIAG -> KG: query FailureModes\nop_preventsFunction(LastExecutedSkill)
+  KG --> DIAG: Candidate FailureModes [{FM_i}]
+
+  loop Monitoring-Maßnahmen je FM
+    DIAG -> KG: get MonitoringSet(FM_i)
+    note right
+      Erste Maßnahme: Parameter-Vergleich\n(gegen Sensorwerte im snapshot).\nWeitere Maßnahmen optional in Reihenfolge.
+    end note
+    DIAG -> DIAG: evaluateMeasures(FM_i, snapshot)
+  end
+
+  alt Eindeutiger Fehler bestimmt
+    DIAG -> KG: get SystemReaction(FM*)
+    KG --> DIAG: SystemReaction + Params
+
+    opt Systemreaktion vorhanden
+      DIAG -> SRE: execute(SystemReaction, Params)
+      SRE --> DIAG: result { success | fail }
+    end opt
+
+    alt Reaction success
+      DIAG -> RISK: setRiskStatus(fromReaction)
+      RISK --> DIAG: risk := updated
+      DIAG -> BUS: Publish: D2_Resolved(FM*, risk)
+      BUS -> TM: Resume/Continue process
+    else Reaction missing or failed
+      DIAG -> RISK: setRiskStatus(fromFailure)
+      DIAG -> BUS: Publish: D2_Unresolved(FM*)
+      BUS -> Operator: Assist Request (Service/Ticket)
+      opt Prozess nicht fortführbar
+        DIAG -> TM: Query ProposedCapabilities\n(without LastExecutedSkill)
+        TM --> BUS: PlanUpdate(ProposedPath)
+        BUS -> PLC: Apply new path
+      end opt
+    end
+
+  else Kein Fehler eindeutig bestimmbar
+    DIAG -> RISK: setRiskStatus(fromFailure)
+    DIAG -> BUS: Publish: D2_Inconclusive
+    BUS -> Operator: Manual inspection
+  end
+
+else D3 (Produktion trotz Störung)
+  BUS -> LOG: writeOccurredFailure(payload)
+  BUS -> RISK: setRiskStatus(fromFailure)
+  RISK --> BUS: risk := updated
+  BUS -> TM: Continue with degraded mode
+  note over BUS,TM
+    Produktion läuft weiter trotz Störung (D3).
+    Keine Diagnose, nur Logging + Risiko-Status.
+  end note
+end
+
+== Abschluss ==
+BUS -> PLC: State update / resume per Mode
+PLC --> BUS: Ack
+BUS -> Operator: Status + Handlungsempfehlung
+
+@enduml

@@ -4,7 +4,7 @@
 #include <string>
 
 enum class EventType {
-    evD2,
+    evD2, evD1, evD3,
     evReactionPlanned, evReactionDone,
     evKGResult, evKGTimeout
 };

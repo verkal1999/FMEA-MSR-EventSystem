@@ -1,0 +1,119 @@
+@startuml
+title Exception Handling (D1/D2/D3) – kompakte State Machine (Slide-fit)
+
+' — Layout für Folien —
+scale 1600 width
+skinparam Shadowing false
+skinparam nodesep 30
+skinparam ranksep 35
+left to right direction
+hide empty description
+
+[*] --> ObserveFault
+
+state ObserveFault {
+  [*] --> Wait
+  Wait --> Detected : FaultDetected
+}
+ObserveFault --> EmitModeEvent : FaultDetected
+
+state EmitModeEvent {
+  [*] --> Publish
+  Publish : publish D{1|2|3} on EventBus
+  Publish --> [*]
+}
+EmitModeEvent --> ModeChoice
+
+state ModeChoice <<choice>>
+
+' drei breite Zweige nebeneinander
+ModeChoice -right-> D1_SafeStop : [mode == D1]
+ModeChoice -right-> D2_Diagnose : [mode == D2]
+ModeChoice -right-> D3_Degraded : [mode == D3]
+
+' === D1: Not-Aus / sicherer Halt ===
+state D1_SafeStop {
+  [*] --> SafeStop
+  SafeStop : SafeStop()\nNotify operator
+  SafeStop --> [*]
+}
+D1_SafeStop --> [*]
+
+' === D2: Diagnose + Behandlung ===
+state D2_Diagnose {
+  [*] --> LogOccurred
+  LogOccurred : OccurredFailure.log(payload)
+  LogOccurred --> QueryKG
+
+  QueryKG : Read OPC UA 'LastExecutedSkill'\nKG: op_preventsFunction(LastExecutedSkill)\n-> Candidate FMs
+  note right of QueryKG
+    'LastExecutedSkill' ist OPC UA (string) und im KG als class_Function
+    hinterlegt, verknüpft via op_preventsFunction mit class_FailureMode.
+    Jeder FailureMode besitzt Sensorwerte & Monitoring-Maßnahmen.
+    Erste Maßnahme: Parameter-Vergleich (Snapshot vs. KG).
+  end note
+  QueryKG --> Monitoring
+
+  state Monitoring {
+    [*] --> ParamCompare
+    ParamCompare : Parameter-Vergleich
+    ParamCompare --> NextMeasure : [weitere Maßnahmen definiert]
+    NextMeasure : Timing/Sequenz/etc. prüfen
+    NextMeasure --> ParamCompare : [nächster FM/Repeat]
+    ParamCompare --> SelectFailure : [FM eindeutig]
+    NextMeasure  --> SelectFailure : [FM eindeutig]
+  }
+
+  Monitoring --> NoFailure : [kein FM bestimmbar]
+  NoFailure : Publish D2_Inconclusive\nRisk := fromFailure
+  NoFailure --> [*]
+
+  Monitoring --> GetReaction : [FM* bestimmt]
+  GetReaction : KG.getSystemReaction(FM*)\n(+ Params)
+  GetReaction --> ReactionChoice
+
+  state ReactionChoice <<choice>>
+  ReactionChoice --> ExecReaction : [Reaction vorhanden]
+  ReactionChoice --> Unavailable  : [keine Reaction]
+
+  ExecReaction : execute(params)
+  ExecReaction --> Outcome <<choice>>
+  Unavailable  --> Outcome
+
+  Outcome --> Resolved   : [success]
+  Outcome --> Unresolved : [failed/missing]
+
+  Resolved : Risk := fromReaction\nPublish D2_Resolved\nResume
+  Resolved --> [*]
+
+  Unresolved : Risk := fromFailure\nPublish D2_Unresolved
+  Unresolved --> ContinueChoice
+
+  state ContinueChoice <<choice>>
+  ContinueChoice --> Resume : [prozess-fähig]
+  ContinueChoice --> Replan : [nicht fortführbar]
+
+  Resume : Continue current plan
+  Resume --> [*]
+
+  Replan : Query ProposedCapabilities\n(without LastExecutedSkill)\nApply new path
+  Replan --> [*]
+}
+D2_Diagnose --> [*]
+
+' === D3: Produktion trotz Störung ===
+state D3_Degraded {
+  [*] --> LogAndRisk
+  LogAndRisk : OccurredFailure.log(payload)\nRisk := fromFailure
+  LogAndRisk --> DegradedRun
+  DegradedRun : Continue in degraded mode
+  DegradedRun --> [*]
+}
+D3_Degraded --> [*]
+
+' Wissensgrundlage Risiko (Hinweis)
+'note "KG-Reasoning liefert je FailureMode die schlimmsten Folgen;\nim Betrieb wird abgefragt und der Risiko-Status gesetzt." as N1
+'N1 .. D2_Diagnose
+'N1 .. D3_Degraded
+
+@enduml
