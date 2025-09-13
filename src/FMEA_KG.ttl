@@ -160,6 +160,26 @@
                                                                      rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
 
 
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> rdf:type owl:ObjectProperty ;
+                                                                         rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForCustomerPlant
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForCustomerPlant> rdf:type owl:ObjectProperty ;
+                                                                                         rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForOwnPlant
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForOwnPlant> rdf:type owl:ObjectProperty ;
+                                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForUser
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForUser> rdf:type owl:ObjectProperty ;
+                                                                                rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> .
+
+
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_is4MProcessCauseElementOf
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_is4MProcessCauseElementOf> rdf:type owl:ObjectProperty ;
                                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
@@ -220,10 +240,23 @@
                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
 
 
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_monitorsFailureMode
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_monitorsFailureMode> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode> ;
+                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
+                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
+
+
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> rdf:type owl:ObjectProperty ;
                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFailureMode
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFailureMode> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> ;
+                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction
@@ -234,6 +267,7 @@
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFailureMode> ;
                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
                                                                        rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
 
@@ -440,7 +474,16 @@ Format:
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams> rdf:type owl:DatatypeProperty ;
                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                   rdfs:range xsd:string .
+                                                                   rdfs:range xsd:string ;
+                                                                   rdfs:comment """Schreibweise:
+{
+  \"rows\": [
+    { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": MAIN.fbJob\" },
+    { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
+    { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
+    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"calc\"}
+  ]
+}""" .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating
@@ -807,7 +850,12 @@ Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers z
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> rdf:type owl:NamedIndividual ,
                                                                         <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
                                                                <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> ;
+                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> """{
+  \"rows\": [
+    { \"id\": \"ns=4;s=OPCUA.Z1\",  \"t\": \"Int16\", \"v\": 0 }
+  ]
+}""" .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail
@@ -823,9 +871,15 @@ Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers z
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction> rdf:type owl:NamedIndividual ,
                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
-                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasDetectionCriterion> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1> ,
-                                                                                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1> .
+                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_monitorsFailureMode> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams> """{
+  \"rows\": [
+    { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob\" },
+    { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
+    { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
+    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"119\"}
+  ]
+}""" .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1
@@ -845,7 +899,7 @@ Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers z
     { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob\" },
     { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
     { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
-    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"calc\"}
+    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"119\"}
   ]
 }""" .
 

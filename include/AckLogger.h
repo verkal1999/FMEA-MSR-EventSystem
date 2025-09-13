@@ -24,6 +24,13 @@ public:
             }
             break;
         }
+        case EventType::evProcessFail:{}
+             if (auto d = std::any_cast<ProcessFailAck>(&ev.payload)) {
+                std::cout << "[AckLogger] ProcessFail    corr=" << d->correlationId
+                          << " processName=" << d->processName
+                          << " summary=" << d->summary << "\n";
+            }
+            break;
         default: break;
         }
     }

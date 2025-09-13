@@ -5,7 +5,7 @@
 
 enum class EventType {
     evD2, evD1, evD3,
-    evReactionPlanned, evReactionDone,
+    evReactionPlanned, evReactionDone, evProcessFail,
     evKGResult, evKGTimeout
 };
 

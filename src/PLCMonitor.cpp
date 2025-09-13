@@ -996,7 +996,112 @@ bool PLCMonitor::watchTriggerD2(double samplingMs, UA_UInt32 queueSize) {
         });
 }
 
-//== Remote Method Call ========================================================
+//== Job Method Call ========================================================
+
+bool PLCMonitor::callMethodTyped(const std::string& objNodeId,
+                                 const std::string& methNodeId,
+                                 const UAValueMap& inputs,
+                                 UAValueMap& outputs,
+                                 unsigned timeoutMs)
+{
+    std::mutex m; std::condition_variable cv;
+    bool done=false, ok=false;
+    UAValueMap tmpOut;
+
+    post([&, objNodeId, methNodeId, timeoutMs]{
+        UA_NodeId obj  = UA_NODEID_STRING_ALLOC(opt_.nsIndex, const_cast<char*>(objNodeId.c_str()));
+        UA_NodeId meth = UA_NODEID_STRING_ALLOC(opt_.nsIndex, const_cast<char*>(methNodeId.c_str()));
+
+        // Inputs: in[] Größe = maxIndex+1
+        size_t inSz = inputs.empty() ? 0u : static_cast<size_t>(inputs.rbegin()->first + 1);
+        std::vector<UA_Variant> in(inSz);
+        for (auto& v : in) UA_Variant_init(&v);
+
+        for (auto& [i, val] : inputs) {
+            switch (val.index()) {
+              case 1: { // bool
+                UA_Boolean b = std::get<bool>(val) ? UA_TRUE : UA_FALSE;
+                UA_Variant_setScalarCopy(&in[i], &b, &UA_TYPES[UA_TYPES_BOOLEAN]); break;
+              }
+              case 2: { // int16
+                UA_Int16 x = std::get<int16_t>(val);
+                UA_Variant_setScalarCopy(&in[i], &x, &UA_TYPES[UA_TYPES_INT16]); break;
+              }
+              case 3: { // int32
+                UA_Int32 x = std::get<int32_t>(val);
+                UA_Variant_setScalarCopy(&in[i], &x, &UA_TYPES[UA_TYPES_INT32]); break;
+              }
+              case 4: { // float
+                UA_Float x = std::get<float>(val);
+                UA_Variant_setScalarCopy(&in[i], &x, &UA_TYPES[UA_TYPES_FLOAT]); break;
+              }
+              case 5: { // double
+                UA_Double x = std::get<double>(val);
+                UA_Variant_setScalarCopy(&in[i], &x, &UA_TYPES[UA_TYPES_DOUBLE]); break;
+              }
+              case 6: { // string
+                std::string s = std::get<std::string>(val);
+                UA_String ua = UA_String_fromChars(s.c_str());
+                UA_Variant_setScalarCopy(&in[i], &ua, &UA_TYPES[UA_TYPES_STRING]);
+                UA_String_clear(&ua);
+                break;
+              }
+              default: break; // monostate -> lässt Slot leer
+            }
+        }
+
+        // Timeout temporär setzen und Call ausführen
+        UA_ClientConfig *cfg = UA_Client_getConfig(client_);
+        UA_UInt32 oldTo = cfg->timeout;
+        cfg->timeout = timeoutMs;
+
+        size_t outSz = 0; UA_Variant* out = nullptr;
+        UA_StatusCode st = UA_Client_call(client_, obj, meth, inSz, in.data(), &outSz, &out); // offizielle API. :contentReference[oaicite:2]{index=2}
+
+        cfg->timeout = oldTo;
+        for (auto& v : in) UA_Variant_clear(&v);
+
+        if (st == UA_STATUSCODE_GOOD) {
+            ok = true;
+            for (size_t i = 0; i < outSz; ++i) {
+                const UA_Variant &vi = out[i];
+                if (!UA_Variant_isScalar(&vi) || !vi.type || !vi.data) continue; // Absicherung. :contentReference[oaicite:3]{index=3}
+
+                if (vi.type == &UA_TYPES[UA_TYPES_BOOLEAN]) {
+                    tmpOut[(int)i] = (*static_cast<UA_Boolean*>(vi.data) == UA_TRUE);
+                } else if (vi.type == &UA_TYPES[UA_TYPES_INT16]) {
+                    tmpOut[(int)i] = *static_cast<UA_Int16*>(vi.data);
+                } else if (vi.type == &UA_TYPES[UA_TYPES_INT32]) {
+                    tmpOut[(int)i] = *static_cast<UA_Int32*>(vi.data);
+                } else if (vi.type == &UA_TYPES[UA_TYPES_FLOAT]) {
+                    tmpOut[(int)i] = *static_cast<UA_Float*>(vi.data);
+                } else if (vi.type == &UA_TYPES[UA_TYPES_DOUBLE]) {
+                    tmpOut[(int)i] = *static_cast<UA_Double*>(vi.data);
+                } else if (vi.type == &UA_TYPES[UA_TYPES_STRING]) {
+                    const UA_String* s = static_cast<UA_String*>(vi.data);
+                    std::string cpp((char*)s->data, s->length); // UA_String ist NICHT nullterminiert. :contentReference[oaicite:4]{index=4}
+                    tmpOut[(int)i] = std::move(cpp);
+                } else {
+                    // TODO: weitere Typen bei Bedarf
+                }
+            }
+        }
+
+        if (out) UA_Array_delete(out, outSz, &UA_TYPES[UA_TYPES_VARIANT]);
+        UA_NodeId_clear(&obj);
+        UA_NodeId_clear(&meth);
+
+        { std::lock_guard<std::mutex> lk(m); done = true; }
+        cv.notify_one();
+    });
+
+    std::unique_lock<std::mutex> lk(m);
+    if (cv.wait_for(lk, std::chrono::milliseconds(timeoutMs + 500)) == std::cv_status::timeout)
+        return false;
+
+    if (ok) outputs = std::move(tmpOut);
+    return ok;
+}
 
 bool PLCMonitor::callJob(const std::string& objNodeId,
                          const std::string& methNodeId,

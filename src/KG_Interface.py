@@ -4,16 +4,15 @@ from rdflib.namespace import RDF
 import json
 
 class KGInterface:
-    def __init__(self, ontology_path: str,
-                 ont_iri: str, class_prefix: str, op_prefix: str, dp_prefix: str):
-        self.ontology_path = ontology_path
-        self.ont_iri = ont_iri
-        self.class_prefix = class_prefix
-        self.op_prefix = op_prefix
-        self.dp_prefix = dp_prefix
+    def __init__(self):
+        self.ontology_path = r"C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src\FMEA_KG.ttl"
+        self.ont_iri = "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/"
+        self.class_prefix = self.ont_iri + "class_"
+        self.op_prefix = self.ont_iri + "op_"
+        self.dp_prefix = self.ont_iri + "dp_"
         self.graph = Graph()
         # TTL laden
-        self.graph.parse(ontology_path, format="turtle")
+        self.graph.parse(self.ontology_path, format="turtle")
 
     def getFailureModeParameters(self, interruptedSkill: str) -> str:
         """Gibt rows-JSON zurück: [{"potFM","FMParam","t","v"} ...]"""
@@ -43,6 +42,34 @@ class KGInterface:
             rows.append({"potFM": potFM, "FMParam": fmparam, "t": "string", "v": ""})
 
         return json.dumps({"rows": rows}, ensure_ascii=False)
+    
+    def getMonitoringActionForFailureMode(self, FMIri: str) -> str:
+        base_sep = '' if self.ont_iri.endswith(('#','/')) else '#'
+        defaultIri = self.ont_iri + base_sep + "checkParameters"
+        query = f"""
+            PREFIX cl: <{self.class_prefix}>
+            PREFIX op: <{self.op_prefix}>
+            PREFIX dp: <{self.dp_prefix}>
+            SELECT DISTINCT ?monAct ?monActParams
+            WHERE {{
+                <{FMIri}> a cl:FailureMode .
+                ?monAct a cl:MonitoringAction ;
+                        op:monitorsFailureMode <{FMIri}> ;
+                        dp:hasMonActParams ?monActParams .
+                FILTER( ?monAct != IRI("{defaultIri}") )
+            }}
+        """
+        print(query)
+        res = self.graph.query(query)
+
+        output_lines = []
+        for row in res:
+            sysR   = str(row["monAct"])
+            params = str(row["monActParams"])
+            output_lines.append(sysR)
+            output_lines.append(params)
+
+        return "\n".join(output_lines)
     
     def getSystemreactionForFailureMode(self, FMIri: str) -> str:
         query = f"""

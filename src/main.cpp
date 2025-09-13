@@ -84,6 +84,7 @@ int main() {
     auto ackLogger = std::make_shared<AckLogger>();
     auto subPlan   = bus.subscribe_scoped(EventType::evReactionPlanned, ackLogger, 1);
     auto subDone   = bus.subscribe_scoped(EventType::evReactionDone,    ackLogger, 1);
+    auto subProcessFail   = bus.subscribe_scoped(EventType::evProcessFail,    ackLogger, 1);
     auto subKGRes  = bus.subscribe_scoped(EventType::evKGResult,        rm, 4);
     auto subKGTo   = bus.subscribe_scoped(EventType::evKGTimeout,       rm, 4);
 

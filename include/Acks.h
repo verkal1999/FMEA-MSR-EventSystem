@@ -14,3 +14,9 @@ struct ReactionDoneAck {
     int rc = 0;                    // 1=OK, 0=Fehler
     std::string summary;           // was wurde getan / Ergebnis
 };
+
+struct ProcessFailAck {
+    std::string correlationId;
+    std::string processName;                  // 1=OK, 0=Fehler
+    std::string summary;           // was wurde getan / Ergebnis
+};

@@ -3,10 +3,11 @@
 #include <chrono>
 #include <unordered_map>
 #include <sstream>
-
+#include <type_traits>
 #include <pybind11/embed.h>
 #include "PythonWorker.h"
-
+// ReactionManager.cpp (bei den Includes)
+#include <optional>
 #include "ReactionManager.h"
 #include "EventBus.h"
 #include "Event.h"
@@ -19,6 +20,7 @@
 #include <nlohmann/json.hpp>
 #include <algorithm>
 #include <cmath>
+#include "MonActionForce.h"
 
 namespace py = pybind11;
 using json = nlohmann::json;
@@ -158,8 +160,72 @@ static std::string rm_fixParamsRawIfNeeded(std::string s) {
         p = after + 1;
     }
     return s;
-}
+    }
 
+    // helper: JSON -> UAValue (nutzt tagOf/almostEqual aus common_types.h)
+    static UAValue parseUAValue(const std::string& t, const nlohmann::json& v) {
+        try {
+            if (t=="bool")   return v.is_boolean() ? v.get<bool>() : (v.is_number_integer()? (bool)v.get<int64_t>() : false);
+            if (t=="int16")  return (int16_t)(v.is_number_integer()? v.get<int64_t>() : std::stoi(v.get<std::string>()));
+            if (t=="int32")  return (int32_t)(v.is_number_integer()? v.get<int64_t>() : std::stol(v.get<std::string>()));
+            if (t=="float")  return (float) (v.is_number() ? v.get<double>() : std::stof(v.get<std::string>()));
+            if (t=="double") return (double)(v.is_number() ? v.get<double>() : std::stod(v.get<std::string>()));
+            if (t=="string") return v.is_string()? v.get<std::string>() : v.dump();
+        } catch (...) {}
+        return {};
+    }
+
+    static void readMapFromJson(const nlohmann::json& obj, UAValueMap& out) {
+        for (auto it = obj.begin(); it != obj.end(); ++it) {
+            int idx = 0; try { idx = std::stoi(it.key()); } catch (...) { continue; }
+            if (!it.value().is_object()) continue;
+            const auto t = it.value().value("t", "");
+            if (!it.value().contains("v")) continue;
+            out[idx] = parseUAValue(t, it.value()["v"]);
+        }
+    }
+
+    inline UAValue parseUAValueFromTypeTag(const std::string& t, const nlohmann::json& v) {
+        try {
+            if (t=="bool")   return v.is_boolean() ? v.get<bool>()
+                            : (v.is_number_integer()? (bool)v.get<int64_t>() : false);
+            if (t=="int16")  return (int16_t)(v.is_number_integer()? v.get<int64_t>()
+                            : std::stoi(v.get<std::string>()));
+            if (t=="int32")  return (int32_t)(v.is_number_integer()? v.get<int64_t>()
+                            : std::stol(v.get<std::string>()));
+            if (t=="float")  return (float) (v.is_number()? v.get<double>()
+                            : std::stof(v.get<std::string>()));
+            if (t=="double") return (double)(v.is_number()? v.get<double>()
+                            : std::stod(v.get<std::string>()));
+            if (t=="string") return v.is_string()? v.get<std::string>() : v.dump();
+        } catch (...) {}
+        return {}; // monostate -> „leer/ungültig“
+    }
+
+    // Setzt target[idx] = typisierter Wert (nur wenn v vorhanden)
+    inline void assignTyped(UAValueMap& target, int idx, const std::string& t, const nlohmann::json& v) {
+        if (!v.is_null()) target[idx] = parseUAValueFromTypeTag(t, v);
+    }
+    // UAValue -> nlohmann::json  (std::monostate wird zu JSON null)
+    inline nlohmann::json uaValueToJson(const UAValue& v) {
+        return std::visit([](auto&& x)->nlohmann::json {
+            using T = std::decay_t<decltype(x)>;
+            if constexpr (std::is_same_v<T, std::monostate>) {
+                return nlohmann::json(nullptr);  // null für „nicht gesetzt“
+            } else {
+                return nlohmann::json(x);        // bool, int16, int32, float, double, string
+            }
+        }, v);
+    }
+    
+    // UAValueMap (index->UAValue) -> kompaktes JSON-Objekt mit Typ-Tag
+    inline nlohmann::json uaMapToJson(const UAValueMap& m) {
+        nlohmann::json j = nlohmann::json::object();
+        for (const auto& [k, v] : m) {
+            j[std::to_string(k)] = { {"t", tagOf(v)}, {"v", uaValueToJson(v)} };
+        }
+        return j;
+    }
 } // namespace
 
 // ---------- ReactionManager ---------------------------------------------------
@@ -592,33 +658,6 @@ Plan ReactionManager::buildPlanFromComparison(const std::string& corr,
     return plan;
 }
 
-void ReactionManager::executePlanAndAck(const Plan& plan, bool checksOk) {
-    using Clock = std::chrono::steady_clock;
-    log(LogLevel::Info) << "executePlanAndAck ENTER corr=" << plan.correlationId
-                        << " ops=" << plan.ops.size()
-                        << " checksOk=" << (checksOk?"true":"false") << "\n";
-
-    bus_.post(Event{
-        EventType::evReactionPlanned, Clock::now(),
-        std::any{ ReactionPlannedAck{
-            plan.correlationId, plan.resourceId,
-            std::string("KG Checks: ") + (checksOk ? "OK" : "FAIL") + " -> DiagnoseFinished-Puls"
-        } }
-    });
-    log(LogLevel::Debug) << "posted evReactionPlanned\n";
-
-    auto cf = CommandForceFactory::create(CommandForceFactory::Kind::UseMonitor, mon_);
-    const int rc = cf->execute(plan);
-    log(LogLevel::Debug) << "CommandForce rc=" << rc << "\n";
-
-    bus_.post(Event{
-        EventType::evReactionDone, Clock::now(),
-        std::any{ ReactionDoneAck{ plan.correlationId, rc, rc ? "OK" : "FAIL" } }
-    });
-    log(LogLevel::Debug) << "posted evReactionDone\n";
-    log(LogLevel::Info)  << "executePlanAndAck EXIT\n";
-}
-
 std::vector<ReactionManager::KgCandidate>
 ReactionManager::normalizeKgPotFM(const std::string& srows) {
     log(LogLevel::Info) << "normalizeKgPotFM ENTER len=" << srows.size()
@@ -762,20 +801,15 @@ Plan ReactionManager::createPlanFromSystemReactionJson(const std::string& corr,
         log(LogLevel::Debug) << "[sysreact] payload preview: \"" << preview << "\"\n";
     }
 
-    // --- 1) Kopfzeile (IRI) optional ausgeben --------------------------------
-    // Format (neu):
-    //   <IRI>\n
-    //   { "rows": [ ... ] }
+    // Optional: IRI-Header
     std::string::size_type nl = payload.find('\n');
     if (nl != std::string::npos) {
         std::string head = payload.substr(0, nl);
-        // nur „nett“ loggen – nicht weiterverwenden
-        if (!head.empty() && head.find("http") != std::string::npos) {
+        if (!head.empty() && head.find("http") != std::string::npos)
             log(LogLevel::Info) << "[sysreact] sysReact IRI: " << head << "\n";
-        }
     }
 
-    // --- 2) JSON-Teil ab erstem '{' herausschneiden + robust parsen ----------
+    // JSON finden + parsen (mit Auto-Fix)
     const std::size_t brace = payload.find('{', (nl == std::string::npos) ? 0 : nl);
     if (brace == std::string::npos) {
         log(LogLevel::Warn) << "[sysreact] no JSON object found in payload\n";
@@ -783,19 +817,16 @@ Plan ReactionManager::createPlanFromSystemReactionJson(const std::string& corr,
         log(LogLevel::Info) << "[sysreact] createPlanFromSystemReactionJson EXIT ops=" << plan.ops.size() << "\n";
         return plan;
     }
-
     std::string js = payload.substr(brace);
 
     nlohmann::json j;
     try {
         j = nlohmann::json::parse(js);
         log(LogLevel::Debug) << "[sysreact] JSON parse OK\n";
-    } catch (const std::exception& e1) {
-        // bekannter Fehler: bei k:"jobId" ist das 'v' manchmal nicht sauber gequotet
+    } catch (...) {
         std::string fixed = rm_fixParamsRawIfNeeded(js);
-        try {
-            j = nlohmann::json::parse(fixed);
-            log(LogLevel::Debug) << "[sysreact] JSON parse OK after auto-fix\n";
+        try { j = nlohmann::json::parse(fixed);
+              log(LogLevel::Debug) << "[sysreact] JSON parse OK after auto-fix\n";
         } catch (const std::exception& e2) {
             log(LogLevel::Warn) << "[sysreact] JSON parse failed: " << e2.what() << "\n";
             plan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
@@ -804,17 +835,14 @@ Plan ReactionManager::createPlanFromSystemReactionJson(const std::string& corr,
         }
     }
 
-    // --- 3) rows[] direkt auswerten (neues, flaches Format) ------------------
-    // Fallbacks bleiben: falls mal doch „bundles“ oder ein nacktes Array kommt.
+    // rows[] extrahieren (dein Format)
     nlohmann::json rows = nlohmann::json::array();
-
     if (j.is_object() && j.contains("rows") && j["rows"].is_array()) {
         rows = j["rows"];
         log(LogLevel::Info) << "[sysreact] rows count=" << rows.size() << "\n";
     } else if (j.is_object() && j.contains("sysReactions") && j["sysReactions"].is_array()
                && !j["sysReactions"].empty() && j["sysReactions"][0].is_object()
-               && j["sysReactions"][0].contains("rows"))
-    {
+               && j["sysReactions"][0].contains("rows")) {
         rows = j["sysReactions"][0]["rows"];
         log(LogLevel::Info) << "[sysreact] bundles->rows count=" << rows.size() << "\n";
     } else if (j.is_array()) {
@@ -824,116 +852,107 @@ Plan ReactionManager::createPlanFromSystemReactionJson(const std::string& corr,
         log(LogLevel::Warn) << "[sysreact] JSON doesn't contain rows[]\n";
     }
 
-    struct Step {
-        std::string jobId;
-        std::string methodId;
-        std::map<int, UA_Int32> intInputs;
-        int timeoutMs = 30000;
+    // --- direkt Operationen pro 'step' aggregieren ---------------------------
+    std::map<int, Operation> opsByStep;
+
+    auto getOp = [&](int step) -> Operation& {
+        auto& op = opsByStep[step];
+        op.type = OpType::CallMethod;
+        return op;
     };
-    std::map<int, Step> steps;
 
-    auto parse_rows_into_steps = [this, &steps](const nlohmann::json& jrows, const char* origin) {
-        for (size_t idx = 0; idx < jrows.size(); ++idx) {
-            const auto& r = jrows[idx];
-            if (!r.is_object()) {
-                log(LogLevel::Warn) << "[sysreact][" << origin << "][row#" << (idx+1)
-                                    << "] skip non-object type=" << r.type_name() << "\n";
-                continue;
+    for (size_t idx = 0; idx < rows.size(); ++idx) {
+        const auto& r = rows[idx];
+        if (!r.is_object()) continue;
+
+        const int         step = r.value("step", 0);
+        const std::string g    = r.value("g", "");
+        const std::string k    = r.value("k", "");
+        const std::string t    = r.value("t", "");
+        const int         i    = r.value("i", 0);
+
+        if (g == "meta" && k == "jobId") {
+            if (r.contains("v") && r["v"].is_string()) getOp(step).callObjNodeId = r["v"].get<std::string>();
+        } else if (g == "method" && k == "methodId") {
+            if (r.contains("v") && r["v"].is_string()) getOp(step).callMethNodeId = r["v"].get<std::string>();
+        } else if (g == "meta" && k == "timeoutMs") {
+            if (r.contains("v")) {
+                if (r["v"].is_number_integer())        getOp(step).timeoutMs = r["v"].get<int>();
+                else if (r["v"].is_string()) { try {   getOp(step).timeoutMs = std::stoi(r["v"].get<std::string>()); } catch (...) {} }
             }
-            const int         step = r.value("step", 0);
-            const std::string g    = r.value("g", "");
-            const std::string k    = r.value("k", "");
-            const std::string t    = r.value("t", "");
-            const int         i    = r.value("i", 0);
-
-            std::string vStr;
-            if (r.contains("v")) vStr = r["v"].is_string() ? r["v"].get<std::string>() : r["v"].dump();
-
-            log(LogLevel::Debug) << "[sysreact][" << origin << "][row#" << (idx+1)
-                                 << "] step=" << step << " g=" << g << " k=" << k
-                                 << " i=" << i << " t=" << t << " v=" << vStr << "\n";
-
-            if (g == "meta" && k == "jobId") {
-                if (r.contains("v") && r["v"].is_string()) steps[step].jobId = r["v"].get<std::string>();
-            } else if (g == "method" && k == "methodId") {
-                if (r.contains("v") && r["v"].is_string()) steps[step].methodId = r["v"].get<std::string>();
-            } else if (g == "meta" && k == "timeoutMs") {
-                if (r.contains("v")) {
-                    if (r["v"].is_number_integer())        steps[step].timeoutMs = r["v"].get<int>();
-                    else if (r["v"].is_string()) { try {   steps[step].timeoutMs = std::stoi(r["v"].get<std::string>()); } catch (...) {} }
-                }
-            } else if (g == "input") {
-                if (t == "int32" && r.contains("v")) {
-                    UA_Int32 val = 0;
-                    if (r["v"].is_number_integer())        val = static_cast<UA_Int32>(r["v"].get<int64_t>());
-                    else if (r["v"].is_string()) { try {   val = static_cast<UA_Int32>(std::stol(r["v"].get<std::string>())); } catch (...) {} }
-                    steps[step].intInputs[i] = val;
-                }
-            }
-            // "output" bleibt informativ
+        } else if (g == "input") {
+            if (r.contains("v")) assignTyped(getOp(step).inputs,  i, t, r["v"]);   // <— typisiert
+        } else if (g == "output") {
+            if (r.contains("v")) assignTyped(getOp(step).expOuts, i, t, r["v"]);   // <— typisiert
         }
-    };
-
-    parse_rows_into_steps(rows, "top");
-
-    if (steps.empty()) {
-        log(LogLevel::Info) << "[sysreact] steps map is EMPTY after parsing -> nothing to execute\n";
-        // trotzdem: DiagnoseFinished zum Schluss
-        plan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
-        log(LogLevel::Info) << "[sysreact] createPlanFromSystemReactionJson EXIT ops=" << plan.ops.size() << "\n";
-        return plan;
     }
 
-    // --- 4) pro Step eine CallMethod-Op erzeugen ------------------------------
-    for (auto &kv : steps) {
-        const int sidx = kv.first;
-        const Step &st = kv.second;
+    // --- in Reihenfolge sammeln + Abschluss-Puls -----------------------------
+    for (auto &kv : opsByStep) {
+        Operation& op = kv.second;
 
-        if (st.jobId.empty() || st.methodId.empty()) {
-            log(LogLevel::Warn) << "[sysreact] step " << sidx << " missing jobId/methodId -> skip\n";
+        if (op.callObjNodeId.empty() || op.callMethNodeId.empty()) {
+            log(LogLevel::Warn) << "[sysreact] step " << kv.first << " missing jobId/methodId -> skip\n";
             continue;
         }
 
-        Operation op;
-        op.type           = OpType::CallMethod;
-        op.callObjNodeId  = st.jobId;
-        op.callMethNodeId = st.methodId;
-        op.timeoutMs      = st.timeoutMs;
-
-        if (auto it = st.intInputs.find(0); it != st.intInputs.end())
-            op.arg = std::to_string(it->second);
-
-        log(LogLevel::Debug) << "[sysreact] step " << sidx
+        log(LogLevel::Debug) << "[sysreact] step " << kv.first
                              << " obj="   << op.callObjNodeId
                              << " meth="  << op.callMethNodeId
-                             << " x="     << (op.arg.empty() ? "(none)" : op.arg)
+                             << " in#="   << op.inputs.size()
+                             << " exp#="  << op.expOuts.size()
                              << " timeoutMs=" << op.timeoutMs << "\n";
 
         plan.ops.push_back(std::move(op));
     }
 
-    // --- 5) Zwangs-letzter Schritt: DiagnoseFinished pulsen -------------------
+    // Abschluss: DiagnoseFinished pulsen
     plan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
 
     log(LogLevel::Info) << "[sysreact] createPlanFromSystemReactionJson EXIT ops=" << plan.ops.size() << "\n";
     return plan;
 }
 
-
-
-
-
-void ReactionManager::executeMethodPlanAndAck(const Plan& plan) {
+void ReactionManager::createCommandForceForPlanAndAck(const Plan& plan,
+                                                      bool checksOk,
+                                                      const std::string& processNameForFail)
+{
     using Clock = std::chrono::steady_clock;
+
+    const bool hasCall =
+        std::any_of(plan.ops.begin(), plan.ops.end(),
+                    [](const Operation& op){ return op.type == OpType::CallMethod; });
+
+    log(LogLevel::Info) << "createCommandForceForPlanAndAck ENTER corr=" << plan.correlationId
+                        << " ops=" << plan.ops.size()
+                        << " checksOk=" << (checksOk?"true":"false")
+                        << " hasCall=" << (hasCall?"true":"false")
+                        << "\n";
 
     // Ack: PLANNED
     bus_.post(Event{
         EventType::evReactionPlanned, Clock::now(),
         std::any{ ReactionPlannedAck{
             plan.correlationId, plan.resourceId,
-            "SystemReaction Plan (CallMethod)"
+            hasCall
+              ? std::string("SystemReaction Plan (CallMethod)")
+              : (std::string("KG Checks: ") + (checksOk ? "OK" : "FAIL") + " -> DiagnoseFinished-Puls")
         } }
     });
+    log(LogLevel::Debug) << "posted evReactionPlanned\n";
+
+    // Falls gar keine System-Reaktion (CallMethod) im Plan ist -> Prozessfehler melden
+    if (!hasCall) {
+        bus_.post(Event{
+            EventType::evProcessFail, Clock::now(),
+            std::any{ ProcessFailAck{
+                plan.correlationId,
+                processNameForFail,
+                "No system reaction defined for this failure."
+            } }
+        });
+        log(LogLevel::Warn) << "[exec] no CallMethod in plan -> posted evProcessFail\n";
+    }
 
     bool allOk = true;
 
@@ -941,45 +960,67 @@ void ReactionManager::executeMethodPlanAndAck(const Plan& plan) {
         const auto& op = plan.ops[idx];
 
         if (op.type == OpType::CallMethod) {
-            // Simple arg: int32 "x" steckt als string in op.arg (falls vorhanden)
-            UA_Int32 x = 0;
-            bool haveX = false;
-            if (!op.arg.empty()) {
-                try { x = static_cast<UA_Int32>(std::stol(op.arg)); haveX = true; }
-                catch (...) { haveX = false; }
-            }
-
-            UA_Int32 yOut = 0;
-            const unsigned to = (op.timeoutMs > 0 ? static_cast<unsigned>(op.timeoutMs) : 3000);
+            const unsigned to = (op.timeoutMs > 0 ? static_cast<unsigned>(op.timeoutMs) : 30000);
 
             log(LogLevel::Info) << "[exec] CallMethod step#" << idx
                                 << " obj='"  << op.callObjNodeId
                                 << "' meth='"<< op.callMethNodeId
-                                << "' x="    << (haveX ? std::to_string(x) : "(none)")
+                                << "' inputs=" << uaMapToJson(op.inputs).dump()
                                 << " timeout=" << to << "ms\n";
 
-            const bool ok = mon_.callJob(op.callObjNodeId, op.callMethNodeId, x, yOut, to);
-            allOk = allOk && ok;
+            // 1) OPC UA Call (typisiert, mehrere Outputs möglich)
+            UAValueMap got;
+            const bool ok = mon_.callMethodTyped(op.callObjNodeId, op.callMethNodeId,
+                                                 op.inputs, got, to);
 
-            log(LogLevel::Info) << "[exec]   -> " << (ok ? "OK" : "FAIL")
-                                << "  yOut=" << yOut << "\n";
+            // 2) Soll/Ist-Vergleich (nur Keys aus expOuts müssen matchen)
+            bool match = true;
+            if (!op.expOuts.empty()) {
+                for (const auto& [k, vexp] : op.expOuts) {
+                    auto it = got.find(k);
+                    if (it == got.end() || !::equalUA(vexp, it->second)) { match = false; break; }
+                }
+                log(LogLevel::Info) << "[exec]   outputs: expected=" << uaMapToJson(op.expOuts).dump()
+                                    << " got=" << uaMapToJson(got).dump()
+                                    << " -> " << (match ? "MATCH" : "DIFF") << "\n";
+            } else {
+                log(LogLevel::Info) << "[exec]   outputs: (no expected values in KG), got size="
+                                    << got.size() << "\n";
+            }
+
+            // 3) evProcessFail bei Output-Differenz (mit Prozessname!)
+            if (!match) {
+                bus_.post(Event{
+                    EventType::evProcessFail, Clock::now(),
+                    std::any{ ProcessFailAck{
+                        plan.correlationId,
+                        processNameForFail,
+                        std::string("Output mismatch at '") + op.callMethNodeId + "'"
+                    } }
+                });
+                log(LogLevel::Debug) << "posted evProcessFail (output mismatch)\n";
+            }
+
+            allOk = allOk && ok && match;
+            log(LogLevel::Info) << "[exec]   -> call=" << (ok ? "OK" : "FAIL")
+                                << " combined=" << (ok && match ? "OK" : "FAIL") << "\n";
         }
         else if (op.type == OpType::PulseBool) {
-            // Den Pulse führen wir über CommandForce aus, damit er garantiert identisch
-            // zu deinem bisherigen Pfad läuft.
+            // Puls-Op über CommandForce ausführen (dein bestehender Weg)
             Plan pulsePlan;
             pulsePlan.correlationId = plan.correlationId;
             pulsePlan.resourceId    = plan.resourceId;
             pulsePlan.ops.push_back(op);
 
             log(LogLevel::Info) << "[exec] PulseBool step#" << idx
-                    << " nodeId='" << op.nodeId << "' ns=" << op.ns
-                    << " value=" << op.arg << " timeout=" << op.timeoutMs << "ms\n";
+                                << " nodeId='" << op.nodeId
+                                << "' ns=" << op.ns
+                                << " value=" << op.arg
+                                << " timeout=" << op.timeoutMs << "ms\n";
 
             auto cf = CommandForceFactory::create(CommandForceFactory::Kind::UseMonitor, mon_);
-            const int rc = cf->execute(pulsePlan);
-            allOk = allOk && (rc != 0);
-
+            const int rc = cf->execute(pulsePlan);            // Pulse/Writes etc.
+            allOk = allOk && (rc != 0);                       // 1=OK/0=FAIL
             log(LogLevel::Info) << "[exec]   -> " << (rc ? "OK" : "FAIL") << "\n";
         }
         else {
@@ -996,9 +1037,179 @@ void ReactionManager::executeMethodPlanAndAck(const Plan& plan) {
             allOk ? "OK" : "FAIL"
         } }
     });
+    log(LogLevel::Debug) << "posted evReactionDone\n";
+    log(LogLevel::Info)  << "createCommandForceForPlanAndAck EXIT\n";
 }
 
+//== Monitoring-Actions
+std::string ReactionManager::fetchMonitoringActionForFM(const std::string& fmIri) {
+    log(LogLevel::Info) << "[monact] fetchMonitoringActionForFM ENTER fmIri=" << fmIri << "\n";
+    std::string payload;
 
+    try {
+        payload = PythonWorker::instance().call([&]() -> std::string {
+            py::module_ sys = py::module_::import("sys");
+            py::list path   = sys.attr("path").cast<py::list>();
+            path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
+
+            py::module_ kg  = py::module_::import("KG_Interface");
+            py::object cls  = kg.attr("KGInterface");
+            py::object kgi  = cls(); // __init__ ohne Parameter
+            py::object res  = kgi.attr("getMonitoringActionForFailureMode")(fmIri.c_str());
+            return std::string(py::str(res));
+        });
+
+        auto preview = payload.substr(0, std::min<size_t>(payload.size(), 300));
+        log(LogLevel::Info)  << "[monact] payload len=" << payload.size() << " preview=\"" << preview << "\"\n";
+        log(LogLevel::Debug) << "[monact] full payload:\n" << payload << "\n";
+    } catch (const std::exception& e) {
+        log(LogLevel::Warn) << "[monact] Python call failed: " << e.what() << "\n";
+    }
+
+    log(LogLevel::Info) << "[monact] fetchMonitoringActionForFM EXIT\n";
+    return payload;
+}
+Plan ReactionManager::createPlanFromMonActionJson(const std::string& corr,
+                                                  const std::string& payload)
+{
+    Plan plan; plan.correlationId = corr; plan.resourceId = "Station";
+
+    log(LogLevel::Info)  << "[monact] createPlanFromMonActionJson ENTER len=" << payload.size() << "\n";
+    if (!payload.empty()) {
+        auto preview = payload.substr(0, std::min<size_t>(payload.size(), 300));
+        log(LogLevel::Debug) << "[monact] payload preview: \"" << preview << "\"\n";
+    }
+
+    // Kopf (IRI-Zeile) überspringen, ersten '{' suchen
+    std::string::size_type nl = payload.find('\n');
+    const std::size_t brace   = payload.find('{', (nl == std::string::npos) ? 0 : nl);
+    if (brace == std::string::npos) {
+        log(LogLevel::Warn) << "[monact] no JSON object found in payload\n";
+        log(LogLevel::Info) << "[monact] createPlanFromMonActionJson EXIT ops=" << plan.ops.size() << "\n";
+        return plan;
+    }
+    std::string js = payload.substr(brace);
+
+    nlohmann::json j;
+    try { j = nlohmann::json::parse(js); }
+    catch (...) {
+        std::string fixed = rm_fixParamsRawIfNeeded(js);
+        try { j = nlohmann::json::parse(fixed); }
+        catch (const std::exception& e2) {
+            log(LogLevel::Warn) << "[monact] JSON parse failed: " << e2.what() << "\n";
+            log(LogLevel::Info) << "[monact] createPlanFromMonActionJson EXIT ops=" << plan.ops.size() << "\n";
+            return plan;
+        }
+    }
+
+    nlohmann::json rows = nlohmann::json::array();
+    if (j.is_object() && j.contains("rows") && j["rows"].is_array()) {
+        rows = j["rows"];
+        log(LogLevel::Info) << "[monact] rows count=" << rows.size() << "\n";
+    } else if (j.is_array()) {
+        rows = j;
+        log(LogLevel::Info) << "[monact] top is array -> rows count=" << rows.size() << "\n";
+    } else if (j.is_object() && j.contains("sysReactions") && j["sysReactions"].is_array()
+               && !j["sysReactions"].empty() && j["sysReactions"][0].is_object()
+               && j["sysReactions"][0].contains("rows")) {
+        rows = j["sysReactions"][0]["rows"];
+        log(LogLevel::Info) << "[monact] bundles->rows count=" << rows.size() << "\n";
+    } else {
+        log(LogLevel::Warn) << "[monact] JSON doesn't contain rows[]\n";
+    }
+
+    std::map<int, Operation> opsByStep;
+    auto getOp = [&](int step) -> Operation& {
+        auto& op = opsByStep[step];
+        op.type = OpType::CallMethod;
+        return op;
+    };
+
+    for (size_t i = 0; i < rows.size(); ++i) {
+        const auto& r = rows[i];
+        if (!r.is_object()) continue;
+
+        const int         step = r.value("step", 0);
+        const std::string g    = r.value("g", "");
+        const std::string k    = r.value("k", "");
+        const std::string t    = r.value("t", "");
+        const int         idx  = r.value("i", 0);
+
+        if (g == "meta"   && k == "jobId")    { if (r.contains("v") && r["v"].is_string()) getOp(step).callObjNodeId = r["v"].get<std::string>(); }
+        else if (g=="method" && k=="methodId"){ if (r.contains("v") && r["v"].is_string()) getOp(step).callMethNodeId = r["v"].get<std::string>(); }
+        else if (g=="meta"   && k=="timeoutMs") {
+            if (r.contains("v")) {
+                if (r["v"].is_number_integer())        getOp(step).timeoutMs = r["v"].get<int>();
+                else if (r["v"].is_string()) { try {   getOp(step).timeoutMs = std::stoi(r["v"].get<std::string>()); } catch (...) {} }
+            }
+        } else if (g == "input") {
+            if (r.contains("v")) assignTyped(getOp(step).inputs,  idx, t, r["v"]);
+        } else if (g == "output") {
+            if (r.contains("v")) assignTyped(getOp(step).expOuts, idx, t, r["v"]);
+        }
+    }
+
+    for (auto &kv : opsByStep) {
+        Operation& op = kv.second;
+        if (op.callObjNodeId.empty() || op.callMethNodeId.empty()) {
+            log(LogLevel::Warn) << "[monact] step " << kv.first << " missing jobId/methodId -> skip\n";
+            continue;
+        }
+        log(LogLevel::Debug) << "[monact] step " << kv.first
+                             << " obj="  << op.callObjNodeId
+                             << " meth=" << op.callMethNodeId
+                             << " in#="  << op.inputs.size()
+                             << " exp#=" << op.expOuts.size()
+                             << " timeoutMs=" << op.timeoutMs << "\n";
+        plan.ops.push_back(std::move(op));
+    }
+
+    log(LogLevel::Info) << "[monact] createPlanFromMonActionJson EXIT ops=" << plan.ops.size() << "\n";
+    return plan;
+}
+bool ReactionManager::executeMonitoringPlanAndCheck(const Plan& plan, unsigned defaultTimeoutMs) {
+    log(LogLevel::Info) << "[monact] executeMonitoringPlanAndCheck ENTER ops=" << plan.ops.size() << "\n";
+    bool allOk = true;
+
+    for (size_t i = 0; i < plan.ops.size(); ++i) {
+        const auto& op = plan.ops[i];
+        if (op.type != OpType::CallMethod) {
+            log(LogLevel::Debug) << "[monact] skip non-CallMethod at idx=" << i << "\n";
+            continue;
+        }
+        const unsigned to = (op.timeoutMs > 0 ? static_cast<unsigned>(op.timeoutMs)
+                                              : (defaultTimeoutMs ? defaultTimeoutMs : 30000));
+
+        log(LogLevel::Info) << "[monact] CallMethod step#" << i
+                            << " obj='"  << op.callObjNodeId
+                            << "' meth='"<< op.callMethNodeId
+                            << "' inputs=" << uaMapToJson(op.inputs).dump()
+                            << " timeout=" << to << "ms\n";
+
+        UAValueMap got;
+        const bool callOk = mon_.callMethodTyped(op.callObjNodeId, op.callMethNodeId, op.inputs, got, to);
+
+        bool match = true;
+        if (!op.expOuts.empty()) {
+            for (const auto& [k, vexp] : op.expOuts) {
+                auto it = got.find(k);
+                if (it == got.end() || !::equalUA(vexp, it->second)) { match = false; break; }
+            }
+            log(LogLevel::Info) << "[monact]   outputs: expected=" << uaMapToJson(op.expOuts).dump()
+                                << " got=" << uaMapToJson(got).dump()
+                                << " -> " << (match ? "MATCH" : "DIFF") << "\n";
+        } else {
+            log(LogLevel::Info) << "[monact]   outputs: (no expected values in KG), got size=" << got.size() << "\n";
+        }
+
+        const bool ok = (callOk && match);
+        allOk = allOk && ok;
+        log(LogLevel::Info) << "[monact]   -> " << (ok ? "OK" : "FAIL") << "\n";
+    }
+
+    log(LogLevel::Info) << "[monact] executeMonitoringPlanAndCheck EXIT allOk=" << (allOk?"true":"false") << "\n";
+    return allOk;
+}
 
 
 void ReactionManager::onMethod(const Event& ev) {
@@ -1014,17 +1225,27 @@ void ReactionManager::onMethod(const Event& ev) {
     const auto corr = makeCorrelationId(evName);
     log(LogLevel::Info) << "onMethod ENTER " << evName << " corr=" << corr << "\n";
 
-    // 1) Inventarsnapshot aufnehmen (inkl. Cache-Füllung/Logs)
+    // 1) Inventarsnapshot aufnehmen (inkl. Cache-Füllung/Logs) + Prozessname cachen
     auto inv = buildInventorySnapshot("PLC1");
     logInventoryVariables(inv);
+    const std::string processName =
+        getStringFromCache(inv, /*ns*/4, "OPCUA.lastExecutedProcess");
 
-    // 2) Job joinbar über Worker-Thread ausführen (kein detach!)
+    // Für evD1 / evD3 aktuell nur Info-Log und raus (Worker nur für evD2)
+    if (ev.type == EventType::evD1 || ev.type == EventType::evD3) {
+        std::cout << "[RM][INF] received " << evName << " corr=" << corr << "\n";
+        log(LogLevel::Info) << "onMethod EXIT " << evName << " corr=" << corr << " (no worker)\n";
+        return;
+    }
+
+    // === Nur für evD2: Job joinbar über Worker-Thread ausführen (kein detach!) ===
     {
         std::lock_guard<std::mutex> lk(job_mx_);
-        jobs_.push([this, corr, inv, evName](std::stop_token st) mutable {
+        jobs_.push([this, corr, inv, evName, processName](std::stop_token st) mutable {
             log(LogLevel::Info) << "[worker] corr=" << corr << " (" << evName << ") START\n";
-                    // --- TIMER: Start + Helper -------------------------------------------
-            using clock = std::chrono::steady_clock;     // monoton, für Intervalle geeignet
+
+            // --- TIMER -----------------------------------------------------------
+            using clock = std::chrono::steady_clock;
             const auto t0    = clock::now();
             auto       tlast = t0;
             auto lap = [&](const char* label) {
@@ -1040,97 +1261,131 @@ void ReactionManager::onMethod(const Event& ev) {
             lap("job-start");
             // ---------------------------------------------------------------------
 
-            log(LogLevel::Info) << "[worker] corr=" << corr << " (" << evName << ") START\n";
-
-            // --- Python: FailureModeParameter für letzte Skill ermitteln ----------
+            // --- Python 1/3: potenzielle FailureModes ---------------------------
             std::string srows;
             try {
-                log(LogLevel::Debug) << "[worker] calling PythonWorker\n";
+                log(LogLevel::Debug) << "[worker] calling PythonWorker.getFailureModeParameters\n";
                 srows = PythonWorker::instance().call([&]() -> std::string {
                     namespace py = pybind11;
-                    py::module_ sys  = py::module_::import("sys");
+                    py::module_ sys  = py::module::import("sys");
                     py::list    path = sys.attr("path").cast<py::list>();
                     path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
 
                     py::module_ kg  = py::module_::import("KG_Interface");
                     py::object cls  = kg.attr("KGInterface");
-                    py::object kgi  = cls(
-                        R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src\FMEA_KG.ttl)",
-                        "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/",
-                        "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_",
-                        "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_",
-                        "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_"
-                    );
-
+                    py::object kgi  = cls();
                     std::string interruptedSkill = getLastExecutedSkill(inv);
-                    if (interruptedSkill.empty()) {
-                        interruptedSkill = "MAIN.fbJob"; // Fallback
-                        log(LogLevel::Warn) << "[skill] empty -> using default \"" << interruptedSkill << "\"\n";
-                    }
-                    auto pyres = kgi.attr("getFailureModeParameters")(interruptedSkill);
+                    if (interruptedSkill.empty()) interruptedSkill = "MAIN.fbJob"; // Fallback
+                    py::object pyres = kgi.attr("getFailureModeParameters")(interruptedSkill.c_str());
                     return std::string(py::str(pyres));
                 });
-                log(LogLevel::Info) << "[worker] PythonWorker OK json_len=" << srows.size()
+                log(LogLevel::Info) << "[worker] KG.getFailureModeParameters OK json_len=" << srows.size()
                                     << " preview=\"" << truncStr(srows) << "\"\n";
             } catch (const std::exception& e) {
                 log(LogLevel::Error) << "[worker] KG error: " << e.what() << "\n";
                 srows = R"({"rows":[]})";
             }
-            lap("kg-params-ready"); 
-            if (st.stop_requested()) {
-                log(LogLevel::Warn) << "[worker] stop requested -> abort corr=" << corr << "\n";
+            lap("kg-params-ready");
+            if (st.stop_requested()) { log(LogLevel::Warn) << "[worker] stop requested -> abort corr=" << corr << "\n"; return; }
+
+            // --- Kandidaten parsen & Checks -------------------------------------
+            auto potCands = normalizeKgPotFM(srows);
+            std::vector<ComparisonReport> perRep;
+            std::vector<std::string> winners;
+            if (!potCands.empty()) {
+                winners = selectPotFMByChecks(inv, potCands, &perRep);
+            }
+            lap("potFM-selected");
+
+            // --- NEU: MonitoringActions je Winner via CommandForce ----------------
+            if (!winners.empty()) {
+                auto wf = CommandForceFactory::createWinnerFilter(
+                    mon_, bus_,
+                    // Fetcher: deine bestehende Methode
+                    [this](const std::string& fm){ return this->fetchMonitoringActionForFM(fm); },
+                    /*defaultTimeoutMs=*/30000
+                );
+                winners = wf->filter(winners, corr, processName);
+                lap("monact-evaluated");
+            }
+
+            // --- Winner-Case: genau einer -> Systemreaktion holen/ausführen ------
+            if (winners.size() == 1) {
+                const std::string foundFM = winners.front();
+                log(LogLevel::Info) << "[potFM] foundFM=" << foundFM << " -> fetch Systemreaction\n";
+
+                // 3/3: KG SysReaction holen
+                std::string sysPayload;
+                try {
+                    log(LogLevel::Debug) << "[worker] calling PythonWorker.getSystemreactionForFailureMode\n";
+                    sysPayload = PythonWorker::instance().call([&]() -> std::string {
+                        namespace py = pybind11;
+                        py::module_ sys  = py::module::import("sys");
+                        py::list    path = sys.attr("path").cast<py::list>();
+                        path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
+                        py::module_ kg  = py::module_::import("KG_Interface");
+                        py::object cls  = kg.attr("KGInterface");
+                        py::object kgi  = cls();
+                        py::object pyres = kgi.attr("getSystemreactionForFailureMode")(foundFM.c_str());
+                        return std::string(py::str(pyres));
+                    });
+                    log(LogLevel::Info) << "[worker] KG.getSystemreactionForFailureMode OK len=" << sysPayload.size()
+                                        << " preview=\"" << truncStr(sysPayload) << "\"\n";
+                } catch (const std::exception& e) {
+                    log(LogLevel::Error) << "[worker] KG sysreact error: " << e.what() << "\n";
+                    sysPayload.clear();
+                }
+                lap("sysreact-fetched");
+
+                // Plan aufbauen & ausführen (SysReact-Parser fügt Pulse am Ende an)
+                Plan sysPlan;
+                if (!sysPayload.empty()) {
+                    sysPlan = createPlanFromSystemReactionJson(corr, sysPayload);
+                } else {
+                    sysPlan.correlationId = corr; sysPlan.resourceId = "Station";
+                    sysPlan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
+                }
+                log(LogLevel::Info) << "[sysreact] steps=" << sysPlan.ops.size() << "\n";
+                lap("sysreact-plan-built");
+
+                createCommandForceForPlanAndAck(sysPlan, /*checksOk=*/true, processName);
+                lap("plan-executed");
+                log(LogLevel::Info) << "[worker] corr=" << corr << " END (sysreact)\n";
                 return;
             }
 
-            // --- 3) Neuer potFM-Pfad zuerst versuchen ----------------------------
-            auto potCands = normalizeKgPotFM(srows);
+            // --- Kein Winner oder Mehrdeutigkeit: Fallback -----------------------
             if (!potCands.empty()) {
-                std::vector<ComparisonReport> perRep;
-                auto winners = selectPotFMByChecks(inv, potCands, &perRep);
-                lap("potFM-selected");  
-                if (winners.size() == 1) {
-                    const std::string foundFM = winners.front();
-                    log(LogLevel::Info) << "[potFM] foundFM=" << foundFM << " -> fetch Systemreaction\n";
-
-                    const std::string sysPayload = fetchSystemReactionForFM(foundFM);
-                    Plan sysPlan = createPlanFromSystemReactionJson(corr, sysPayload);
-                    log(LogLevel::Info) << "[sysreact] steps=" << sysPlan.ops.size() << "\n";
-                    lap("sysreact-plan-built");
-                    lap("before-exec"); 
-                    executeMethodPlanAndAck(sysPlan);        // inkl. Acks
-                    log(LogLevel::Info) << "[worker] corr=" << corr << " END (sysreact)\n";
-                    lap("exec-done");
-                    return;
-                }
-
                 if (winners.empty()) {
-                    log(LogLevel::Info) << "[potFM] kein FailureMode passt -> Fallback (Checks/DiagnoseFinished)\n";
+                    log(LogLevel::Info) << "[potFM] keine Kandidaten übrig nach MonAct -> Fallback\n";
                 } else {
-                    log(LogLevel::Warn) << "[potFM] mehrdeutige Treffer (" << winners.size()
-                                        << ") -> Fallback (Checks/DiagnoseFinished)\n";
+                    log(LogLevel::Warn) << "[potFM] mehrdeutige Kandidaten (" << winners.size()
+                                        << ") nach MonAct -> Fallback\n";
                 }
-
-                // kosmetische Checks-Info für Ack/Logger
                 auto plan = buildPlanFromComparison(
                     corr, winners.size()==1 ? ComparisonReport{true,{}} : ComparisonReport{false,{}});
                 lap("fallback-plan-built");
-                lap("before-exec");
-                executePlanAndAck(plan, winners.size()==1);
+
+                createCommandForceForPlanAndAck(plan, winners.size()==1, processName);
+                lap("plan-executed");
                 log(LogLevel::Info) << "[worker] corr=" << corr << " END (fallback potFM)\n";
-                lap("exec-done");
                 return;
             }
 
-            // --- 4) Altes Format (id/t/v Rows) – Fallback ------------------------
+            // --- Altes Format (id/t/v Rows) – Fallback ---------------------------
             auto expects = normalizeKgResponse(srows);
             auto rep     = compareAgainstCache(inv, expects);
             auto plan    = buildPlanFromComparison(corr, rep);
-            executePlanAndAck(plan, rep.allOk);
+            createCommandForceForPlanAndAck(plan, rep.allOk, processName);
 
             log(LogLevel::Info) << "[worker] corr=" << corr << " END\n";
         });
+        job_cv_.notify_one();
     }
-    job_cv_.notify_one();
 
-    log(LogLevel::Info) << "onMethod EXIT " << evName << " corr=" << corr << " (queued)\n";
+    log(LogLevel::Info) << "onMethod EXIT " << evName << " corr=" << corr << " (worker enqueued)\n";
 }
+
+
+
+

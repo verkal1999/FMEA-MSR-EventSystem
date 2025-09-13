@@ -117,7 +117,9 @@ private:
 
     // 4) Plan bauen & ausführen
     Plan  buildPlanFromComparison(const std::string& corr, const ComparisonReport& rep);
-    void  executePlanAndAck(const Plan& plan, bool checksOk);
+    void createCommandForceForPlanAndAck(const Plan& plan,
+                                     bool checksOk,
+                                     const std::string& processNameForFail);
 
     // 5) Logging/Dumps
     void  logBoolInventory(const InventorySnapshot& inv) const;
@@ -133,5 +135,10 @@ private:
     std::string fetchSystemReactionForFM(const std::string& fmIri); // Python call
     Plan        createPlanFromSystemReactionJson(const std::string& corrId,
                                                  const std::string& payloadJson);
-    void        executeMethodPlanAndAck(const Plan& plan);
+                                                
+    // Monitoring-Stage: KG holen, Plan bauen, ausführen/prüfen
+    std::string fetchMonitoringActionForFM(const std::string& fmIri);
+    Plan        createPlanFromMonActionJson(const std::string& corr, const std::string& payload);
+    bool        executeMonitoringPlanAndCheck(const Plan& plan, unsigned defaultTimeoutMs = 30000);
+
 };

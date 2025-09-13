@@ -36,6 +36,7 @@ add_executable(opcua_client
   src/PythonRuntime.cpp
   src/CommandForce.cpp
   src/CommandForceFactory.cpp
+  src/MonActionForce.cpp
 )
 
 target_sources(opcua_client PRIVATE
@@ -52,6 +53,8 @@ target_sources(opcua_client PRIVATE
   include/Acks.h
   include/AckLogger.h
   include/Correlation.h
+  include/MonActionForce.h
+  include/common_types.h
 )
 
 # Includes (eigene + open62541 generated)

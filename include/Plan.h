@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>               // neu
+#include "common_types.h"    // UAValue, UAValueMap (neu)
 
 /// Primitive, aus denen ein Reaktionsplan besteht.
 enum class OpType {
@@ -20,24 +22,23 @@ struct Operation {
     OpType        type = OpType::CallMethod;
 
     // Allgemein (für Write*/ReadCheck):
-    // NodeId als StringId (wie bei UA_NODEID_STRING[_ALLOC]); Namespace separat.
-    std::string   nodeId;                 // z. B. "DiagnoseFinished" (ohne "ns=" Präfix)
-    unsigned short ns   = 1;              // Namespace Index (Standard: 1)
+    std::string   nodeId;                 // z. B. "DiagnoseFinished"
+    unsigned short ns   = 1;              // Namespace Index
 
     // ---- CallMethod-spezifisch ----
-    // Falls type == CallMethod:
-    // - callObjNodeId / callMethNodeId werden verwendet
-    // - callNsObj / callNsMeth erlauben bei Bedarf verschiedene Namespaces
-    // Wenn nicht gesetzt, kannst du in der Ausführung auf 'ns' zurückfallen.
     std::string   callObjNodeId;          // Object-NodeId (StringId)
     std::string   callMethNodeId;         // Method-NodeId (StringId)
-    unsigned short callNsObj  = 0;        // 0 = "nicht gesetzt" -> beim Ausführen auf 'ns' zurückfallen
-    unsigned short callNsMeth = 0;        // 0 = "nicht gesetzt" -> beim Ausführen auf 'ns' zurückfallen
+    unsigned short callNsObj  = 0;        // 0 = "nicht gesetzt" -> 'ns' nutzen
+    unsigned short callNsMeth = 0;        // 0 = "nicht gesetzt" -> 'ns' nutzen
 
-    // Argument-Payload:
+    // Typisierte Argumente (nur für CallMethod genutzt):
+    UAValueMap    inputs;                 // index -> UAValue (bool,int16,int32,float,double,string)
+    UAValueMap    expOuts;                // erwartete Outputs (index -> UAValue)
+
+    // Legacy/sonstige:
     // WriteBool:  "true"/"false"
     // WriteInt32: "42"
-    // CallMethod: Key=Value-Paare ("x=7;mode=fast") ODER JSON (wenn du magst)
+    // CallMethod: wird künftig ignoriert (nur noch inputs/expOuts)
     std::string   arg;
 
     // Zeitfeld:
@@ -47,11 +48,11 @@ struct Operation {
     int           timeoutMs = 0;
 };
 
-/// Gesamter Reaktionsplan für eine Störung/Diagnose.
+/// Gesamter Reaktionsplan …
 struct Plan {
-    std::string              correlationId;    // für Acks/Tracing (z. B. "evD2-...")
-    std::string              resourceId;       // optional (aus KG)
-    std::vector<Operation>   ops;              // sequenziell auszuführen
+    std::string              correlationId;
+    std::string              resourceId;
+    std::vector<Operation>   ops;
     bool                     abortRequired  = false;
     bool                     degradeAllowed = false;
 };

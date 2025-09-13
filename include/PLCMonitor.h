@@ -8,13 +8,15 @@
 #include <memory>
 #include <type_traits>
 #include <future>
-
+#include <map>
+#include <variant>
 #include <open62541/client.h>
 #include <open62541/client_config_default.h>
 #include <open62541/client_highlevel.h>
 #include <open62541/client_subscriptions.h>
 #include <open62541/plugin/log_stdout.h>
 #include <open62541/util.h>
+#include "common_types.h"
 
 class PLCMonitor {
 public:
@@ -55,11 +57,11 @@ public:
     UA_StatusCode runIterate(int timeoutMs = 0);   // vorantreiben (single-thread)
     bool waitUntilActivated(int timeoutMs = 3000); // bis Session aktiv
 
-    // ---------- Highlevel-Beispiele ----------
-    bool callMethode1(UA_UInt16 nsIndex,
-                      const std::string& objectIdStr,
-                      const std::string& methodIdStr,
-                      UA_Int32 x, UA_Int32& yOut);
+    bool callMethodTyped(const std::string& objNodeId,
+                     const std::string& methNodeId,
+                     const UAValueMap& inputs,   // index -> typed value
+                     UAValueMap& outputs,        // index -> typed value
+                     unsigned timeoutMs);
 
     bool readInt16At(const std::string& nodeIdStr, UA_UInt16 nsIndex, UA_Int16 &out) const;
     // Liest eine boolsche Variable (identifier string, also z.B. "OPCUA.bool1", plus Namespace)
