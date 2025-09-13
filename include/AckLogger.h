@@ -6,7 +6,7 @@
 
 class AckLogger : public ReactiveObserver {
 public:
-    void onMethod(const Event& ev) override {
+    void onEvent(const Event& ev) override {
         switch (ev.type) {
         case EventType::evReactionPlanned: {
             if (auto p = std::any_cast<ReactionPlannedAck>(&ev.payload)) {

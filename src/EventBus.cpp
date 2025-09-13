@@ -77,7 +77,7 @@ void EventBus::dispatch_one(const Event& ev) {
     bool anyDead = false;
     for (const auto& e : copy) {
         if (auto sp = e.wp.lock()) {
-            sp->onMethod(ev);
+            sp->onEvent(ev);
         } else {
             anyDead = true;
         }

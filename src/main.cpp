@@ -87,6 +87,8 @@ int main() {
     auto subProcessFail   = bus.subscribe_scoped(EventType::evProcessFail,    ackLogger, 1);
     auto subKGRes  = bus.subscribe_scoped(EventType::evKGResult,        rm, 4);
     auto subKGTo   = bus.subscribe_scoped(EventType::evKGTimeout,       rm, 4);
+    auto recorder = std::make_shared<FailureRecorder>(mon, bus);
+    recorder->subscribeAll();   // registriert Observer für alle EventTypes
 
     // 7) Trigger-Subscription → Event
     std::atomic<bool> d2Prev{false};

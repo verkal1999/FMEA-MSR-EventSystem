@@ -1,4 +1,5 @@
 #include "MonActionForce.h"
+#include "PlanJsonUtils.h"
 #include "PLCMonitor.h"
 #include "EventBus.h"
 #include "Event.h"
@@ -9,69 +10,6 @@
 #include <algorithm>
 #include <iostream>
 #include <chrono>
-
-// kleine JSON-Helper (nur für Logs)
-namespace {
-inline nlohmann::json uaValueToJson(const UAValue& v) {
-    return std::visit([](auto&& x)->nlohmann::json {
-        using T = std::decay_t<decltype(x)>;
-        if constexpr (std::is_same_v<T, std::monostate>) return nlohmann::json(nullptr);
-        else return nlohmann::json(x);
-    }, v);
-}
-inline nlohmann::json uaMapToJson(const UAValueMap& m) {
-    nlohmann::json j = nlohmann::json::object();
-    for (const auto& [k, v] : m) {
-        j[std::to_string(k)] = { {"t", tagOf(v)}, {"v", uaValueToJson(v)} };
-    }
-    return j;
-}
-
-// --- Parser-Helfer (lokal, unabhängig vom ReactionManager) -------------------
-static std::string fixParamsRawIfNeeded(std::string s) {
-    auto skip_ws = [](const std::string& str, size_t pos) {
-        while (pos < str.size() && (str[pos]==' ' || str[pos]=='\t' || str[pos]=='\r' || str[pos]=='\n')) ++pos;
-        return pos;
-    };
-    size_t p = 0;
-    while (true) {
-        p = s.find("\"k\"", p);
-        if (p == std::string::npos) break;
-        size_t p_colon = s.find(':', p); if (p_colon == std::string::npos) break;
-        size_t p_val = skip_ws(s, p_colon+1); if (p_val >= s.size()) break;
-        if (s.compare(p_val, 8, "\"jobId\"") != 0) { ++p; continue; }
-
-        size_t pv = s.find("\"v\"", p_val); if (pv == std::string::npos) break;
-        size_t pv_colon = s.find(':', pv);  if (pv_colon == std::string::npos) break;
-        size_t after = skip_ws(s, pv_colon+1); if (after >= s.size()) break;
-
-        if (s[after] != '"') s.insert(after, 1, '"');
-        p = after + 1;
-    }
-    return s;
-}
-inline UAValue parseUAValueFromTypeTag(const std::string& t, const nlohmann::json& v) {
-    try {
-        if (t=="bool")   return v.is_boolean()? v.get<bool>()
-                        : (v.is_number_integer()? (bool)v.get<int64_t>() : false);
-        if (t=="int16")  return (int16_t)(v.is_number_integer()? v.get<int64_t>()
-                        : std::stoi(v.get<std::string>()));
-        if (t=="int32")  return (int32_t)(v.is_number_integer()? v.get<int64_t>()
-                        : std::stol(v.get<std::string>()));
-        if (t=="float")  return (float) (v.is_number()? v.get<double>()
-                        : std::stof(v.get<std::string>()));
-        if (t=="double") return (double)(v.is_number()? v.get<double>()
-                        : std::stod(v.get<std::string>()));
-        if (t=="string") return v.is_string()? v.get<std::string>() : v.dump();
-    } catch (...) {}
-    return {};
-}
-inline void assignTyped(UAValueMap& target, int idx, const std::string& t, const nlohmann::json& v) {
-    if (!v.is_null()) target[idx] = parseUAValueFromTypeTag(t, v);
-}
-} // namespace
-
-// -----------------------------------------------------------------------------
 
 MonitoringActionForce::MonitoringActionForce(PLCMonitor& mon, EventBus& bus,
                                              Fetcher fetch,
@@ -103,10 +41,10 @@ Plan MonitoringActionForce::buildPlanFromPayload(const std::string& corr,
         rows = j["rows"];
     } else if (j.is_array()) {
         rows = j;
-    } else if (j.is_object() && j.contains("sysReactions") && j["sysReactions"].is_array()
-               && !j["sysReactions"].empty() && j["sysReactions"][0].is_object()
-               && j["sysReactions"][0].contains("rows")) {
-        rows = j["sysReactions"][0]["rows"];
+    } else if (j.is_object() && j.contains("monReactions") && j["monReactions"].is_array()
+               && !j["monReactions"].empty() && j["monReactions"][0].is_object()
+               && j["monReactions"][0].contains("rows")) {
+        rows = j["monReactions"][0]["rows"];
     }
 
     std::map<int, Operation> opsByStep;

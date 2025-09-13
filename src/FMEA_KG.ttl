@@ -727,6 +727,10 @@ Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers z
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> rdf:type owl:Class .
 
 
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR> rdf:type owl:Class .
+
+
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> rdf:type owl:Class .
 
@@ -758,6 +762,10 @@ Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers z
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> rdf:type owl:Class ;
                                                                        rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
                                                                        rdfs:comment "Für das Anwendungsbeispiel schon alles hinterlegt in der PLC. Neue Methoden in dieser Klasse sind für das Reasoning von Fehlerdiagnosen gedacht" .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure> rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence

@@ -37,13 +37,17 @@ add_executable(opcua_client
   src/CommandForce.cpp
   src/CommandForceFactory.cpp
   src/MonActionForce.cpp
+  src/SystemReactionForce.cpp
+  src/PlanJsonUtils.cpp 
+  src/FailureRecorder.cpp
+  src/KGIngestionForce.cpp
 )
 
 target_sources(opcua_client PRIVATE
   include/Event.h
   include/ReactiveObserver.h
   include/EventBus.h
-  include/ReactionManager.h   # oder TaskManager.h
+  include/ReactionManager.h  
   include/PythonWorker.h
   include/PythonRuntime.h
   include/PLCMonitor.h
@@ -55,6 +59,11 @@ target_sources(opcua_client PRIVATE
   include/Correlation.h
   include/MonActionForce.h
   include/common_types.h
+  include/PlanJsonUtils.h
+  include/SystemReactionForce.h
+  include/FailureRecorder.h
+  include/KGIngestionForce.h
+  
 )
 
 # Includes (eigene + open62541 generated)

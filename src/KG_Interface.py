@@ -59,7 +59,7 @@ class KGInterface:
                 FILTER( ?monAct != IRI("{defaultIri}") )
             }}
         """
-        print(query)
+        #print(query)
         res = self.graph.query(query)
 
         output_lines = []

@@ -24,7 +24,7 @@ public:
     enum class LogLevel { Error = 0, Warn = 1, Info = 2, Debug = 3, Trace = 4, Verbose = 5 };
 
     ReactionManager(PLCMonitor& mon, EventBus& bus);
-    void onMethod(const Event& ev) override;
+    void onEvent(const Event& ev) override;
 
     // Logging-API
     void setLogLevel(LogLevel lvl) { logLevel_.store(static_cast<int>(lvl), std::memory_order_relaxed); }

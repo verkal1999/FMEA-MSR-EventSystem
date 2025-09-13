@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <cmath>
 #include "MonActionForce.h"
+#include "PlanJsonUtils.h"
 
 namespace py = pybind11;
 using json = nlohmann::json;
@@ -44,187 +45,81 @@ static std::string keyStr(const ReactionManager::NodeKey& k) {
 // ---------- Helfer in anonymem Namensraum (kollisionsfrei) -------------------
 namespace {
 
-// Vorwärtsdeklaration, damit IntelliSense die Signatur kennt, bevor sie benutzt wird.
-static bool rm_parseNsAndId(const std::string& full,
-                            UA_UInt16& nsOut,
-                            std::string& idStrOut,
-                            char& idTypeOut);
+    // Vorwärtsdeklaration, damit IntelliSense die Signatur kennt, bevor sie benutzt wird.
+    static bool rm_parseNsAndId(const std::string& full,
+                                UA_UInt16& nsOut,
+                                std::string& idStrOut,
+                                char& idTypeOut);
 
-// robustes Float-Gleichheitkriterium ohne initializer_list
-static bool nearlyEqual(double a, double b,
-                        double absTol = 1e-6,
-                        double relTol = 1e-6) {
-    const double diff  = std::fabs(a - b);
-    const double aa    = std::fabs(a);
-    const double bb    = std::fabs(b);
-    double scale = 1.0;
-    if (aa > scale) scale = aa;
-    if (bb > scale) scale = bb;
-    return diff <= absTol + relTol * scale;
-}
-
-static nlohmann::json parseMaybeDoubleEncoded(const nlohmann::json& j, const char* /*where*/) {
-    if (j.is_string()) {
-        try { return nlohmann::json::parse(j.get<std::string>()); } catch (...) {}
-    }
-    return j;
-}
-
-static bool coerceRowObject(const nlohmann::json& in, nlohmann::json& out) {
-    if (in.is_object()) { out = in; return true; }
-    if (in.is_string()) {
-        try {
-            auto j2 = nlohmann::json::parse(in.get<std::string>());
-            if (j2.is_object()) {
-                if (j2.contains("rows") && j2["rows"].is_array() && !j2["rows"].empty() && j2["rows"][0].is_object()) { out=j2["rows"][0]; return true; }
-                out=j2; return true;
-            }
-            if (j2.is_array() && !j2.empty() && j2[0].is_object()) { out=j2[0]; return true; }
-        } catch (...) {}
-    }
-    return false;
-}
-
-// Implementierung von rm_parseNsAndId (früher parseNsAndId)
-static bool rm_parseNsAndId(const std::string& full,
-                            UA_UInt16& nsOut,
-                            std::string& idStrOut,
-                            char& idTypeOut)
-{
-    nsOut = 4;
-    idStrOut.clear();
-    idTypeOut = '?';
-
-    // Kurzform
-    if (full.rfind("OPCUA.", 0) == 0) {
-        idTypeOut = 's';
-        idStrOut  = full;
-        return true;
-    }
-    // Langform "ns=<n>;<t>=<id>"
-    if (full.rfind("ns=", 0) != 0) return false;
-
-    const size_t semi = full.find(';');
-    if (semi == std::string::npos) return false;
-
-    try {
-        nsOut = static_cast<UA_UInt16>(std::stoi(full.substr(3, semi - 3)));
-    } catch (...) {
-        nsOut = 4;
+    // robustes Float-Gleichheitkriterium ohne initializer_list
+    static bool nearlyEqual(double a, double b,
+                            double absTol = 1e-6,
+                            double relTol = 1e-6) {
+        const double diff  = std::fabs(a - b);
+        const double aa    = std::fabs(a);
+        const double bb    = std::fabs(b);
+        double scale = 1.0;
+        if (aa > scale) scale = aa;
+        if (bb > scale) scale = bb;
+        return diff <= absTol + relTol * scale;
     }
 
-    if (semi + 2 >= full.size()) return false;
-    idTypeOut = full[semi + 1];
-    if (full[semi + 2] != '=') return false;
-
-    idStrOut = full.substr(semi + 3);
-    return true;
-}
-
-// Versucht, ein evtl. unvollständig quotiertes params_raw zu reparieren.
-// Spezifisch für Zeilen mit k:"jobId", wo "v": MAIN.fbJob" ohne öffnendes
-// Anführungszeichen kommen kann.
-static std::string rm_fixParamsRawIfNeeded(std::string s) {
-    auto find_ws = [](const std::string& str, size_t pos) {
-        while (pos < str.size() && (str[pos]==' ' || str[pos]=='\t' || str[pos]=='\r' || str[pos]=='\n'))
-            ++pos;
-        return pos;
-    };
-
-    size_t p = 0;
-    while (true) {
-        // Suche eine Stelle mit  "k": "jobId"
-        p = s.find("\"k\"", p);
-        if (p == std::string::npos) break;
-        size_t p_colon = s.find(':', p);
-        if (p_colon == std::string::npos) break;
-        size_t p_val = find_ws(s, p_colon+1);
-        if (p_val >= s.size()) break;
-        if (s.compare(p_val, 8, "\"jobId\"") != 0) { ++p; continue; }
-
-        // Jetzt ab hier die nächste "v":
-        size_t pv = s.find("\"v\"", p_val);
-        if (pv == std::string::npos) break;
-        size_t pv_colon = s.find(':', pv);
-        if (pv_colon == std::string::npos) break;
-        size_t after = find_ws(s, pv_colon+1);
-        if (after >= s.size()) break;
-
-        // Falls kein öffnendes Anführungszeichen kommt, füge eines ein
-        if (s[after] != '"') {
-            s.insert(after, 1, '"');
-            // Bei den Beispielen ist ein schließendes Anführungszeichen schon vorhanden.
-            // Falls nicht, könnte man hier bis zum Ende des Tokens laufen und ein " einfügen.
-        }
-        // Weiter suchen, um mehrere Vorkommen zu fixen
-        p = after + 1;
-    }
-    return s;
-    }
-
-    // helper: JSON -> UAValue (nutzt tagOf/almostEqual aus common_types.h)
-    static UAValue parseUAValue(const std::string& t, const nlohmann::json& v) {
-        try {
-            if (t=="bool")   return v.is_boolean() ? v.get<bool>() : (v.is_number_integer()? (bool)v.get<int64_t>() : false);
-            if (t=="int16")  return (int16_t)(v.is_number_integer()? v.get<int64_t>() : std::stoi(v.get<std::string>()));
-            if (t=="int32")  return (int32_t)(v.is_number_integer()? v.get<int64_t>() : std::stol(v.get<std::string>()));
-            if (t=="float")  return (float) (v.is_number() ? v.get<double>() : std::stof(v.get<std::string>()));
-            if (t=="double") return (double)(v.is_number() ? v.get<double>() : std::stod(v.get<std::string>()));
-            if (t=="string") return v.is_string()? v.get<std::string>() : v.dump();
-        } catch (...) {}
-        return {};
-    }
-
-    static void readMapFromJson(const nlohmann::json& obj, UAValueMap& out) {
-        for (auto it = obj.begin(); it != obj.end(); ++it) {
-            int idx = 0; try { idx = std::stoi(it.key()); } catch (...) { continue; }
-            if (!it.value().is_object()) continue;
-            const auto t = it.value().value("t", "");
-            if (!it.value().contains("v")) continue;
-            out[idx] = parseUAValue(t, it.value()["v"]);
-        }
-    }
-
-    inline UAValue parseUAValueFromTypeTag(const std::string& t, const nlohmann::json& v) {
-        try {
-            if (t=="bool")   return v.is_boolean() ? v.get<bool>()
-                            : (v.is_number_integer()? (bool)v.get<int64_t>() : false);
-            if (t=="int16")  return (int16_t)(v.is_number_integer()? v.get<int64_t>()
-                            : std::stoi(v.get<std::string>()));
-            if (t=="int32")  return (int32_t)(v.is_number_integer()? v.get<int64_t>()
-                            : std::stol(v.get<std::string>()));
-            if (t=="float")  return (float) (v.is_number()? v.get<double>()
-                            : std::stof(v.get<std::string>()));
-            if (t=="double") return (double)(v.is_number()? v.get<double>()
-                            : std::stod(v.get<std::string>()));
-            if (t=="string") return v.is_string()? v.get<std::string>() : v.dump();
-        } catch (...) {}
-        return {}; // monostate -> „leer/ungültig“
-    }
-
-    // Setzt target[idx] = typisierter Wert (nur wenn v vorhanden)
-    inline void assignTyped(UAValueMap& target, int idx, const std::string& t, const nlohmann::json& v) {
-        if (!v.is_null()) target[idx] = parseUAValueFromTypeTag(t, v);
-    }
-    // UAValue -> nlohmann::json  (std::monostate wird zu JSON null)
-    inline nlohmann::json uaValueToJson(const UAValue& v) {
-        return std::visit([](auto&& x)->nlohmann::json {
-            using T = std::decay_t<decltype(x)>;
-            if constexpr (std::is_same_v<T, std::monostate>) {
-                return nlohmann::json(nullptr);  // null für „nicht gesetzt“
-            } else {
-                return nlohmann::json(x);        // bool, int16, int32, float, double, string
-            }
-        }, v);
-    }
-    
-    // UAValueMap (index->UAValue) -> kompaktes JSON-Objekt mit Typ-Tag
-    inline nlohmann::json uaMapToJson(const UAValueMap& m) {
-        nlohmann::json j = nlohmann::json::object();
-        for (const auto& [k, v] : m) {
-            j[std::to_string(k)] = { {"t", tagOf(v)}, {"v", uaValueToJson(v)} };
+    static nlohmann::json parseMaybeDoubleEncoded(const nlohmann::json& j, const char* /*where*/) {
+        if (j.is_string()) {
+            try { return nlohmann::json::parse(j.get<std::string>()); } catch (...) {}
         }
         return j;
+    }
+
+    static bool coerceRowObject(const nlohmann::json& in, nlohmann::json& out) {
+        if (in.is_object()) { out = in; return true; }
+        if (in.is_string()) {
+            try {
+                auto j2 = nlohmann::json::parse(in.get<std::string>());
+                if (j2.is_object()) {
+                    if (j2.contains("rows") && j2["rows"].is_array() && !j2["rows"].empty() && j2["rows"][0].is_object()) { out=j2["rows"][0]; return true; }
+                    out=j2; return true;
+                }
+                if (j2.is_array() && !j2.empty() && j2[0].is_object()) { out=j2[0]; return true; }
+            } catch (...) {}
+        }
+        return false;
+    }
+
+    // Implementierung von rm_parseNsAndId (früher parseNsAndId)
+    static bool rm_parseNsAndId(const std::string& full,
+                                UA_UInt16& nsOut,
+                                std::string& idStrOut,
+                                char& idTypeOut)
+    {
+        nsOut = 4;
+        idStrOut.clear();
+        idTypeOut = '?';
+
+        // Kurzform
+        if (full.rfind("OPCUA.", 0) == 0) {
+            idTypeOut = 's';
+            idStrOut  = full;
+            return true;
+        }
+        // Langform "ns=<n>;<t>=<id>"
+        if (full.rfind("ns=", 0) != 0) return false;
+
+        const size_t semi = full.find(';');
+        if (semi == std::string::npos) return false;
+
+        try {
+            nsOut = static_cast<UA_UInt16>(std::stoi(full.substr(3, semi - 3)));
+        } catch (...) {
+            nsOut = 4;
+        }
+
+        if (semi + 2 >= full.size()) return false;
+        idTypeOut = full[semi + 1];
+        if (full[semi + 2] != '=') return false;
+
+        idStrOut = full.substr(semi + 3);
+        return true;
     }
 } // namespace
 
@@ -766,13 +661,7 @@ std::string ReactionManager::fetchSystemReactionForFM(const std::string& fmIri) 
 
             py::module_ kg  = py::module_::import("KG_Interface");
             py::object cls  = kg.attr("KGInterface");
-            py::object kgi  = cls(
-                R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src\FMEA_KG.ttl)",
-                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/",
-                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_",
-                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_",
-                "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_"
-            );
+            py::object kgi  = cls();
             py::object res = kgi.attr("getSystemreactionForFailureMode")(fmIri.c_str());
             return std::string(py::str(res));
         });
@@ -786,131 +675,6 @@ std::string ReactionManager::fetchSystemReactionForFM(const std::string& fmIri) 
 
     log(LogLevel::Info) << "[sysreact] fetchSystemReactionForFM EXIT\n";
     return payload;
-}
-
-Plan ReactionManager::createPlanFromSystemReactionJson(const std::string& corr,
-                                                       const std::string& payload)
-{
-    Plan plan;
-    plan.correlationId = corr;
-    plan.resourceId    = "Station";
-
-    log(LogLevel::Info)  << "[sysreact] createPlanFromSystemReactionJson ENTER len=" << payload.size() << "\n";
-    if (!payload.empty()) {
-        auto preview = payload.substr(0, std::min<size_t>(payload.size(), 300));
-        log(LogLevel::Debug) << "[sysreact] payload preview: \"" << preview << "\"\n";
-    }
-
-    // Optional: IRI-Header
-    std::string::size_type nl = payload.find('\n');
-    if (nl != std::string::npos) {
-        std::string head = payload.substr(0, nl);
-        if (!head.empty() && head.find("http") != std::string::npos)
-            log(LogLevel::Info) << "[sysreact] sysReact IRI: " << head << "\n";
-    }
-
-    // JSON finden + parsen (mit Auto-Fix)
-    const std::size_t brace = payload.find('{', (nl == std::string::npos) ? 0 : nl);
-    if (brace == std::string::npos) {
-        log(LogLevel::Warn) << "[sysreact] no JSON object found in payload\n";
-        plan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
-        log(LogLevel::Info) << "[sysreact] createPlanFromSystemReactionJson EXIT ops=" << plan.ops.size() << "\n";
-        return plan;
-    }
-    std::string js = payload.substr(brace);
-
-    nlohmann::json j;
-    try {
-        j = nlohmann::json::parse(js);
-        log(LogLevel::Debug) << "[sysreact] JSON parse OK\n";
-    } catch (...) {
-        std::string fixed = rm_fixParamsRawIfNeeded(js);
-        try { j = nlohmann::json::parse(fixed);
-              log(LogLevel::Debug) << "[sysreact] JSON parse OK after auto-fix\n";
-        } catch (const std::exception& e2) {
-            log(LogLevel::Warn) << "[sysreact] JSON parse failed: " << e2.what() << "\n";
-            plan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
-            log(LogLevel::Info) << "[sysreact] createPlanFromSystemReactionJson EXIT ops=" << plan.ops.size() << "\n";
-            return plan;
-        }
-    }
-
-    // rows[] extrahieren (dein Format)
-    nlohmann::json rows = nlohmann::json::array();
-    if (j.is_object() && j.contains("rows") && j["rows"].is_array()) {
-        rows = j["rows"];
-        log(LogLevel::Info) << "[sysreact] rows count=" << rows.size() << "\n";
-    } else if (j.is_object() && j.contains("sysReactions") && j["sysReactions"].is_array()
-               && !j["sysReactions"].empty() && j["sysReactions"][0].is_object()
-               && j["sysReactions"][0].contains("rows")) {
-        rows = j["sysReactions"][0]["rows"];
-        log(LogLevel::Info) << "[sysreact] bundles->rows count=" << rows.size() << "\n";
-    } else if (j.is_array()) {
-        rows = j;
-        log(LogLevel::Info) << "[sysreact] top is array -> rows count=" << rows.size() << "\n";
-    } else {
-        log(LogLevel::Warn) << "[sysreact] JSON doesn't contain rows[]\n";
-    }
-
-    // --- direkt Operationen pro 'step' aggregieren ---------------------------
-    std::map<int, Operation> opsByStep;
-
-    auto getOp = [&](int step) -> Operation& {
-        auto& op = opsByStep[step];
-        op.type = OpType::CallMethod;
-        return op;
-    };
-
-    for (size_t idx = 0; idx < rows.size(); ++idx) {
-        const auto& r = rows[idx];
-        if (!r.is_object()) continue;
-
-        const int         step = r.value("step", 0);
-        const std::string g    = r.value("g", "");
-        const std::string k    = r.value("k", "");
-        const std::string t    = r.value("t", "");
-        const int         i    = r.value("i", 0);
-
-        if (g == "meta" && k == "jobId") {
-            if (r.contains("v") && r["v"].is_string()) getOp(step).callObjNodeId = r["v"].get<std::string>();
-        } else if (g == "method" && k == "methodId") {
-            if (r.contains("v") && r["v"].is_string()) getOp(step).callMethNodeId = r["v"].get<std::string>();
-        } else if (g == "meta" && k == "timeoutMs") {
-            if (r.contains("v")) {
-                if (r["v"].is_number_integer())        getOp(step).timeoutMs = r["v"].get<int>();
-                else if (r["v"].is_string()) { try {   getOp(step).timeoutMs = std::stoi(r["v"].get<std::string>()); } catch (...) {} }
-            }
-        } else if (g == "input") {
-            if (r.contains("v")) assignTyped(getOp(step).inputs,  i, t, r["v"]);   // <— typisiert
-        } else if (g == "output") {
-            if (r.contains("v")) assignTyped(getOp(step).expOuts, i, t, r["v"]);   // <— typisiert
-        }
-    }
-
-    // --- in Reihenfolge sammeln + Abschluss-Puls -----------------------------
-    for (auto &kv : opsByStep) {
-        Operation& op = kv.second;
-
-        if (op.callObjNodeId.empty() || op.callMethNodeId.empty()) {
-            log(LogLevel::Warn) << "[sysreact] step " << kv.first << " missing jobId/methodId -> skip\n";
-            continue;
-        }
-
-        log(LogLevel::Debug) << "[sysreact] step " << kv.first
-                             << " obj="   << op.callObjNodeId
-                             << " meth="  << op.callMethNodeId
-                             << " in#="   << op.inputs.size()
-                             << " exp#="  << op.expOuts.size()
-                             << " timeoutMs=" << op.timeoutMs << "\n";
-
-        plan.ops.push_back(std::move(op));
-    }
-
-    // Abschluss: DiagnoseFinished pulsen
-    plan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
-
-    log(LogLevel::Info) << "[sysreact] createPlanFromSystemReactionJson EXIT ops=" << plan.ops.size() << "\n";
-    return plan;
 }
 
 void ReactionManager::createCommandForceForPlanAndAck(const Plan& plan,
@@ -1069,150 +833,9 @@ std::string ReactionManager::fetchMonitoringActionForFM(const std::string& fmIri
     log(LogLevel::Info) << "[monact] fetchMonitoringActionForFM EXIT\n";
     return payload;
 }
-Plan ReactionManager::createPlanFromMonActionJson(const std::string& corr,
-                                                  const std::string& payload)
-{
-    Plan plan; plan.correlationId = corr; plan.resourceId = "Station";
-
-    log(LogLevel::Info)  << "[monact] createPlanFromMonActionJson ENTER len=" << payload.size() << "\n";
-    if (!payload.empty()) {
-        auto preview = payload.substr(0, std::min<size_t>(payload.size(), 300));
-        log(LogLevel::Debug) << "[monact] payload preview: \"" << preview << "\"\n";
-    }
-
-    // Kopf (IRI-Zeile) überspringen, ersten '{' suchen
-    std::string::size_type nl = payload.find('\n');
-    const std::size_t brace   = payload.find('{', (nl == std::string::npos) ? 0 : nl);
-    if (brace == std::string::npos) {
-        log(LogLevel::Warn) << "[monact] no JSON object found in payload\n";
-        log(LogLevel::Info) << "[monact] createPlanFromMonActionJson EXIT ops=" << plan.ops.size() << "\n";
-        return plan;
-    }
-    std::string js = payload.substr(brace);
-
-    nlohmann::json j;
-    try { j = nlohmann::json::parse(js); }
-    catch (...) {
-        std::string fixed = rm_fixParamsRawIfNeeded(js);
-        try { j = nlohmann::json::parse(fixed); }
-        catch (const std::exception& e2) {
-            log(LogLevel::Warn) << "[monact] JSON parse failed: " << e2.what() << "\n";
-            log(LogLevel::Info) << "[monact] createPlanFromMonActionJson EXIT ops=" << plan.ops.size() << "\n";
-            return plan;
-        }
-    }
-
-    nlohmann::json rows = nlohmann::json::array();
-    if (j.is_object() && j.contains("rows") && j["rows"].is_array()) {
-        rows = j["rows"];
-        log(LogLevel::Info) << "[monact] rows count=" << rows.size() << "\n";
-    } else if (j.is_array()) {
-        rows = j;
-        log(LogLevel::Info) << "[monact] top is array -> rows count=" << rows.size() << "\n";
-    } else if (j.is_object() && j.contains("sysReactions") && j["sysReactions"].is_array()
-               && !j["sysReactions"].empty() && j["sysReactions"][0].is_object()
-               && j["sysReactions"][0].contains("rows")) {
-        rows = j["sysReactions"][0]["rows"];
-        log(LogLevel::Info) << "[monact] bundles->rows count=" << rows.size() << "\n";
-    } else {
-        log(LogLevel::Warn) << "[monact] JSON doesn't contain rows[]\n";
-    }
-
-    std::map<int, Operation> opsByStep;
-    auto getOp = [&](int step) -> Operation& {
-        auto& op = opsByStep[step];
-        op.type = OpType::CallMethod;
-        return op;
-    };
-
-    for (size_t i = 0; i < rows.size(); ++i) {
-        const auto& r = rows[i];
-        if (!r.is_object()) continue;
-
-        const int         step = r.value("step", 0);
-        const std::string g    = r.value("g", "");
-        const std::string k    = r.value("k", "");
-        const std::string t    = r.value("t", "");
-        const int         idx  = r.value("i", 0);
-
-        if (g == "meta"   && k == "jobId")    { if (r.contains("v") && r["v"].is_string()) getOp(step).callObjNodeId = r["v"].get<std::string>(); }
-        else if (g=="method" && k=="methodId"){ if (r.contains("v") && r["v"].is_string()) getOp(step).callMethNodeId = r["v"].get<std::string>(); }
-        else if (g=="meta"   && k=="timeoutMs") {
-            if (r.contains("v")) {
-                if (r["v"].is_number_integer())        getOp(step).timeoutMs = r["v"].get<int>();
-                else if (r["v"].is_string()) { try {   getOp(step).timeoutMs = std::stoi(r["v"].get<std::string>()); } catch (...) {} }
-            }
-        } else if (g == "input") {
-            if (r.contains("v")) assignTyped(getOp(step).inputs,  idx, t, r["v"]);
-        } else if (g == "output") {
-            if (r.contains("v")) assignTyped(getOp(step).expOuts, idx, t, r["v"]);
-        }
-    }
-
-    for (auto &kv : opsByStep) {
-        Operation& op = kv.second;
-        if (op.callObjNodeId.empty() || op.callMethNodeId.empty()) {
-            log(LogLevel::Warn) << "[monact] step " << kv.first << " missing jobId/methodId -> skip\n";
-            continue;
-        }
-        log(LogLevel::Debug) << "[monact] step " << kv.first
-                             << " obj="  << op.callObjNodeId
-                             << " meth=" << op.callMethNodeId
-                             << " in#="  << op.inputs.size()
-                             << " exp#=" << op.expOuts.size()
-                             << " timeoutMs=" << op.timeoutMs << "\n";
-        plan.ops.push_back(std::move(op));
-    }
-
-    log(LogLevel::Info) << "[monact] createPlanFromMonActionJson EXIT ops=" << plan.ops.size() << "\n";
-    return plan;
-}
-bool ReactionManager::executeMonitoringPlanAndCheck(const Plan& plan, unsigned defaultTimeoutMs) {
-    log(LogLevel::Info) << "[monact] executeMonitoringPlanAndCheck ENTER ops=" << plan.ops.size() << "\n";
-    bool allOk = true;
-
-    for (size_t i = 0; i < plan.ops.size(); ++i) {
-        const auto& op = plan.ops[i];
-        if (op.type != OpType::CallMethod) {
-            log(LogLevel::Debug) << "[monact] skip non-CallMethod at idx=" << i << "\n";
-            continue;
-        }
-        const unsigned to = (op.timeoutMs > 0 ? static_cast<unsigned>(op.timeoutMs)
-                                              : (defaultTimeoutMs ? defaultTimeoutMs : 30000));
-
-        log(LogLevel::Info) << "[monact] CallMethod step#" << i
-                            << " obj='"  << op.callObjNodeId
-                            << "' meth='"<< op.callMethNodeId
-                            << "' inputs=" << uaMapToJson(op.inputs).dump()
-                            << " timeout=" << to << "ms\n";
-
-        UAValueMap got;
-        const bool callOk = mon_.callMethodTyped(op.callObjNodeId, op.callMethNodeId, op.inputs, got, to);
-
-        bool match = true;
-        if (!op.expOuts.empty()) {
-            for (const auto& [k, vexp] : op.expOuts) {
-                auto it = got.find(k);
-                if (it == got.end() || !::equalUA(vexp, it->second)) { match = false; break; }
-            }
-            log(LogLevel::Info) << "[monact]   outputs: expected=" << uaMapToJson(op.expOuts).dump()
-                                << " got=" << uaMapToJson(got).dump()
-                                << " -> " << (match ? "MATCH" : "DIFF") << "\n";
-        } else {
-            log(LogLevel::Info) << "[monact]   outputs: (no expected values in KG), got size=" << got.size() << "\n";
-        }
-
-        const bool ok = (callOk && match);
-        allOk = allOk && ok;
-        log(LogLevel::Info) << "[monact]   -> " << (ok ? "OK" : "FAIL") << "\n";
-    }
-
-    log(LogLevel::Info) << "[monact] executeMonitoringPlanAndCheck EXIT allOk=" << (allOk?"true":"false") << "\n";
-    return allOk;
-}
 
 
-void ReactionManager::onMethod(const Event& ev) {
+void ReactionManager::onEvent(const Event& ev) {
     // Wir reagieren auf D1/D2/D3; andere Events ignorieren wir hier früh.
     const char* evName = nullptr;
     switch (ev.type) {
@@ -1223,7 +846,7 @@ void ReactionManager::onMethod(const Event& ev) {
     }
 
     const auto corr = makeCorrelationId(evName);
-    log(LogLevel::Info) << "onMethod ENTER " << evName << " corr=" << corr << "\n";
+    log(LogLevel::Info) << "onEvent ENTER " << evName << " corr=" << corr << "\n";
 
     // 1) Inventarsnapshot aufnehmen (inkl. Cache-Füllung/Logs) + Prozessname cachen
     auto inv = buildInventorySnapshot("PLC1");
@@ -1234,7 +857,7 @@ void ReactionManager::onMethod(const Event& ev) {
     // Für evD1 / evD3 aktuell nur Info-Log und raus (Worker nur für evD2)
     if (ev.type == EventType::evD1 || ev.type == EventType::evD3) {
         std::cout << "[RM][INF] received " << evName << " corr=" << corr << "\n";
-        log(LogLevel::Info) << "onMethod EXIT " << evName << " corr=" << corr << " (no worker)\n";
+        log(LogLevel::Info) << "onEvent EXIT " << evName << " corr=" << corr << " (no worker)\n";
         return;
     }
 
@@ -1311,46 +934,14 @@ void ReactionManager::onMethod(const Event& ev) {
 
             // --- Winner-Case: genau einer -> Systemreaktion holen/ausführen ------
             if (winners.size() == 1) {
-                const std::string foundFM = winners.front();
-                log(LogLevel::Info) << "[potFM] foundFM=" << foundFM << " -> fetch Systemreaction\n";
-
-                // 3/3: KG SysReaction holen
-                std::string sysPayload;
-                try {
-                    log(LogLevel::Debug) << "[worker] calling PythonWorker.getSystemreactionForFailureMode\n";
-                    sysPayload = PythonWorker::instance().call([&]() -> std::string {
-                        namespace py = pybind11;
-                        py::module_ sys  = py::module::import("sys");
-                        py::list    path = sys.attr("path").cast<py::list>();
-                        path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
-                        py::module_ kg  = py::module_::import("KG_Interface");
-                        py::object cls  = kg.attr("KGInterface");
-                        py::object kgi  = cls();
-                        py::object pyres = kgi.attr("getSystemreactionForFailureMode")(foundFM.c_str());
-                        return std::string(py::str(pyres));
-                    });
-                    log(LogLevel::Info) << "[worker] KG.getSystemreactionForFailureMode OK len=" << sysPayload.size()
-                                        << " preview=\"" << truncStr(sysPayload) << "\"\n";
-                } catch (const std::exception& e) {
-                    log(LogLevel::Error) << "[worker] KG sysreact error: " << e.what() << "\n";
-                    sysPayload.clear();
-                }
-                lap("sysreact-fetched");
-
-                // Plan aufbauen & ausführen (SysReact-Parser fügt Pulse am Ende an)
-                Plan sysPlan;
-                if (!sysPayload.empty()) {
-                    sysPlan = createPlanFromSystemReactionJson(corr, sysPayload);
-                } else {
-                    sysPlan.correlationId = corr; sysPlan.resourceId = "Station";
-                    sysPlan.ops.push_back(Operation{ OpType::PulseBool, "OPCUA.DiagnoseFinished", 4, "true", "", 100 });
-                }
-                log(LogLevel::Info) << "[sysreact] steps=" << sysPlan.ops.size() << "\n";
-                lap("sysreact-plan-built");
-
-                createCommandForceForPlanAndAck(sysPlan, /*checksOk=*/true, processName);
-                lap("plan-executed");
-                log(LogLevel::Info) << "[worker] corr=" << corr << " END (sysreact)\n";
+                auto wfSys = CommandForceFactory::createSystemReactionFilter(
+                    mon_, bus_,
+                    // Du kannst deinen bestehenden Python-Aufruf weiterverwenden:
+                    [this](const std::string& fmIri){ return fetchSystemReactionForFM(fmIri); }, // existiert schon
+                    /*defaultTimeoutMs=*/30000
+                );
+                winners = wfSys->filter(winners, corr, processName);   // führt Plan aus + Acks
+                // optional: je nach Semantik bei Fehler fall-backen
                 return;
             }
 
@@ -1372,18 +963,26 @@ void ReactionManager::onMethod(const Event& ev) {
                 return;
             }
 
-            // --- Altes Format (id/t/v Rows) – Fallback ---------------------------
-            auto expects = normalizeKgResponse(srows);
+             //--- Altes Format (id/t/v Rows) – Fallback ---------------------------
+            /*auto expects = normalizeKgResponse(srows);
             auto rep     = compareAgainstCache(inv, expects);
             auto plan    = buildPlanFromComparison(corr, rep);
-            createCommandForceForPlanAndAck(plan, rep.allOk, processName);
+            auto cf = CommandForceFactory::create(CommandForceFactory::Kind::UseMonitor, mon_);
+            cf->execute(plan);
+            
+            using Clock = std::chrono::steady_clock;
+            bus_.post(Event{ EventType::evReactionPlanned, Clock::now(),
+                std::any{ ReactionPlannedAck{ plan.correlationId, plan.resourceId,
+                                            "KG Checks Fallback -> DiagnoseFinished-Puls" } } });
+            bus_.post(Event{ EventType::evReactionDone, Clock::now(),
+                std::any{ ReactionDoneAck{ plan.correlationId, 1, "OK" } } });*/
 
             log(LogLevel::Info) << "[worker] corr=" << corr << " END\n";
         });
         job_cv_.notify_one();
     }
 
-    log(LogLevel::Info) << "onMethod EXIT " << evName << " corr=" << corr << " (worker enqueued)\n";
+    log(LogLevel::Info) << "onEvent EXIT " << evName << " corr=" << corr << " (worker enqueued)\n";
 }
 
 
