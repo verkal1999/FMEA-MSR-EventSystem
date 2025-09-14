@@ -41,6 +41,7 @@ add_executable(opcua_client
   src/PlanJsonUtils.cpp 
   src/FailureRecorder.cpp
   src/KGIngestionForce.cpp
+  src/InventorySnapshotUtils.cpp
 )
 
 target_sources(opcua_client PRIVATE
@@ -63,6 +64,8 @@ target_sources(opcua_client PRIVATE
   include/SystemReactionForce.h
   include/FailureRecorder.h
   include/KGIngestionForce.h
+  include/InventorySnapshot.h
+  include/InventorySnapshotUtils.h
   
 )
 

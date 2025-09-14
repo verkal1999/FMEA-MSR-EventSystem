@@ -32,16 +32,16 @@ class KGInterface:
             }}
         """
         res = self.graph.query(query)
-
-        rows = []
+        output_lines = []
         for row in res:  # row ist rdflib.query.ResultRow
             potFM = str(row["potFM"])    # URIRef → str
             fmparam = str(row["FMParam"])
             # Platzhalter für Typ/Wert (falls später im KG abgelegt):
             #print(f"potFM: {potFM}    FMParam: {fmparam}")
-            rows.append({"potFM": potFM, "FMParam": fmparam, "t": "string", "v": ""})
+            output_lines.append(potFM)
+            output_lines.append(fmparam)
 
-        return json.dumps({"rows": rows}, ensure_ascii=False)
+        return "\n".join(output_lines)
     
     def getMonitoringActionForFailureMode(self, FMIri: str) -> str:
         base_sep = '' if self.ont_iri.endswith(('#','/')) else '#'

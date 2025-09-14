@@ -1,32 +1,39 @@
 #pragma once
-#include "ReactiveObserver.h"
-#include "EventBus.h"
-#include "PLCMonitor.h"
-#include "Plan.h"
+#include <unordered_map>
+#include <mutex>
 #include <memory>
 #include <string>
+
+#include "ReactiveObserver.h"
+#include "EventBus.h"
+#include "Plan.h"
+#include <nlohmann/json.hpp>
+
+// dein gemeinsamer Typ-Header mit Snapshot + Payload
+#include "InventorySnapshot.h"   // enthält: NodeKey, InventorySnapshot, D2Snapshot
 
 class FailureRecorder : public ReactiveObserver,
                         public std::enable_shared_from_this<FailureRecorder> {
 public:
-    FailureRecorder(PLCMonitor& mon, EventBus& bus)
-        : mon_(mon), bus_(bus) {}
+    explicit FailureRecorder(EventBus& bus) : bus_(bus) {}
 
-    void onEvent(const Event& ev) override;
-
-    // in main() mehrfach aufrufen: ein Abo je EventType
+    // bequem in main() aufrufen, um auf "alle" Events zu lauschen
     void subscribeAll();
 
+    // zentrales Callback
+    void onEvent(const Event& ev) override;
+
 private:
-    PLCMonitor& mon_;
-    EventBus&   bus_;
+    EventBus& bus_;
 
-    // sammelt Screenshot-Pfade: bevorzugt via KG-Cache, sonst Dateisystem-Fallback
-    std::string getScreenshotsJson(const std::string& correlationId);
+    // Nur lokal im Recorder, kein globaler Store:
+    std::mutex mx_;
+    std::unordered_map<std::string, std::string> snapshotJsonByCorr_; // corr -> JSON
 
-    // baut „Plan“ für KG-Ingestion (reiner String-Transport via inputs[0..3])
+    static nlohmann::json snapshotToJson(const InventorySnapshot& inv);
+
     static Plan makeKgIngestionPlan(const std::string& corr,
                                     const std::string& process,
                                     const std::string& summary,
-                                    const std::string& screenshotsJson);
+                                    const std::string& snapshotJson);
 };

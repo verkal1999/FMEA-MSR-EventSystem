@@ -1,106 +1,129 @@
 #include "FailureRecorder.h"
 #include "Acks.h"
-#include "CommandForceFactory.h"
-#include "PythonWorker.h"
+#include "KgIngestionForce.h"          // direkt instanziieren; alternativ Factory-Erweiterung
 #include <nlohmann/json.hpp>
-#include <filesystem>
 #include <iostream>
+#include "CommandForceFactory.h"
 
-using json = nlohmann::json;
-namespace fs = std::filesystem;
+using nlohmann::json;
 
 void FailureRecorder::subscribeAll() {
     auto self = shared_from_this();
-    // alle dir. Events registrieren – der Observer reagiert nur bei Fehlern
-    bus_.subscribe(EventType::evD1, self, 1);
-    bus_.subscribe(EventType::evD2, self, 1);
-    bus_.subscribe(EventType::evD3, self, 1);
-    bus_.subscribe(EventType::evReactionPlanned, self, 1);
-    bus_.subscribe(EventType::evReactionDone, self, 1);
-    bus_.subscribe(EventType::evProcessFail, self, 1);
-    bus_.subscribe(EventType::evKGResult, self, 1);
-    bus_.subscribe(EventType::evKGTimeout, self, 1);
+    // hört wirklich auf alles, reagiert aber nur wo nötig
+    bus_.subscribe(EventType::evD1,              self, 3);
+    bus_.subscribe(EventType::evD2,              self, 3);  // hier kommt unser Snapshot-Payload
+    bus_.subscribe(EventType::evD3,              self, 3);
+    bus_.subscribe(EventType::evReactionPlanned, self, 3);
+    bus_.subscribe(EventType::evReactionDone,    self, 3);
+    bus_.subscribe(EventType::evProcessFail,     self, 3);  // hier triggern wir die Force
+    bus_.subscribe(EventType::evKGResult,        self, 3);
+    bus_.subscribe(EventType::evKGTimeout,       self, 3);  // optional als "Fehler" verbuchen
 }
 
 void FailureRecorder::onEvent(const Event& ev) {
-    // nur bei Fehlern erfassen → evProcessFail, evKGTimeout
-    std::string corr, process, text;
+    if (ev.type == EventType::evD2) {
+        // Neuer Payload: typisierter Snapshot
+        if (auto p = std::any_cast<D2Snapshot>(&ev.payload)) {
+            // in JSON konvertieren und lokal vormerken
+            const std::string corr = p->correlationId;
+            const std::string js   = snapshotToJson(p->inv).dump();
+
+            std::lock_guard<std::mutex> lk(mx_);
+            snapshotJsonByCorr_[corr] = js;
+        }
+        return;
+    }
 
     if (ev.type == EventType::evProcessFail) {
-        if (!ev.payload.has_value()) return;
-        const auto& p = std::any_cast<const ProcessFailAck&>(ev.payload);
-        corr    = p.correlationId;
-        process = p.processName;
-        text    = p.summary;
-    } else if (ev.type == EventType::evKGTimeout) {
-        if (!ev.payload.has_value()) return;
-        const auto& p = std::any_cast<const KGTimeoutPayload&>(ev.payload);
-        corr    = p.correlationId;
-        process = "KG";
-        text    = "Knowledge Graph timeout";
-    } else {
-        return; // andere Events ignorieren
+        if (auto a = std::any_cast<ProcessFailAck>(&ev.payload)) {
+            std::string snap;
+            {
+                std::lock_guard<std::mutex> lk(mx_);
+                if (auto it = snapshotJsonByCorr_.find(a->correlationId); it != snapshotJsonByCorr_.end())
+                    snap = it->second;
+            }
+            Plan plan = makeKgIngestionPlan(a->correlationId, a->processName, a->summary, snap);
+
+            // → Factory entscheiden lassen (siehe Punkt 3)
+            auto cf = CommandForceFactory::createForOp(plan.ops.front(), /*mon*/nullptr, bus_);
+            if (cf) (void)cf->execute(plan);
+        }
+        return;
+    }
+    if (ev.type == EventType::evKGTimeout) {
+        // optional auch Timeouts aufnehmen
+        if (auto t = std::any_cast<ProcessFailAck>(&ev.payload)) {
+            std::string snap;
+            {
+                std::lock_guard<std::mutex> lk(mx_);
+                if (auto it = snapshotJsonByCorr_.find(t->correlationId); it != snapshotJsonByCorr_.end())
+                    snap = it->second;
+            }
+            Plan plan = makeKgIngestionPlan(t->correlationId, t->processName, t->summary, snap);
+
+            // → Factory entscheiden lassen (siehe Punkt 3)
+            auto cf = CommandForceFactory::createForOp(plan.ops.front(), /*mon*/nullptr, bus_);
+            if (cf) (void)cf->execute(plan);
+        }
+        return;
     }
 
-    // Screenshots einsammeln (KG-Cache bevorzugt)
-    const std::string shotsJson = getScreenshotsJson(corr);
-
-    // Plan für Ingestion bauen
-    Plan plan = makeKgIngestionPlan(corr, process, text, shotsJson);
-
-    // neue CommandForce-Variante nutzen
-    auto cf = CommandForceFactory::create(CommandForceFactory::Kind::KGIngest, mon_);
-    (void)cf->execute(plan);
+    if (ev.type == EventType::evReactionDone) {
+        // Aufräumen ist optional – wenn gewünscht, hier löschen:
+        if (auto d = std::any_cast<ReactionDoneAck>(&ev.payload)) {
+            std::lock_guard<std::mutex> lk(mx_);
+            snapshotJsonByCorr_.erase(d->correlationId);
+        }
+        return;
+    }
 }
 
-std::string FailureRecorder::getScreenshotsJson(const std::string& corr) {
-    // 1) KG fragt eigene Cache-Registry (falls vorhanden)
-    try {
-        return PythonWorker::instance().call([&]() -> std::string {
-            namespace py = pybind11;
-            py::module_ sys  = py::module_::import("sys");
-            py::list    path = sys.attr("path").cast<py::list>();
-            path.append(R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)");
+// -------- helpers --------
 
-            py::module_ kg = py::module_::import("KG_Interface");
-            py::object kgi = kg.attr("KGInterface")();
-            py::object res = kgi.attr("getCachedScreenshots")(py::str(corr));
-            return std::string(py::str(res)); // erwartet z.B. '["C:/.../a.png", "..."]'
+json FailureRecorder::snapshotToJson(const InventorySnapshot& inv) {
+    auto keyToJ = [](const NodeKey& k){
+        return json{{"ns",k.ns},{"t",std::string(1,k.type)},{"id",k.id}};
+    };
+
+    json j;
+    // Rows (Metadaten über die Knoten)
+    j["rows"] = json::array();
+    for (const auto& r : inv.rows) {
+        j["rows"].push_back({
+            {"nodeClass", r.nodeClass},
+            {"id",        r.nodeId},
+            {"t",         r.dtypeOrSig}
         });
-    } catch (...) {
-        // 2) Fallback: Dateisystem-konvention ./screenshots/<corr>/*.png|*.jpg
-        json arr = json::array();
-        try {
-            fs::path root = fs::path("screenshots") / corr;
-            if (fs::exists(root) && fs::is_directory(root)) {
-                for (auto& de : fs::directory_iterator(root)) {
-                    if (!de.is_regular_file()) continue;
-                    const auto ext = de.path().extension().string();
-                    if (ext == ".png" || ext == ".jpg" || ext == ".jpeg" || ext == ".bmp") {
-                        arr.push_back(de.path().string());
-                    }
-                }
-            }
-        } catch (...) {}
-        return arr.dump();
     }
+
+    // Werte, typgruppiert
+    j["bools"]   = json::array();
+    for (const auto& [k,v] : inv.bools)   j["bools"].push_back(  {{"k",keyToJ(k)},{"v",v}} );
+    j["strings"] = json::array();
+    for (const auto& [k,v] : inv.strings) j["strings"].push_back({{"k",keyToJ(k)},{"v",v}} );
+    j["int16s"]  = json::array();
+    for (const auto& [k,v] : inv.int16s)  j["int16s"].push_back( {{"k",keyToJ(k)},{"v",v}} );
+    j["floats"]  = json::array();
+    for (const auto& [k,v] : inv.floats)  j["floats"].push_back( {{"k",keyToJ(k)},{"v",v}} );
+
+    return j;
 }
 
 Plan FailureRecorder::makeKgIngestionPlan(const std::string& corr,
                                           const std::string& process,
                                           const std::string& summary,
-                                          const std::string& screenshotsJson)
+                                          const std::string& snapshotJson)
 {
     Plan p;
     p.correlationId = corr;
     p.resourceId    = "KG";
 
     Operation op;
-    op.type = OpType::CallMethod; // semantisch egal – wird von KgIngestionForce als „Input-Container“ genutzt
+    op.type = OpType::KGIngestion;    // <— wichtig: dein neuer Typ
     op.inputs[0] = corr;
     op.inputs[1] = process;
     op.inputs[2] = summary;
-    op.inputs[3] = screenshotsJson;
+    op.inputs[3] = snapshotJson;      // JSON des InventorySnapshot
     p.ops.push_back(std::move(op));
     return p;
 }

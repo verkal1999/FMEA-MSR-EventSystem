@@ -9,17 +9,21 @@ enum class OpType {
     WriteBool,
     PulseBool,
     WriteInt32,
-    CallMethod,
+    // Aufrufe (semantisch getrennt):
+    CallMethod,             // generischer Method-Call (falls genutzt)
+    CallMonitoringActions,  // <— NEU: MonActionForce-Domain
+    CallSystemReaction,     // <— NEU: SystemReactionForce-Domain
     WaitMs,
     ReadCheck,
     BlockResource,
     RerouteOrders,
-    UnblockResource
+    UnblockResource,
+    KGIngestion             // KG-Ingestion (nicht-PLC)
 };
 
 /// Eine einzelne Operation (Schritt) in einem Plan.
 struct Operation {
-    OpType        type = OpType::CallMethod;
+    OpType type;
 
     // Allgemein (für Write*/ReadCheck):
     std::string   nodeId;                 // z. B. "DiagnoseFinished"

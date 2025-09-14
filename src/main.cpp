@@ -9,6 +9,9 @@
 #include <iostream>
 #include <thread>
 #include <pybind11/embed.h>
+#include "InventorySnapshot.h"
+#include "InventorySnapshotUtils.h"
+#include "FailureRecorder.h"
 
 
 namespace py = pybind11;
@@ -87,21 +90,28 @@ int main() {
     auto subProcessFail   = bus.subscribe_scoped(EventType::evProcessFail,    ackLogger, 1);
     auto subKGRes  = bus.subscribe_scoped(EventType::evKGResult,        rm, 4);
     auto subKGTo   = bus.subscribe_scoped(EventType::evKGTimeout,       rm, 4);
-    auto recorder = std::make_shared<FailureRecorder>(mon, bus);
-    recorder->subscribeAll();   // registriert Observer für alle EventTypes
+    auto rec = std::make_shared<FailureRecorder>(bus);
+    rec->subscribeAll();   // registriert Observer für alle EventTypes
 
     // 7) Trigger-Subscription → Event
     std::atomic<bool> d2Prev{false};
-    mon.subscribeBool("OPCUA.TriggerD2", opt.nsIndex, 0.0, 10,
-        [&](bool b, const UA_DataValue&) {
-            if (b) {
-                if (!d2Prev.exchange(true)) {
-                    bus.post({ EventType::evD2, std::chrono::steady_clock::now(), {} });
-                }
-            } else {
-                d2Prev = false;
-            }
+    mon.subscribeBool("OPCUA.TriggerD2", opt.nsIndex, 0.0, 10, [&](bool b, const UA_DataValue&) {
+        static std::atomic<bool> d2Prev{false};
+        if (!b) { d2Prev = false; return; }
+        if (d2Prev.exchange(true)) return;
+
+        mon.post([&]{
+            InventorySnapshot inv;
+            const bool ok = buildInventorySnapshotNow(mon, "PLC", inv);
+            std::cout << "[Debug] buildInventorySnapshotNow = " << (ok ? "OK":"FAIL") << "\n";
+            dumpInventorySnapshot(inv);  // <— kompletter Dump hier
+
+            const std::string corr = "evD2-" + std::to_string(
+                std::chrono::steady_clock::now().time_since_epoch().count());
+            bus.post({ EventType::evD2, std::chrono::steady_clock::now(),
+                    std::any{ D2Snapshot{ corr, std::move(inv) } } });
         });
+    });
     std::cout << "[Client] subscribed: ns=4;s=TriggerD2\n";
 
     // 8) Main-Loop

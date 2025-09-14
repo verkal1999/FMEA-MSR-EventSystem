@@ -24,3 +24,8 @@ struct KGResultPayload {
 struct KGTimeoutPayload {
     std::string correlationId;
 };
+
+struct PLCSnapshotPayload {
+    std::string correlationId;   // vom Erzeuger vergeben (z. B. "evD2-...")
+    std::string snapshotJson;    // z.B. {"rows":[...],"vals":{...},"processName":"..."}
+};
