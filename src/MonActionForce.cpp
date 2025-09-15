@@ -24,17 +24,26 @@ MonitoringActionForce::filter(const std::vector<std::string>& winners,
 
     // Ack: PLANNED
     bus_.post(Event{
-        EventType::evReactionPlanned, Clock::now(),
+        EventType::evMonActPlanned, Clock::now(),
         std::any{ ReactionPlannedAck{ corr, "Station", "MonitoringAction Filter (CallMethod)" } }
     });
 
     std::vector<std::string> kept;
+    std::vector<std::string> executedSkillIris;
     kept.reserve(winners.size());
 
     for (const auto& fm : winners) {
         // 1) MonAction aus KG holen
         const std::string payload = fetch_(fm);
         if (payload.empty()) { kept.push_back(fm); continue; }
+        std::string iri;
+        {
+            const auto nl    = payload.find('\n');
+            const auto brace = payload.find('{', (nl==std::string::npos ? 0 : nl));
+            iri = (nl==std::string::npos) ? payload.substr(0, brace) : payload.substr(0, nl);
+            // trim:
+            while(!iri.empty() && (iri.back()=='\r' || iri.back()=='\n' || iri.back()==' ' || iri.back()=='\t')) iri.pop_back();
+        }
 
         // 2) Plan bauen (nur CallMethod)
         Plan monPlan = buildCallMethodPlanFromPayload(corr, payload, /*appendPulse=*/false, "Station");
@@ -71,27 +80,25 @@ MonitoringActionForce::filter(const std::vector<std::string>& winners,
             allOk = allOk && callOk && match;
         }
 
-        if (allOk) kept.push_back(fm);
-        else {
-            bus_.post(Event{
-                EventType::evProcessFail, Clock::now(),
-                std::any{ ProcessFailAck{
-                    corr, processNameForAck,
-                    std::string("MonitoringAction mismatch for FM: ") + fm
-                } }
-            });
+        if (allOk) {
+            kept.push_back(fm);
+            if (!iri.empty()) executedSkillIris.push_back(iri);
+        }else {
+            std::cout << "[MonActionForce] MonitoringAction mismatch for FM: " << fm << "/n";
         }
     }
 
     // Ack: DONE
     bus_.post(Event{
-        EventType::evReactionDone, Clock::now(),
+        EventType::evMonActDone, Clock::now(),
         std::any{ ReactionDoneAck{
             corr,
             kept.empty() ? 0 : 1,
             kept.empty() ? "NO CANDIDATE PASSED" : "OK"
         } }
     });
+    bus_.post(Event{ EventType::evMonActFinished, Clock::now(),
+    std::any{ MonActFinishedAck{ corr, executedSkillIris } } });
 
     return kept;
 }

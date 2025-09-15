@@ -503,7 +503,7 @@ void ReactionManager::createCommandForceForPlanAndAck(const Plan& plan,
 
     // Ack: PLANNED
     bus_.post(Event{
-        EventType::evReactionPlanned, Clock::now(),
+        EventType::evSRPlanned, Clock::now(),
         std::any{ ReactionPlannedAck{
             plan.correlationId,
             plan.resourceId,
@@ -535,7 +535,7 @@ void ReactionManager::createCommandForceForPlanAndAck(const Plan& plan,
     }
 
     bus_.post(Event{
-        EventType::evReactionDone, Clock::now(),
+        EventType::evSRDone, Clock::now(),
         std::any{ ReactionDoneAck{
             plan.correlationId,
             allOk ? 1 : 0,

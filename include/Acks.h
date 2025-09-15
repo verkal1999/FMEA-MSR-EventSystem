@@ -20,3 +20,25 @@ struct ProcessFailAck {
     std::string processName;                  // 1=OK, 0=Fehler
     std::string summary;           // was wurde getan / Ergebnis
 };
+
+struct IngestionPlannedAck {
+    std::string correlationId;
+    std::string individualName;   // corr_ts
+    std::string process;          // lastExecutedProcess (aus Param)
+    std::string summary;          // kurze Beschreibung
+};
+
+struct IngestionDoneAck {
+    std::string correlationId;
+    int rc = 0;                   // 1=OK, 0=FAIL
+    std::string message;          // z.B. "printed params"
+};
+
+struct MonActFinishedAck {
+    std::string correlationId;
+    std::vector<std::string> skills;       // IRIs der ausgeführten Monitoring-Actions
+};
+struct SysReactFinishedAck {
+    std::string correlationId;
+    std::vector<std::string> skills;       // IRIs der ausgeführten System-Reactions
+};

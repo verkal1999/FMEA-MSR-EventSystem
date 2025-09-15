@@ -1,322 +1,146 @@
-@startuml
-title Eventbased ExceptionHandling-System – Gesamtübersicht (Klassen & Structs)
-
+@startuml Class Structure
 skinparam classAttributeIconSize 0
-skinparam packageStyle rectangle
-left to right direction
+skinparam linetype ortho
+'left to right direction
+top to bottom direction
+'scale max 1200 width
+'scale max 800 height
 
-' ============================= Core: Events & Bus =============================
-package "Core Events" {
-  enum EventType {
+abstract class ReactiveObserver {
+    +priority: int
+    {abstract} +onEvent(event: Event): void
+    +setEventHandled(event: Event): bool
+}
+'factory design pattern
+class ReactionManager {
+    -mut_ : std::mutex
+    +priority:int = 4
+    +onEvent(event: Event): void
+    +createPlan(JSON_Respone:string):Plan
+}
+struct Plan{
+    +correlationId:string  
+    +resourceId: string
+    +ops: vector<Operation>            
+    abortRequired: bool;
+    degradeAllowed bool;
+}
+abstract class CommandForce  {
+    {abstract} +execute(Task): void
+}
+
+enum EventType{
     evD2
+    evD3
+    evD1
     evReactionPlanned
     evReactionDone
     evKGResult
     evKGTimeout
-  }
-
-  class Event <<struct>> {
-    +type : EventType
-    +ts   : time_point
-    +payload : any
-  }
-
-  class KGResultPayload <<struct>> {
-    +correlationId : string
-    +rowsJson : string
-    +ok : bool
-  }
-  class KGTimeoutPayload <<struct>> {
-    +correlationId : string
-  }
-
-  abstract class ReactiveObserver {
-    +onMethod(ev: Event) : void
-  }
-
-  class SubscriptionToken <<struct>> {
-    +type : EventType
-    +id : uint64
-  }
-
-  class Subscription {
-    -bus_ : EventBus*
-    -tok_ : SubscriptionToken
-    +unsubscribe() : void
-    +token() : SubscriptionToken
-    -- RAII: unsub in dtor --
-  }
-
-  class EventBus {
-    +subscribe(t: EventType, obs: ReactiveObserver, prio: int) : SubscriptionToken
-    +subscribe_scoped(t: EventType, obs: ReactiveObserver, prio: int) : Subscription
-    +unsubscribe(tok: SubscriptionToken) : void
-    +post(ev: Event) : void
-    +post_now(ev: Event) : void
-    +process(maxEvents: size_t = 32) : void
-    +clear_queue() : void
-  }
-
-  ' interne Listener-Einträge (im Header als nested struct)
-  class "EventBus::Entry" <<struct>> {
-    +wp : weak_ptr<ReactiveObserver>
-    +id : uint64
-    +priority : int
-  }
-
-  ' Kompositionen des EventBus
-  EventBus *-- "queue [*]\nq_ : deque<Event>" Event
-  EventBus *-- "listeners [*]" "EventBus::Entry"
-  EventBus *-- "tokens [*]" SubscriptionToken
-  Subscription --> EventBus : «uses»
-  EventBus ..> ReactiveObserver : «notifies»
 }
 
-' ============================= Acks & Logger =============================
-package "Acks" {
-  class ReactionPlannedAck <<struct>> {
-    +correlationId : string
-    +resourceId : string
-    +summary : string
-  }
-  class ReactionDoneAck <<struct>> {
-    +correlationId : string
-    +rc : int
-    +summary : string
-  }
+class KG {}
+class EventBus{
+    -Callbacks: List[EventType, &Class::onEvent]
+    -mut_ : std::mutex
+    +post(ev:Event):void
+    +subscribe<Event>(obj, &Class::onEvent) : void
+    +unsubscribe<Event>(obj, &Class::onEvent) : void
+    +start()
+    +stop()
+}
+class AckLogger {}
 
-  class AckLogger {
-    +onMethod(ev: Event) : void
-  }
-  AckLogger -|> ReactiveObserver
-  AckLogger ..> ReactionPlannedAck : «any_cast»
-  AckLogger ..> ReactionDoneAck : «any_cast»
+struct Event{
+    +type: EventType
+    +payload: Payload
 }
 
-' ============================= PLC / OPC UA =============================
-package "PLC / OPC UA" {
-  class PLCMonitor {
-    +post(fn) : void
-    +processPosted(max: size_t=16) : void
-    +connect() : bool
-    +disconnect() : void
-    +runIterate(timeoutMs:int=0) : UA_StatusCode
-    +waitUntilActivated(timeoutMs:int=3000) : bool
-    +readBoolAt(id: string, ns: UA_UInt16, out: bool&) : bool
-    +readInt16At(id: string, ns: UA_UInt16, out: int16&) : bool
-    +readStringAt(id: string, ns: UA_UInt16, out: string&) : bool
-    +readFloatAt(id: string, ns: UA_UInt16, out: float&) : bool
-    +readDoubleAt(id: string, ns: UA_UInt16, out: double&) : bool
-    +writeBool(id: string, ns: UA_UInt16, v: bool) : bool
-    +subscribeInt16(id: string, ns: UA_UInt16, sampMs: double, q: UA_UInt32, cb) : bool
-    +subscribeBool(id: string, ns: UA_UInt16, sampMs: double, q: UA_UInt32, cb) : bool
-    +unsubscribe() : void
-    +dumpPlcInventory(out: vector<InventoryRow>&, plcNameContains="PLC") : bool
-    +printInventoryTable(rows: vector<InventoryRow>) : void
-    +postDelayed(delayMs:int, fn) : void
-    +processTimers() : void
-    +callJob(objId: string, methId: string, x:int32, yOut:int32&, timeoutMs:uint) : bool
-    +raw() : UA_Client*
-  }
-
-  class "PLCMonitor::Options" <<struct>> {
-    +endpoint : string
-    +username : string
-    +password : string
-    +certDerPath : string
-    +keyDerPath  : string
-    +applicationUri : string
-    +nsIndex : UA_UInt16
-  }
-
-  class "PLCMonitor::InventoryRow" <<struct>> {
-    +nodeClass : string
-    +nodeId : string
-    +dtypeOrSig : string
-  }
-
-  class "PLCMonitor::TimedFn" <<struct>> {
-    +due : time_point
-    +fn  : function<void()>
-  }
-
-  PLCMonitor *-- "opt_ : Options" "PLCMonitor::Options"
-  PLCMonitor *-- "inventory [*]" "PLCMonitor::InventoryRow"
-  PLCMonitor *-- "timers [*]" "PLCMonitor::TimedFn"
+interface KGInterface {
+    +queryForAction(event: Event): List<Action>
+    +parseResponse(str): List<Action>
+    +ingestFailure(event: Event): void
 }
 
-' ============================= Plans =============================
-package "Plan" {
-  enum OpType {
-    WriteBool
-    PulseBool
-    WriteInt32
-    CallMethod
-    WaitMs
-    ReadCheck
-    BlockResource
-    RerouteOrders
-    UnblockResource
-  }
-
-  class Operation <<struct>> {
-    +type : OpType
-    +nodeId : string
-    +ns : ushort
-    +callObjNodeId : string
-    +callMethNodeId : string
-    +callNsObj  : ushort
-    +callNsMeth : ushort
-    +arg : string
-    +timeoutMs : int
-  }
-
-  class Plan <<struct>> {
-    +correlationId : string
-    +resourceId : string
-    +ops : vector<Operation>
-    +abortRequired : bool
-    +degradeAllowed : bool
-  }
-
-  Plan *-- "ops [*]" Operation
+struct InventoryRow {
+    + std::string nodeClass;   
+    + std::string nodeId;      
+    + std::string dtypeOrSig; 
 }
 
-' ============================= Reaction Manager =============================
-package "Reactions" {
-  class ReactionManager {
-    +onMethod(ev: Event) : void
-    +setLogLevel(lvl: LogLevel) : void
-    +getLogLevel() : LogLevel
-    --
-    +buildInventorySnapshot(root: string) : InventorySnapshot
-    +normalizeKgResponse(rowsJson: string) : vector<KgExpect>
-    +normalizeKgPotFM(rowsJson: string) : vector<KgCandidate>
-    +compareAgainstCache(inv: InventorySnapshot, ex: vector<KgExpect>) : ComparisonReport
-    +selectPotFMByChecks(inv: InventorySnapshot, cands: vector<KgCandidate>) : vector<string>
-    +buildPlanFromComparison(corr: string, rep: ComparisonReport) : Plan
-    +executePlanAndAck(plan: Plan, checksOk: bool) : void
-    +fetchSystemReactionForFM(fmIri: string) : string
-    +createPlanFromSystemReactionJson(corr: string, json: string) : Plan
-    +executeMethodPlanAndAck(plan: Plan) : void
-    --
-    -mon_ : PLCMonitor&
-    -bus_ : EventBus&
-  }
-
-  enum "ReactionManager::LogLevel" {
-    Error
-    Warn
-    Info
-    Debug
-    Trace
-    Verbose
-  }
-
-  class "ReactionManager::NodeKey" <<struct>> {
-    +ns : uint16
-    +type : char
-    +id : string
-  }
-
-  class "ReactionManager::NodeKeyHash" <<struct>>
-
-  class "ReactionManager::InventorySnapshot" <<struct>> {
-    +rows : vector<PLCMonitor::InventoryRow>
-    +bools    : unordered_map<NodeKey,bool,NodeKeyHash>
-    +strings  : unordered_map<NodeKey,string,NodeKeyHash>
-    +int16s   : unordered_map<NodeKey,int16,NodeKeyHash>
-    +floats   : unordered_map<NodeKey,double,NodeKeyHash>
-  }
-
-  enum "ReactionManager::KgValKind" {
-    Bool
-    Int16
-    Float64
-    String
-  }
-
-  class "ReactionManager::KgExpect" <<struct>> {
-    +key : NodeKey
-    +kind : KgValKind
-    +expectedBool : bool
-    +expectedI16  : int16
-    +expectedF64  : double
-    +expectedStr  : string
-  }
-
-  class "ReactionManager::ComparisonItem" <<struct>> {
-    +key : NodeKey
-    +ok : bool
-    +detail : string
-  }
-  class "ReactionManager::ComparisonReport" <<struct>> {
-    +allOk : bool
-    +items : vector<ComparisonItem>
-  }
-
-  class "ReactionManager::KgCandidate" <<struct>> {
-    +potFM : string
-    +expects : vector<KgExpect>
-  }
-
-  ReactionManager -|> ReactiveObserver
-  ReactionManager *-- "NodeKey" "ReactionManager::NodeKey"
-  ReactionManager *-- "NodeKeyHash" "ReactionManager::NodeKeyHash"
-  ReactionManager *-- "InventorySnapshot" "ReactionManager::InventorySnapshot"
-  ReactionManager *-- "KgExpect [*]" "ReactionManager::KgExpect"
-  ReactionManager *-- "ComparisonItem [*]" "ReactionManager::ComparisonItem"
-  ReactionManager *-- "ComparisonReport" "ReactionManager::ComparisonReport"
-  ReactionManager *-- "KgCandidate [*]" "ReactionManager::KgCandidate"
-
-  ReactionManager --> PLCMonitor : «uses (mon_)»
-  ReactionManager --> EventBus   : «uses (bus_)»
-  ReactionManager ..> Plan       : «builds/executes»
-  ReactionManager ..> ReactionPlannedAck : «posts»
-  ReactionManager ..> ReactionDoneAck    : «posts»
+class PLCMonitor {
+  +connect(): void
+  +disconnect(): void
+  +run():void
+  +onDataChange(nodeId: string, value: any): void
+  -bus: EventBus
+  +createSnapshot():vector<InventoryRow>
+  +wasTimeout(): bool
+  +getGEMMAState():str
+  -mut_ : std::mutex
+'Mutex bei parallelem Zugriff und aufpassen, dass Tas
 }
 
-' ============================= Python Runtime =============================
-package "Python Integration" {
-  class PythonWorker <<singleton>> {
-    +start() : void
-    +stop() : void
-    +call<F>(f: F) : R
-    -run_() : void
-  }
-  class PythonRuntime <<struct>> {
-    +ensure_started() : void
-  }
+interface ICommand {
+  +execute(plan: Plan) : Result
 }
 
-' ============================= Commands =============================
-package "Commands" {
-  class IOrderQueue <<struct>> {
-    +blockResource(resId:string) : bool
-    +reroute(resId:string, criteriaJson:string) : bool
-    +unblockResource(resId:string) : bool
-  }
-
-  class ICommandForce <<struct>> {
-    +execute(p: Plan) : int
-  }
-
-  class CommandForce {
-    +CommandForce(mon: PLCMonitor&, oq: IOrderQueue*=nullptr)
-    +execute(p: Plan) : int
-    -mon_ : PLCMonitor&
-    -oq_  : IOrderQueue*
-  }
-
-  CommandForce -|> ICommandForce
-  CommandForce --> PLCMonitor : «uses (ref)»
-  CommandForce ..> IOrderQueue : «optional»
-
-  class CommandForceFactory {
-    +create(params) : ICommandForce
-  }
-  CommandForceFactory ..> CommandForce : «creates»
-  CommandForceFactory ..> ICommandForce
+class CommandForce {
+  - mon_ : PLCMonitor&
+  - oq_  : IOrderQueue*
+  + execute(p: Plan): int
 }
+
+class FailureRecorder {
+
+}
+
+' === Factory-Seite ===
+interface ICommandFactory {
+  +create(plan: Plan) : ICommand
+}
+Interface IWinnerFilter{
+
+}
+
+class CommandForceFactory {
+  +create(plan: Plan):ICommand
+}
+' === Beziehungen ===
+CommandForce -up-|> ICommand
+CommandForceFactory -up-|> ICommandFactory
+
+' Factory erzeugt Produkt
+CommandForceFactory ..> CommandForce : «creates»
+
+' Client nutzt nur Abstraktionen
+ReactionManager ..> ICommandFactory
+ReactionManager *-- Plan: contains
+PLCMonitor --> EventBus : publishes on
+PLCMonitor --> InventoryRow : creates
+EventBus "1" --> "1...*" ReactiveObserver : notify
+ReactiveObserver <|-- ReactionManager 
+ReactiveObserver <|-- AckLogger 
+ReactiveObserver <|-- FailureRecorder
+FailureRecorder --> ICommandFactory
+ReactionManager  --> KGInterface : uses
+EventBus "1" *-- "1...*" Event : contains
+KG ..|> KGInterface : interact
+ReactionManager --> PLCMonitor: Knows
+CommandForce --> PLCMonitor: Knows
+ICommandForce <|.. CommandForce
+ICommandForce <|.. KGIngestionForce
+IWinnerFilter <|.. MonitoringActionForce
+IWinnerFilter <|.. SystemReactionForce
+
+CommandForceFactory ..> CommandForce : creates
+CommandForceFactory ..> KGIngestionForce : creates
+CommandForceFactory ..> MonitoringActionForce : creates
+CommandForceFactory ..> SystemReactionForce : creates
+
+ReactionManager ..> IWinnerFilter : uses
+ReactionManager ..> ICommand : uses
+FailureRecorder ..> ICommand : uses
+ICommandForce ..> PLCMonitor : executes on (receiver)
 
 @enduml

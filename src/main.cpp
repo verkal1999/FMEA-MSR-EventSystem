@@ -85,13 +85,17 @@ int main() {
     auto subD1 = bus.subscribe_scoped(EventType::evD1, rm, 4);
     auto subD3 = bus.subscribe_scoped(EventType::evD3, rm, 4);
     auto ackLogger = std::make_shared<AckLogger>();
-    auto subPlan   = bus.subscribe_scoped(EventType::evReactionPlanned, ackLogger, 1);
-    auto subDone   = bus.subscribe_scoped(EventType::evReactionDone,    ackLogger, 1);
+    auto subPlan   = bus.subscribe_scoped(EventType::evSRPlanned, ackLogger, 1);
+    auto subDone   = bus.subscribe_scoped(EventType::evSRDone,    ackLogger, 1);
+    auto subPlan2   = bus.subscribe_scoped(EventType::evMonActPlanned, ackLogger, 1);
+    auto subDone2   = bus.subscribe_scoped(EventType::evMonActDone,    ackLogger, 1);
     auto subProcessFail   = bus.subscribe_scoped(EventType::evProcessFail,    ackLogger, 1);
     auto subKGRes  = bus.subscribe_scoped(EventType::evKGResult,        rm, 4);
     auto subKGTo   = bus.subscribe_scoped(EventType::evKGTimeout,       rm, 4);
     auto rec = std::make_shared<FailureRecorder>(bus);
     rec->subscribeAll();   // registriert Observer für alle EventTypes
+    auto subIngPlan = bus.subscribe_scoped(EventType::evIngestionPlanned, ackLogger, 1);
+    auto subIngDone = bus.subscribe_scoped(EventType::evIngestionDone,    ackLogger, 1);
 
     // 7) Trigger-Subscription → Event
     std::atomic<bool> d2Prev{false};
@@ -116,7 +120,7 @@ int main() {
 
     // 8) Main-Loop
     for (;;) {
-        mon.runIterate(50);    // Client pumpt *kein* eigener Thread → regelmäßig aufrufen!
+        mon.runIterate(50);   
         mon.processPosted(16);
         bus.process(16);
         // std::this_thread::sleep_for(std::chrono::milliseconds(10));

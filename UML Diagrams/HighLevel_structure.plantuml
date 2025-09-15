@@ -91,6 +91,10 @@ class CommandForce {
   + execute(p: Plan): int
 }
 
+class FailureRecorder {
+
+}
+
 ' === Factory-Seite ===
 interface ICommandFactory {
   +create(plan: Plan) : ICommand
@@ -115,6 +119,8 @@ PLCMonitor --> InventoryRow : creates
 EventBus "1" --> "1...*" ReactiveObserver : notify
 ReactiveObserver <|-- ReactionManager 
 ReactiveObserver <|-- AckLogger 
+ReactiveObserver <|-- FailureRecorder
+FailureRecorder --> ICommandFactory
 ReactionManager  --> KGInterface : uses
 EventBus "1" *-- "1...*" Event : contains
 KG ..|> KGInterface : interact

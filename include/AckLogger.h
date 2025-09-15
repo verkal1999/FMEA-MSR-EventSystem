@@ -8,17 +8,33 @@ class AckLogger : public ReactiveObserver {
 public:
     void onEvent(const Event& ev) override {
         switch (ev.type) {
-        case EventType::evReactionPlanned: {
+        case EventType::evSRPlanned: {
             if (auto p = std::any_cast<ReactionPlannedAck>(&ev.payload)) {
-                std::cout << "[AckLogger] PLANNED corr=" << p->correlationId
+                std::cout << "[AckLogger] SRPLANNED corr=" << p->correlationId
                           << " res=" << p->resourceId
                           << " summary=" << p->summary << "\n";
             }
             break;
         }
-        case EventType::evReactionDone: {
+        case EventType::evSRDone: {
             if (auto d = std::any_cast<ReactionDoneAck>(&ev.payload)) {
-                std::cout << "[AckLogger] DONE    corr=" << d->correlationId
+                std::cout << "[AckLogger] SRDONE    corr=" << d->correlationId
+                          << " rc=" << d->rc
+                          << " summary=" << d->summary << "\n";
+            }
+            break;
+        }
+        case EventType::evMonActPlanned: {
+            if (auto p = std::any_cast<ReactionPlannedAck>(&ev.payload)) {
+                std::cout << "[AckLogger] MonActPLANNED corr=" << p->correlationId
+                          << " res=" << p->resourceId
+                          << " summary=" << p->summary << "\n";
+            }
+            break;
+        }
+        case EventType::evMonActDone: {
+            if (auto d = std::any_cast<ReactionDoneAck>(&ev.payload)) {
+                std::cout << "[AckLogger] MonAct_DONE    corr=" << d->correlationId
                           << " rc=" << d->rc
                           << " summary=" << d->summary << "\n";
             }
@@ -31,6 +47,24 @@ public:
                           << " summary=" << d->summary << "\n";
             }
             break;
+
+        case EventType::evIngestionPlanned: {
+            if (auto p = std::any_cast<IngestionPlannedAck>(&ev.payload)) {
+                std::cout << "[AckLogger] INGESTION PLANNED corr=" << p->correlationId
+                        << " indiv=" << p->individualName
+                        << " process=" << p->process
+                        << " summary=" << p->summary << "\n";
+            }
+            break;
+        }
+        case EventType::evIngestionDone: {
+            if (auto d = std::any_cast<IngestionDoneAck>(&ev.payload)) {
+                std::cout << "[AckLogger] INGESTION DONE    corr=" << d->correlationId
+                        << " rc=" << d->rc
+                        << " msg=" << d->message << "\n";
+            }
+            break;
+        }
         default: break;
         }
     }

@@ -23,10 +23,11 @@ SystemReactionForce::filter(const std::vector<std::string>& winners,
     using Clock = std::chrono::steady_clock;
 
     // Ack: PLANNED (wie bei MonitoringActions, aber Summary passend)
-    bus_.post({ EventType::evReactionPlanned, Clock::now(),
+    bus_.post({ EventType::evSRPlanned, Clock::now(),
         std::any{ ReactionPlannedAck{ corr, "Station", "SystemReaction Plan (CallMethod)" } } });
 
     std::vector<std::string> kept;
+    std::vector<std::string> executedSysSkillIris;   // NEU
     kept.reserve(winners.size());
 
     bool allOk = true;
@@ -53,6 +54,14 @@ SystemReactionForce::filter(const std::vector<std::string>& winners,
             p.ops.push_back(op);
             cf->execute(p);
             continue;
+        }
+        //Zu ausgeführten Systemreaktionen hinzufügen
+        std::string iri;
+        {
+            const auto nl    = payload.find('\n');
+            const auto brace = payload.find('{', (nl==std::string::npos ? 0 : nl));
+            iri = (nl==std::string::npos) ? payload.substr(0, brace) : payload.substr(0, nl);
+            while(!iri.empty() && (iri.back()=='\r'||iri.back()=='\n'||iri.back()==' '||iri.back()=='\t')) iri.pop_back();
         }
 
         // 2) Plan bauen -> mit DiagnoseFinished-Puls am Ende
@@ -129,10 +138,12 @@ SystemReactionForce::filter(const std::vector<std::string>& winners,
         }
         if (okThis) kept.push_back(fm);
         allOk = allOk && okThis;
+        if (!iri.empty()) executedSysSkillIris.push_back(iri);
     }
-
+    bus_.post({ EventType::evSysReactFinished, Clock::now(),
+        std::any{ SysReactFinishedAck{ corr, executedSysSkillIris } } });
     // Ack: DONE
-    bus_.post({ EventType::evReactionDone, Clock::now(),
+    bus_.post({ EventType::evSRDone, Clock::now(),
         std::any{ ReactionDoneAck{ corr, allOk ? 1 : 0, allOk ? "OK" : "FAIL" } } });
 
     // Semantik wie bei MonitoringActionForce: „kept“ signalisiert Erfolg.

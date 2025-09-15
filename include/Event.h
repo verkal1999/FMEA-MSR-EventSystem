@@ -5,10 +5,12 @@
 
 enum class EventType {
     evD2, evD1, evD3,
-    evReactionPlanned, evReactionDone, evProcessFail,
-    evKGResult, evKGTimeout
+    evSRPlanned, evSRDone, evProcessFail,
+    evMonActPlanned, evMonActDone,
+    evKGResult, evKGTimeout,
+    evIngestionPlanned, evIngestionDone,
+    evMonActFinished, evSysReactFinished
 };
-
 struct Event {
     EventType type{};
     std::chrono::steady_clock::time_point ts{ std::chrono::steady_clock::now() };
@@ -20,6 +22,8 @@ struct KGResultPayload {
     std::string rowsJson;
     bool ok;
 };
+
+
 
 struct KGTimeoutPayload {
     std::string correlationId;

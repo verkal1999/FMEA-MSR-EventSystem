@@ -1,95 +1,258 @@
-@startuml Flow
-title D1/D2/D3 Flow – High-Level Exception Handling mit EventBus, KG & OPC UA
+@startuml Sequenz
+title Eventbased ExceptionHandling - Sequenz (evD2 bis Ingestion)
 
-skinparam Shadowing false
-skinparam sequenceMessageAlign center
-hide footbox
+actor PLC as PLC
+participant "main()" as App
+participant PLCMonitor as PLCMon
+participant EventBus as Bus
+participant ReactionManager as RM
+participant FailureRecorder as FR
+participant AckLogger as Ack
+participant PythonWorker as PW
+participant CommandForceFactory as CFF
+participant MonitoringActionForce as MonF
+participant SystemReactionForce as SysF
+participant CommandForce as CF
+participant KGIngestionForce as KGF
 
-actor Operator
-participant "PLC (Beckhoff)" as PLC
-participant "EventBus" as BUS
-participant "FailureLogger\n(OccurredFailure)" as LOG
-participant "Diagnoser\n(KGQuerier + Monitor)" as DIAG
-participant "Knowledge Graph\n(FMEA-KG)" as KG
-participant "SystemReactionExecutor" as SRE
-participant "RiskAssessor" as RISK
-participant "TaskManager / SkillOA" as TM
+== Init ==
+App -> PLCMon: connect()
+activate PLCMon
+PLCMon --> App: connected
+deactivate PLCMon
 
-== Fehlerfeststellung ==
-PLC -> PLC: Erkennung: "Fehler liegt vor"
-note right of PLC
-  Über OPC UA steht die Variable\nLastExecutedSkill: string
-  (zuletzt ausgeführter Skill).
+App -> Bus: create()
+activate Bus
+Bus --> App: ready
+deactivate Bus
+
+App -> RM: create(mon,bus)
+activate RM
+RM -> Bus: subscribe D2/D1/D3
+activate Bus
+Bus --> RM: ok
+deactivate Bus
+RM --> App: ready
+deactivate RM
+
+App -> Ack: create()
+activate Ack
+Ack -> Bus: subscribe(Acks)
+activate Bus
+Bus --> Ack: ok
+deactivate Bus
+deactivate Ack
+
+App -> FR: create(bus)
+activate FR
+FR -> Bus: subscribe(errors/all)
+activate Bus
+Bus --> FR: ok
+deactivate Bus
+deactivate FR
+
+App -> PLCMon: subscribeBool(OPCUA.TriggerD2)
+activate PLCMon
+PLCMon --> App: subscribed
+deactivate PLCMon
+
+note right of App
+Main loop:
+- PLCMon.runIterate()
+- PLCMon.processPosted()
+- Bus.process()
 end note
-PLC -> BUS: Emit Event: Enter D{1|2|3}\n+ payload { LastExecutedSkill, snapshot }
 
-alt D1 (Not-Aus)
-  BUS -> PLC: Command: SafeStop()
-  BUS -> Operator: Notify: E-Stop active (D1)
-  ... keine OccurredFailure-Schreibung in diesem Flow ...
-  return System steht sicher
+== Auslöser ==
+PLC -> PLCMon: TriggerD2 = TRUE (Flanke)
+activate PLCMon
+PLCMon -> PLCMon: buildInventorySnapshotNow()
+PLCMon -> Bus: post evD2(corr, inv)
+activate Bus
+Bus --> PLCMon: queued
+deactivate Bus
+deactivate PLCMon
 
-else D2 (Diagnose angefordert)
-  BUS -> LOG: writeOccurredFailure(payload)
-  BUS -> DIAG: DiagnoseStart(LastExecutedSkill, snapshot)
+== Verteilung ==
+Bus -> FR: onEvent(evD2) store snapshotJson[corr]
+activate FR
+FR --> Bus: stored
+deactivate FR
 
-  DIAG -> PLC: Read OPC UA: LastExecutedSkill
-  DIAG -> KG: query FailureModes\nop_preventsFunction(LastExecutedSkill)
-  KG --> DIAG: Candidate FailureModes [{FM_i}]
+Bus -> RM: onEvent(evD2) enqueue job(corr, inv)
+activate RM
+RM --> Bus: enqueued
+deactivate Bus
 
-  loop Monitoring-Maßnahmen je FM
-    DIAG -> KG: get MonitoringSet(FM_i)
-    note right
-      Erste Maßnahme: Parameter-Vergleich\n(gegen Sensorwerte im snapshot).\nWeitere Maßnahmen optional in Reihenfolge.
-    end note
-    DIAG -> DIAG: evaluateMeasures(FM_i, snapshot)
-  end
+== Worker-Job ==
+RM -> PW: getFailureModeParameters(lastExecutedSkill)
+activate PW
+PW --> RM: rowsJson (potFM + Checks)
+deactivate PW
 
-  alt Eindeutiger Fehler bestimmt
-    DIAG -> KG: get SystemReaction(FM*)
-    KG --> DIAG: SystemReaction + Params
+RM -> RM: compareAgainstCache(inv) -> winners
 
-    opt Systemreaktion vorhanden
-      DIAG -> SRE: execute(SystemReaction, Params)
-      SRE --> DIAG: result { success | fail }
-    end opt
+alt winners gefunden
+  RM -> CFF: createWinnerFilter(...)
+  activate CFF
+  CFF --> RM: MonF
+  deactivate CFF
 
-    alt Reaction success
-      DIAG -> RISK: setRiskStatus(fromReaction)
-      RISK --> DIAG: risk := updated
-      DIAG -> BUS: Publish: D2_Resolved(FM*, risk)
-      BUS -> TM: Resume/Continue process
-    else Reaction missing or failed
-      DIAG -> RISK: setRiskStatus(fromFailure)
-      DIAG -> BUS: Publish: D2_Unresolved(FM*)
-      BUS -> Operator: Assist Request (Service/Ticket)
-      opt Prozess nicht fortführbar
-        DIAG -> TM: Query ProposedCapabilities\n(without LastExecutedSkill)
-        TM --> BUS: PlanUpdate(ProposedPath)
-        BUS -> PLC: Apply new path
-      end opt
+  RM -> MonF: filter(winners, corr, processName)
+  activate MonF
+  MonF -> Bus: evReactionPlanned("MonitoringAction Filter")
+  activate Bus
+  Bus --> MonF: ack
+  deactivate Bus
+
+  loop für jeden Winner
+    MonF -> PW: getMonitoringActionForFailureMode(FM)
+    activate PW
+    PW --> MonF: payload (IRI + rows)
+    deactivate PW
+
+    MonF -> MonF: buildCallMethodPlan(payload)
+
+    loop pro CallMethod
+      MonF -> PLCMon: callMethodTyped(obj, meth, inputs, to)
+      activate PLCMon
+      PLCMon -> PLC: UA_Client_call(...)
+      activate PLC
+      PLC --> PLCMon: outputs[]
+      deactivate PLC
+      PLCMon --> MonF: outputs[]
+      deactivate PLCMon
+
+      alt outputs match expected
+        MonF -> MonF: log MATCH
+      else outputs mismatch
+        MonF -> Bus: evProcessFail(corr, process,"MonAct mismatch")
+        activate Bus
+        Bus --> MonF: ack
+        deactivate Bus
+      end
     end
-
-  else Kein Fehler eindeutig bestimmbar
-    DIAG -> RISK: setRiskStatus(fromFailure)
-    DIAG -> BUS: Publish: D2_Inconclusive
-    BUS -> Operator: Manual inspection
   end
 
-else D3 (Produktion trotz Störung)
-  BUS -> LOG: writeOccurredFailure(payload)
-  BUS -> RISK: setRiskStatus(fromFailure)
-  RISK --> BUS: risk := updated
-  BUS -> TM: Continue with degraded mode
-  note over BUS,TM
-    Produktion läuft weiter trotz Störung (D3).
-    Keine Diagnose, nur Logging + Risiko-Status.
-  end note
+  MonF -> Bus: evReactionDone(corr, rc)
+  activate Bus
+  Bus --> MonF: ack
+  deactivate Bus
+  MonF --> RM: kept winners
+  deactivate MonF
+else keine winners
+  RM -> RM: no KG winners
 end
 
-== Abschluss ==
-BUS -> PLC: State update / resume per Mode
-PLC --> BUS: Ack
-BUS -> Operator: Status + Handlungsempfehlung
+' --- SystemReaction oder Fallback nach MonActions ---
+alt genau 1 Winner nach MonActions
+  RM -> CFF: createSystemReactionFilter(...)
+  activate CFF
+  CFF --> RM: SysF
+  deactivate CFF
+
+  RM -> SysF: filter([winner], corr, processName)
+  activate SysF
+  SysF -> Bus: evReactionPlanned("SystemReaction Plan")
+  activate Bus
+  Bus --> SysF: ack
+  deactivate Bus
+
+  SysF -> PW: getSystemReactionForFailureMode(FM)
+  activate PW
+  PW --> SysF: payload
+  deactivate PW
+
+  SysF -> SysF: buildCallMethodPlan(payload, appendPulse=true)
+
+  loop pro CallMethod
+    SysF -> PLCMon: callMethodTyped(...)
+    activate PLCMon
+    PLCMon -> PLC: UA_Client_call(...)
+    activate PLC
+    PLC --> PLCMon: outputs[]
+    deactivate PLC
+    PLCMon --> SysF: outputs[]
+    deactivate PLCMon
+
+    alt outputs match expected
+      SysF -> SysF: log OK
+    else mismatch
+      SysF -> Bus: evProcessFail(corr, process,"SysReact mismatch")
+      activate Bus
+      Bus --> SysF: ack
+      deactivate Bus
+    end
+  end
+
+  SysF -> Bus: evReactionDone(corr, rc)
+  activate Bus
+  Bus --> SysF: ack
+  deactivate Bus
+  SysF --> RM: done
+  deactivate SysF
+else 0 oder >1 Winner
+  RM -> RM: buildFallbackPulsePlan(corr)
+  RM -> CFF: createForOp(PulseBool)
+  activate CFF
+  CFF --> RM: CF
+  deactivate CFF
+
+  RM -> CF: execute(pulse OPCUA.DiagnoseFinished)
+  activate CF
+  CF -> PLCMon: writeBool(HI)
+  activate PLCMon
+  PLCMon --> CF: ok
+  CF -> PLCMon: delay... then writeBool(LO)
+  PLCMon --> CF: ok
+  deactivate PLCMon
+  CF --> RM: rc
+  deactivate CF
+
+  RM -> Bus: evProcessFail(corr, process,"No unique system reaction")
+  activate Bus
+  Bus --> RM: ack
+  RM -> Bus: evReactionDone(corr, rc)
+  Bus --> RM: ack
+  deactivate Bus
+end
+RM --> App: worker finished
+deactivate RM
+
+== Acks/Logging ==
+Bus -> Ack: onEvent(Planned/Done/Fail) -> log
+activate Ack
+Ack --> Bus: logged
+deactivate Ack
+
+== KG-Ingestion bei Fehler ==
+alt Bei evProcessFail oder evKGTimeout
+  Bus -> FR: onEvent(error) makeKgIngestionPlan(...)
+  activate FR
+  FR -> CFF: createForOp(KGIngestion)
+  activate CFF
+  CFF --> FR: KGF
+  deactivate CFF
+
+  FR -> KGF: execute(plan)
+  activate KGF
+  KGF -> Bus: evIngestionPlanned("OccurredFailure ingestion")
+  activate Bus
+  Bus --> KGF: ack
+  deactivate Bus
+
+  KGF -> PW: ingestOccurredFailure(...)   ' (hier: Params drucken)
+  activate PW
+  PW --> KGF: rc
+  deactivate PW
+
+  KGF -> Bus: evIngestionDone(corr, rc)
+  activate Bus
+  Bus --> KGF: ack
+  deactivate Bus
+  KGF --> FR: rc
+  deactivate KGF
+  deactivate FR
+end
 
 @enduml

@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <map>               // neu
+#include <map>  
+#include <any>             
 #include "common_types.h"    // UAValue, UAValueMap (neu)
 
 /// Primitive, aus denen ein Reaktionsplan besteht.
@@ -50,6 +51,11 @@ struct Operation {
     // PulseBool:   Pulsbreite
     // CallMethod:  Call-Timeout (Client->config->timeout)
     int           timeoutMs = 0;
+
+    
+    // Opaque Cargo für spezielle OpTypes (z. B. KGIngestion)
+    // Hier legen wir ein std::shared_ptr<KgIngestionParams> ab.
+    std::any      attach;
 };
 
 /// Gesamter Reaktionsplan …

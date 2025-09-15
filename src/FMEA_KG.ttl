@@ -306,16 +306,20 @@
 #    Data properties
 #################################################################
 
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams> rdf:type owl:DatatypeProperty .
+
+
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadMonActExecutionParams
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadMonActExecutionParams> rdf:type owl:DatatypeProperty ;
-                                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExecutionParams> ;
+                                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams> ;
                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedMonAct> ;
                                                                             rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadSRExecutionParams
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadSRExecutionParams> rdf:type owl:DatatypeProperty ;
-                                                                        rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExecutionParams> ;
+                                                                        rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams> ;
                                                                         rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR> ;
                                                                         rdfs:range xsd:string .
 
@@ -404,10 +408,6 @@
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExactDecValue> rdf:type owl:DatatypeProperty ;
                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
                                                                     rdfs:range xsd:decimal .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExecutionParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExecutionParams> rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating
@@ -696,6 +696,12 @@ Format:
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound> rdf:type owl:DatatypeProperty ;
                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
                                                                  rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_isUnknownFailure
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_isUnknownFailure> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure> ;
+                                                                    rdfs:range xsd:boolean .
 
 
 #################################################################
