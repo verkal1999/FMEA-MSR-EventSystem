@@ -17,6 +17,16 @@ void FailureRecorder::subscribeAll() {
     bus_.subscribe(EventType::evSRDone,           self, 3); // Trigger Ingestion
     bus_.subscribe(EventType::evKGTimeout,        self, 3); // Trigger Ingestion
     bus_.subscribe(EventType::evIngestionDone,    self, 3); // Cleanup
+    bus_.subscribe(EventType::evUnknownFM,      self, 3);
+    bus_.subscribe(EventType::evGotFM,            self, 3);
+}
+
+void FailureRecorder::resetCorrUnlocked(const std::string& corr) {
+    snapshotJsonByCorr_.erase(corr);
+    monReactsByCorr_.erase(corr);
+    sysReactsByCorr_.erase(corr);
+    failureModeByCorr_.erase(corr);
+    ingestionStarted_.erase(corr);
 }
 
 bool FailureRecorder::tryMarkIngestion(const std::string& corr) {
@@ -112,14 +122,23 @@ FailureRecorder::buildParams(const std::string& corr, const std::string& process
         std::lock_guard<std::mutex> lk(mx_);
         if (auto it = snapshotJsonByCorr_.find(corr); it != snapshotJsonByCorr_.end())
             snap = it->second;
-        // Reaktionslisten, falls schon vorhanden:
-        if (auto it = monReactsByCorr_.find(corr); it != monReactsByCorr_.end())
-            prm.monReactions = it->second;
-        if (auto it = sysReactsByCorr_.find(corr); it != sysReactsByCorr_.end())
-            prm.sysReactions = it->second;
-    }
-    prm.snapshotWrapped = wrapSnapshot(snap);
 
+        // NEW: ExecmonReactions (vector) & ExecsysReaction (string)
+        if (auto it = monReactsByCorr_.find(corr); it != monReactsByCorr_.end())
+            prm.ExecmonReactions = it->second;
+
+        if (auto it = sysReactsByCorr_.find(corr); it != sysReactsByCorr_.end()) {
+            // Semantik: erster Eintrag als "die" ausgeführte System-Reaction;
+            // alternativ joinen, wenn Sie mehrere als String serialisieren möchten.
+            prm.ExecsysReaction = it->second.empty() ? std::string{} : it->second.front();
+        }
+
+        // NEW: FailureMode-Name (falls eingetroffen)
+        if (auto it = failureModeByCorr_.find(corr); it != failureModeByCorr_.end())
+            prm.failureMode = it->second;
+    }
+
+    prm.snapshotWrapped = wrapSnapshot(snap);
     try {
         json j = snap.empty() ? json::object() : json::parse(snap);
         prm.lastSkill   = findStringInSnap(j, "OPCUA.lastExecutedSkill");
@@ -148,71 +167,94 @@ void FailureRecorder::startIngestionWith(std::shared_ptr<KgIngestionParams> prm)
 // ---------- zentrales Event-Handling ----------
 void FailureRecorder::onEvent(const Event& ev) {
     switch (ev.type) {
-    case EventType::evD2: {
-        if (auto p = std::any_cast<D2Snapshot>(&ev.payload)) {
-            const std::string corr = p->correlationId;
-            const std::string js   = snapshotToJson_flat(p->inv).dump();
-            std::lock_guard<std::mutex> lk(mx_);
-            snapshotJsonByCorr_[corr] = js;
+        case EventType::evD2: {
+            if (auto p = std::any_cast<D2Snapshot>(&ev.payload)) {
+                const std::string corr = p->correlationId;
+                const std::string js   = snapshotToJson_flat(p->inv).dump();
+                std::lock_guard<std::mutex> lk(mx_);
+                resetCorrUnlocked(corr);            // <- ALT-STATE sicher löschen
+                activeCorr_.insert(corr);           // <- Session aktivieren
+                snapshotJsonByCorr_[corr] = js;     // <- frischer Snapshot
+            }
+            break;
         }
-        break;
-    }
-    case EventType::evMonActFinished: {
-        if (auto a = std::any_cast<MonActFinishedAck>(&ev.payload)) {
-            std::lock_guard<std::mutex> lk(mx_);
-            monReactsByCorr_[a->correlationId] = a->skills; // wenn leer => absichtlich leer
+        case EventType::evGotFM: {
+            if (auto a = std::any_cast<GotFMAck>(&ev.payload)) {
+                std::lock_guard<std::mutex> lk(mx_);
+                if (!activeCorr_.count(a->correlationId)) break;
+                if (ingestionStarted_.count(a->correlationId)) break;
+                failureModeByCorr_[a->correlationId] = a->failureModeName;
+            }
+            break;
         }
-        break;
-    }
-    case EventType::evSysReactFinished: {
-        if (auto a = std::any_cast<SysReactFinishedAck>(&ev.payload)) {
-            std::lock_guard<std::mutex> lk(mx_);
-            sysReactsByCorr_[a->correlationId] = a->skills; // wenn leer => absichtlich leer
+        case EventType::evMonActFinished: {
+            if (auto a = std::any_cast<MonActFinishedAck>(&ev.payload)) {
+                std::lock_guard<std::mutex> lk(mx_);
+                if (!activeCorr_.count(a->correlationId)) break;       // ignorieren, wenn nicht aktiv
+                if (ingestionStarted_.count(a->correlationId)) break;  // ignorieren, wenn schon getriggert
+                monReactsByCorr_[a->correlationId] = a->skills;
+            }
+            break;
         }
-        break;
-    }
+        case EventType::evSysReactFinished: {
+            if (auto a = std::any_cast<SysReactFinishedAck>(&ev.payload)) {
+                std::lock_guard<std::mutex> lk(mx_);
+                if (!activeCorr_.count(a->correlationId)) break;
+                if (ingestionStarted_.count(a->correlationId)) break;
+                sysReactsByCorr_[a->correlationId] = a->skills;
+            }
+            break;
+        }
+        // --- Trigger: Ingestion starten ---
+        case EventType::evProcessFail: {
+            if (auto a = std::any_cast<ProcessFailAck>(&ev.payload)) {
+                if (!tryMarkIngestion(a->correlationId)) break; // schon gestartet
+                auto prm = buildParams(a->correlationId, a->processName, a->summary);
+                startIngestionWith(std::move(prm));
+            }
+            break;
+        }
+        case EventType::evSRDone: {
+            if (auto d = std::any_cast<ReactionDoneAck>(&ev.payload)) {
+                if (!tryMarkIngestion(d->correlationId)) break; // schon gestartet
+                auto prm = buildParams(d->correlationId, "SystemReaction",
+                                    std::string("SRDone: ") + (d->rc ? "OK" : "FAIL"));
+                if (!prm->lastProcess.empty())
+                    prm->process = prm->lastProcess;
+                startIngestionWith(std::move(prm));
+            }
+            break;
+        }
+        case EventType::evKGTimeout: {
+            if (auto t = std::any_cast<KGTimeoutPayload>(&ev.payload)) {
+                if (!tryMarkIngestion(t->correlationId)) break; // schon gestartet
+                auto prm = buildParams(t->correlationId, "KG", "Knowledge Graph timeout");
+                startIngestionWith(std::move(prm));
+            }
+            break;
+        }
+        case EventType::evUnknownFM: {
+            if (auto a = std::any_cast<UnknownFMAck>(&ev.payload)) {
+                if (!tryMarkIngestion(a->correlationId)) break; // schon gestartet
+                // Prozessname bevorzugt lastExecutedProcess; sonst a->processName
+                auto prm = buildParams(a->correlationId,
+                                    a->processName.empty() ? "UnknownFM" : a->processName,
+                                    a->summary.empty() ? "Unknown failure mode (no KG candidates)" : a->summary);
+                if (!prm->lastProcess.empty())
+                    prm->process = prm->lastProcess;
+                startIngestionWith(std::move(prm));
+            }
+            break;
+        }
 
-    // --- Trigger: Ingestion starten ---
-    case EventType::evProcessFail: {
-        if (auto a = std::any_cast<ProcessFailAck>(&ev.payload)) {
-            if (!tryMarkIngestion(a->correlationId)) break; // schon gestartet
-            auto prm = buildParams(a->correlationId, a->processName, a->summary);
-            startIngestionWith(std::move(prm));
+        // --- Cleanup NUR nach Ingestion ---
+        case EventType::evIngestionDone: {
+            if (auto d = std::any_cast<IngestionDoneAck>(&ev.payload)) {
+                std::lock_guard<std::mutex> lk(mx_);
+                resetCorrUnlocked(d->correlationId); // <- alles weg
+                activeCorr_.erase(d->correlationId); // <- Session beenden
+            }
+            break;
         }
-        break;
-    }
-    case EventType::evSRDone: {
-        if (auto d = std::any_cast<ReactionDoneAck>(&ev.payload)) {
-            if (!tryMarkIngestion(d->correlationId)) break; // schon gestartet
-            auto prm = buildParams(d->correlationId, "SystemReaction",
-                                   std::string("SRDone: ") + (d->rc ? "OK" : "FAIL"));
-            if (!prm->lastProcess.empty())
-                prm->process = prm->lastProcess;
-            startIngestionWith(std::move(prm));
-        }
-        break;
-    }
-    case EventType::evKGTimeout: {
-        if (auto t = std::any_cast<KGTimeoutPayload>(&ev.payload)) {
-            if (!tryMarkIngestion(t->correlationId)) break; // schon gestartet
-            auto prm = buildParams(t->correlationId, "KG", "Knowledge Graph timeout");
-            startIngestionWith(std::move(prm));
-        }
-        break;
-    }
-
-    // --- Cleanup NUR nach Ingestion ---
-    case EventType::evIngestionDone: {
-        if (auto d = std::any_cast<IngestionDoneAck>(&ev.payload)) {
-            std::lock_guard<std::mutex> lk(mx_);
-            snapshotJsonByCorr_.erase(d->correlationId);
-            monReactsByCorr_.erase(d->correlationId);
-            sysReactsByCorr_.erase(d->correlationId);
-            ingestionStarted_.erase(d->correlationId);
-        }
-        break;
-    }
-    default:
-        break;
     }
 }

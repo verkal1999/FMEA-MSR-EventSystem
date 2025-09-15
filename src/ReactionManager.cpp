@@ -1,5 +1,4 @@
 #include "ReactionManager.h"
-
 #include <algorithm>
 #include <chrono>
 #include <iostream>
@@ -12,27 +11,14 @@
 #include "CommandForceFactory.h"
 #include "EventBus.h"
 #include "PythonWorker.h"
-#include <iostream>
 #include <thread>
 #include <chrono>
 #include <unordered_map>
 #include <sstream>
-#include <type_traits>
-#include <pybind11/embed.h>
-#include "PythonWorker.h"
-// ReactionManager.cpp (bei den Includes)
 #include <optional>
-#include "ReactionManager.h"
-#include "EventBus.h"
 #include "Event.h"
-#include "Acks.h"
-#include "Correlation.h"
-#include "CommandForce.h"
-#include "CommandForceFactory.h"
 #include "PLCMonitor.h"
 #include "Plan.h"
-#include <nlohmann/json.hpp>
-#include <algorithm>
 #include <cmath>
 #include "MonActionForce.h"
 #include "PlanJsonUtils.h"
@@ -178,6 +164,14 @@ void ReactionManager::onEvent(const Event& ev) {
 
             // 4) Genau ein Winner? -> SystemReaction via Winner-Filter
             if (winners.size() == 1) {
+                const std::string& winner = winners.front();
+                bus_.post(Event{
+                        EventType::evGotFM, Clock::now(),
+                        std::any{ GotFMAck {
+                            corr,
+                            winner
+                        } }
+                    });
                 auto wfSys = CommandForceFactory::createSystemReactionFilter(
                     mon_, bus_,
                     [this](const std::string& fmIri){ return fetchSystemReactionForFM(fmIri); },
@@ -186,21 +180,35 @@ void ReactionManager::onEvent(const Event& ev) {
                 winners = wfSys->filter(winners, corr, processName); // <— ebenfalls filter(...)
                 log(LogLevel::Info) << "[worker] corr=" << corr << " END (winner ok)\n";
                 return;
-            }
-
             // 5) Fallback bei 0 oder >1 Gewinnern -> DiagnoseFinished-Puls
-            if (!potCands.empty()) {
-                if (winners.empty()) {
-                    log(LogLevel::Info) << "[potFM] keine Kandidaten übrig nach MonAct -> Fallback\n";
+            } else {
+                if (potCands.empty()) {
+                    // -> KG lieferte 0 Kandidaten: UnknownFM posten und danach Puls auslösen
+                    bus_.post(Event{
+                        EventType::evUnknownFM, Clock::now(),
+                        std::any{ UnknownFMAck{
+                            corr,
+                            processName,  // oder "UnknownFM"
+                            std::string("KG: no failure modes for skill '") + interruptedSkill + "'"
+                        } }
+                    });
+                    log(LogLevel::Info) << "[potFM] KG lieferte 0 Kandidaten -> UnknownFM + Fallback (Pulse DiagnoseFinished)\n";
+                } else if (winners.empty()) {
+                    log(LogLevel::Info) << "[potFM] keine Kandidaten übrig nach MonAct -> Fallback (Pulse DiagnoseFinished)\n";
                 } else {
-                    log(LogLevel::Warn) << "[potFM] mehrdeutige Kandidaten (" << winners.size() << ") -> Fallback\n";
+                    log(LogLevel::Warn) << "[potFM] mehrdeutige Kandidaten (" << winners.size() << ") -> Fallback (Pulse DiagnoseFinished)\n";
                 }
-                auto plan = buildPlanFromComparison(
-                    corr, winners.size()==1 ? ComparisonReport{true,{}} : ComparisonReport{false,{}});
-                createCommandForceForPlanAndAck(plan, winners.size()==1, processName);
+
+                // Fallback-Plan: nur Puls auf OPCUA.DiagnoseFinished; keine CallMethod → checksOk = false
+                auto plan = buildPlanFromComparison(corr, ComparisonReport{false, {}});
+                createCommandForceForPlanAndAck(plan, /*checksOk=*/false, processName);
+
+                log(LogLevel::Info) << "[worker] corr=" << corr << " END (fallback)\n";
+                return;
             }
-            log(LogLevel::Info) << "[worker] corr=" << corr << " END (fallback)\n";
-        });
+        }
+            
+        );
         job_cv_.notify_one();
     }
 

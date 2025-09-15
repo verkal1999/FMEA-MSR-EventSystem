@@ -9,7 +9,8 @@ enum class EventType {
     evMonActPlanned, evMonActDone,
     evKGResult, evKGTimeout,
     evIngestionPlanned, evIngestionDone,
-    evMonActFinished, evSysReactFinished
+    evMonActFinished, evSysReactFinished,
+    evUnknownFM, evGotFM
 };
 struct Event {
     EventType type{};
@@ -22,7 +23,6 @@ struct KGResultPayload {
     std::string rowsJson;
     bool ok;
 };
-
 
 
 struct KGTimeoutPayload {

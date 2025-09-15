@@ -6,8 +6,17 @@
 #include <sstream>
 #include "KGIngestionParams.h"
 #include <iostream>
+namespace py = pybind11;
+
+template<typename T>
+static py::tuple to_py_tuple(const std::vector<T>& v) {
+    py::tuple t(v.size());
+    for (size_t i = 0; i < v.size(); ++i) t[i] = py::cast(v[i]);
+    return t;
+}
 
 using json = nlohmann::json;
+using Clock = std::chrono::steady_clock;
 
 std::string KgIngestionForce::getStr(const UAValueMap& m, int idx) {
     auto it = m.find(idx);
@@ -89,48 +98,70 @@ KgIngestionForce::Parameters KgIngestionForce::buildParams(const Plan& p) {
 }
 
 int KgIngestionForce::execute(const Plan& p) {
-    using Clock = std::chrono::steady_clock;
     if (p.ops.empty()) return 0;
     const auto& op = p.ops.front();
 
-    // 1) Parameters aus attach (bevorzugt)
     std::shared_ptr<KgIngestionParams> prm;
     if (op.attach.has_value()) {
-        if (auto spp = std::any_cast<std::shared_ptr<KgIngestionParams>>(&op.attach)) {
-            prm = *spp;
-        }
+        try { prm = std::any_cast<std::shared_ptr<KgIngestionParams>>(op.attach); }
+        catch (...) {}
     }
+    if (!prm) return 0; // in Ihrem System kommt es regulär über attach
 
-    // 2) Fallback: aus inputs rekonstruieren (alt-kompatibel)  :contentReference[oaicite:4]{index=4}
-    KgIngestionParams tmp;
-    if (!prm) {
-        tmp.corr      = p.correlationId.empty() ? getStr(op.inputs, 0) : p.correlationId;
-        tmp.process   = getStr(op.inputs, 1);
-        tmp.summary   = getStr(op.inputs, 2);
-        tmp.snapshotWrapped = getStr(op.inputs, 3); // evtl. bereits "==InventorySnapshot==...=="
-        tmp.resourceId = p.resourceId;
-        prm = std::make_shared<KgIngestionParams>(std::move(tmp));
-    }
-
-     // 3) Ack: PLANNED (neu: ingestion-spezifisch)
+    // Ack: geplant
     bus_.post({ EventType::evIngestionPlanned, Clock::now(),
-        std::any{ IngestionPlannedAck{
-            prm->corr,
-            prm->individualName,
-            prm->lastProcess.empty() ? prm->process : prm->lastProcess,
-            "OccurredFailure ingestion (prepared in C++)"
-        } }
-    });
+        std::any{ IngestionPlannedAck{ prm->corr, prm->resourceId, "KGIngestion" } } });
 
-    // 4) Statt Python: Parameter hübsch ausgeben
-    std::cout << "[KGIngestion] params=\n" << prm->toJson().dump(2) << "\n";
+    bool ok = true;
+    std::string py_err;
 
-    // „Erfolg“ simulieren
-    const bool ok = true;
+    try {
+        PythonWorker::instance().call([&]() -> std::string {
+            namespace py = pybind11;
 
-    // 5) DONE (neu: ingestion-spezifisch)
+            // (Optional) Pfad setzen – nur falls nicht global erledigt
+            py::module_ sys = py::module_::import("sys");
+            sys.attr("path").cast<py::list>().append(
+                R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)"
+            );
+
+            // Modul/Instanz 1x holen; Funktion 1x auflösen
+            static py::object func;      // Cache über Aufrufe hinweg
+            if (!func) {
+                py::module_ kg = py::module_::import("KG_Interface");
+                py::object kgi = kg.attr("KGInterface")();
+                func = kgi.attr("ingestOccuredFailure");
+            }
+
+            const std::string monAct = prm->ExecmonReactions.empty()
+                                     ? std::string{}
+                                     : prm->ExecmonReactions.front();
+
+            py::tuple srTuple(prm->ExecsysReaction.empty() ? 0 : 1);
+            if (!prm->ExecsysReaction.empty())
+                srTuple[0] = py::cast(prm->ExecsysReaction);
+
+            func(
+                py::cast(prm->individualName),     // id
+                py::cast(prm->failureMode),        // failureModeName (String)
+                py::cast(monAct),                  // MonActIRI (String)
+                srTuple,                           // Liste(SRIRIs)
+                py::cast(prm->lastSkill),          // lastSkillName
+                py::cast(prm->lastProcess),        // lastProcessName
+                py::cast(prm->summary),            // summary
+                py::cast(prm->snapshotWrapped)     // PLCsnapshot (String / Wrapper)
+            );
+            return std::string{"ok"};
+        });
+    } catch (const std::exception& e) {
+        ok = false; py_err = e.what();
+    }
+
+    // Ack: fertig
     bus_.post({ EventType::evIngestionDone, Clock::now(),
-        std::any{ IngestionDoneAck{ prm->corr, ok ? 1 : 0, ok ? "printed params" : "error" } } });
+        std::any{ IngestionDoneAck{ prm->corr, ok ? 1 : 0,
+            ok ? "ingested via single-call" : ("pyerr: " + py_err) } } });
 
     return ok ? 1 : 0;
 }
+

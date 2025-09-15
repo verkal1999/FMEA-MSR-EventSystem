@@ -24,6 +24,8 @@ public:
     void onEvent(const Event& ev) override;
 
 private:
+    void resetCorrUnlocked(const std::string& corr);
+    std::unordered_set<std::string> activeCorr_;
     using json = nlohmann::json;
 
     EventBus& bus_;
@@ -34,6 +36,7 @@ private:
     std::unordered_map<std::string, std::vector<std::string>>  monReactsByCorr_;
     std::unordered_map<std::string, std::vector<std::string>>  sysReactsByCorr_;
     std::unordered_set<std::string>                             ingestionStarted_;
+    std::unordered_map<std::string, std::string> failureModeByCorr_;
     // optional: FailureModesByCorr_ kannst du später genauso hinzufügen
     bool tryMarkIngestion(const std::string& corr);
     // Helpers

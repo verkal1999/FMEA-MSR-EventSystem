@@ -5,10 +5,12 @@
 
 struct KgIngestionParams {
     // Meta
+    std::string id;
     std::string corr;
     std::string process;
     std::string summary;
     std::string resourceId;
+    
 
     // Zeit/Name
     std::string ts;               // "YYYY-MM-DD_HH-mm-ss"
@@ -20,9 +22,9 @@ struct KgIngestionParams {
     std::string lastProcess;      // aus Snapshot (OPCUA.lastExecutedProcess)
 
     // Listen (füllt der FailureRecorder aus Events)
-    std::vector<std::string> sysReactions;    // IRIs der ausgeführten System-Reactions
-    std::vector<std::string> monReactions;    // IRIs der ausgeführten Monitoring-Actions
-    std::vector<std::string> failureModes;    // optional
+    std::string ExecsysReaction;    // IRIs der ausgeführten System-Reactions
+    std::vector<std::string> ExecmonReactions;    // IRIs der ausgeführten Monitoring-Actions
+    std::string failureMode;    // optional
 
     nlohmann::json toJson() const {
         using nlohmann::json;
@@ -31,10 +33,6 @@ struct KgIngestionParams {
             {"ts", ts}, {"individualName", individualName},
             {"snapshot", snapshotWrapped}, {"lastSkill", lastSkill}, {"lastProcess", lastProcess}
         };
-        if (!sysReactions.empty()) j["sysReactions"] = sysReactions;
-        if (!monReactions.empty()) j["monReactions"] = monReactions;
-        if (!failureModes.empty()) j["failureModes"] = failureModes;
-        return j;
     }
     /*nlohmann::json toJson() const {
         using nlohmann::json;

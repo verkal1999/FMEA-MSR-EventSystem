@@ -96,6 +96,7 @@ int main() {
     rec->subscribeAll();   // registriert Observer für alle EventTypes
     auto subIngPlan = bus.subscribe_scoped(EventType::evIngestionPlanned, ackLogger, 1);
     auto subIngDone = bus.subscribe_scoped(EventType::evIngestionDone,    ackLogger, 1);
+    auto subUnknown = bus.subscribe_scoped(EventType::evUnknownFM, ackLogger, 1);
 
     // 7) Trigger-Subscription → Event
     std::atomic<bool> d2Prev{false};

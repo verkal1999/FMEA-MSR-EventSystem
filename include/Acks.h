@@ -42,3 +42,13 @@ struct SysReactFinishedAck {
     std::string correlationId;
     std::vector<std::string> skills;       // IRIs der ausgeführten System-Reactions
 };
+struct UnknownFMAck {
+    std::string correlationId;
+    std::string processName;   // z.B. "UnknownFM" oder letzter Prozess
+    std::string summary;       // kurze Erklärung ("KG: no failure modes for <skill>")
+};
+struct GotFMAck {
+    std::string correlationId;
+    std::string failureModeName;   // z.B. "UnknownFM" oder letzter Prozess      // kurze Erklärung ("KG: no failure modes for <skill>")
+};
+

@@ -1,7 +1,7 @@
 # kg_interface.py
 from rdflib import Graph, URIRef
 from rdflib.namespace import RDF
-import json
+from typing import Sequence
 
 class KGInterface:
     def __init__(self):
@@ -94,3 +94,77 @@ class KGInterface:
             output_lines.append(params)
 
         return "\n".join(output_lines)
+    
+    def ingestOccuredFailure(
+        self,
+        id: str,
+        failureModeIRI: str,
+        monActIRI: Sequence[str],
+        srIRI: str,   # akzeptiert tuple oder list
+        lastSkillName: str,
+        lastProcessName: str,
+        summary: str,
+        plcSnapshot: str,
+    ) -> bool:
+        def _to_list(x):
+            if x is None:
+                return []
+            if isinstance(x, str):
+                return [x]
+            try:
+                return list(x)
+            except TypeError:
+                return [x]
+
+        def _print_param(name, value):
+            if isinstance(value, str) or value is None:
+                print(f"{name}: {value}")
+            else:
+                items = _to_list(value)
+                print(f"{name} (len={len(items)}):")
+                for i, v in enumerate(items, 1):
+                    print(f"  {i}: {v}")
+
+        def _print_list(name, items):
+            print(f"{name} (len={len(items)}):")
+            for i, v in enumerate(items, 1):
+                print(f"  {i}: {v}")
+
+        # Debug: Eingaben ausgeben
+        print("---PYTHON----")
+        _print_param("id", id)
+        _print_param("failureModeIRI", failureModeIRI)
+        _print_param("monActIRI", monActIRI)
+        _print_param("srIRI", srIRI)
+        _print_param("lastSkillName", lastSkillName)
+        _print_param("lastProcessName", lastProcessName)
+        _print_param("summary", summary)
+        _print_param("plcSnapshot", plcSnapshot)
+
+        # Separator abhängig von self.ont_iri
+        base_sep = '' if self.ont_iri.endswith(('#','/')) else '#'
+
+        # Hilfsfunktion zum Erzeugen der neuen IDs
+        def _make_ids(marker: str, n: int) -> list[str]:
+            # i startet bei 1
+            return [f"{self.ont_iri}{base_sep}{marker}{id}_{i}" for i in range(1, n + 1)]
+
+        # Längen bestimmen (robust gegen str vs. list/tuple)
+        n_m  = len(_to_list(monActIRI))
+
+        # Neue IRI-Listen erzeugen
+        if (failureModeIRI != ''):
+            fm_ids = _make_ids("FM_", 1)   # für failureModeIRI
+        m_ids  = _make_ids("M_",  n_m)    # für monActIRI
+        if (srIRI != ''):
+            sr_ids = _make_ids("SR_", 1)   # für srIRIs
+        
+
+        # Debug: neue Listen ausgeben
+        _print_list("fm_id", fm_ids)
+        _print_list("m_ids",  m_ids)
+        _print_list("sr_id", sr_ids)
+        print("---PYTHON----")
+
+        # TODO: falls benötigt, hier mit fm_ids/m_ids/sr_ids weiterarbeiten
+        return True
