@@ -133,19 +133,19 @@ int KgIngestionForce::execute(const Plan& p) {
                 func = kgi.attr("ingestOccuredFailure");
             }
 
-            const std::string monAct = prm->ExecmonReactions.empty()
-                                     ? std::string{}
-                                     : prm->ExecmonReactions.front();
-
-            py::tuple srTuple(prm->ExecsysReaction.empty() ? 0 : 1);
-            if (!prm->ExecsysReaction.empty())
-                srTuple[0] = py::cast(prm->ExecsysReaction);
-
+            py::object monArg = py::none();
+            if (!prm->ExecmonReactions.empty()) {
+                py::list lst;
+                for (const auto& s : prm->ExecmonReactions) {
+                    lst.append(py::str(s));            // explizit als str
+                }
+                monArg = std::move(lst);
+            }
             func(
                 py::cast(prm->individualName),     // id
                 py::cast(prm->failureMode),        // failureModeName (String)
-                py::cast(monAct),                  // MonActIRI (String)
-                srTuple,                           // Liste(SRIRIs)
+                monArg,                  // MonActIRI (String)
+                py::cast(prm->ExecsysReaction),                           // Liste(SRIRIs)
                 py::cast(prm->lastSkill),          // lastSkillName
                 py::cast(prm->lastProcess),        // lastProcessName
                 py::cast(prm->summary),            // summary

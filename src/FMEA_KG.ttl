@@ -1,640 +1,366 @@
-@prefix : <http://www.semanticweb.org/alexanderverkhov/ontologies/2023/11/FMEA#> .
+@prefix cl: <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_> .
+@prefix dp: <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_> .
+@prefix op: <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/alexanderverkhov/ontologies/2023/11/FMEA#> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021> rdf:type owl:Ontology .
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_createsRisk
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_createsRisk> rdf:type owl:ObjectProperty ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesDetection
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesDetection> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesFrequency
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesFrequency> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesMonitoring
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesMonitoring> rdf:type owl:ObjectProperty ;
-                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesOccurence
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesOccurence> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRisk
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRisk> rdf:type owl:ObjectProperty ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ;
-                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> rdf:type owl:ObjectProperty .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesSeverity
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesSeverity> rdf:type owl:ObjectProperty ;
-                                                                   rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                                   rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode> rdf:type owl:ObjectProperty ;
-                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
-                                                                      rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForFinalUser
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForFinalUser> rdf:type owl:ObjectProperty ;
-                                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
-                                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForNextLevel
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesDesignFunctionForNextLevel> rdf:type owl:ObjectProperty ;
-                                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
-                                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> rdf:type owl:ObjectProperty ;
-                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                                   rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForCustomerFactory
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForCustomerFactory> rdf:type owl:ObjectProperty ;
-                                                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
-                                                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory> rdf:type owl:ObjectProperty ;
-                                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesFunction> ;
-                                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_examinesElement
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_examinesElement> rdf:type owl:ObjectProperty ;
-                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> ;
-                                                                   rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_executedBecauseOfFM
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_executedBecauseOfFM> rdf:type owl:ObjectProperty ;
-                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ;
-                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasDetectionCriterion
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasDetectionCriterion> rdf:type owl:ObjectProperty ;
-                                                                         rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
-                                                                         rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasExecutionStamp
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasExecutionStamp> rdf:type owl:ObjectProperty .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForCustomerPlant
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForCustomerPlant> rdf:type owl:ObjectProperty ;
-                                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> ;
-                                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForFinalUser
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForFinalUser> rdf:type owl:ObjectProperty ;
-                                                                                rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> ;
-                                                                                rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                                rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> rdf:type owl:ObjectProperty ;
-                                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> ;
-                                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFunction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFunction> rdf:type owl:ObjectProperty ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
-                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasMExecutionStamp
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasMExecutionStamp> rdf:type owl:ObjectProperty ;
-                                                                      rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasExecutionStamp> ;
-                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                      rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedMonAct> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasNextProcessStep
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasNextProcessStep> rdf:type owl:ObjectProperty ;
-                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> ;
-                                                                      rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasRiskAssessment
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasRiskAssessment> rdf:type owl:ObjectProperty ;
-                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
-                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasSRExecutionStamp
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasSRExecutionStamp> rdf:type owl:ObjectProperty ;
-                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasExecutionStamp> ;
-                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> rdf:type owl:ObjectProperty ;
-                                                                         rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffect> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForCustomerPlant
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForCustomerPlant> rdf:type owl:ObjectProperty ;
-                                                                                         rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForOwnPlant
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForOwnPlant> rdf:type owl:ObjectProperty ;
-                                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForUser
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffectForUser> rdf:type owl:ObjectProperty ;
-                                                                                rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasWorstFailureEffect> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_is4MProcessCauseElementOf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_is4MProcessCauseElementOf> rdf:type owl:ObjectProperty ;
-                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
-                                                                             rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isDForAP
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isDForAP> rdf:type owl:ObjectProperty ;
-                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> ;
-                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isFForMSRAP
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isFForMSRAP> rdf:type owl:ObjectProperty ;
-                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
-                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMForMSRAP
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMForMSRAP> rdf:type owl:ObjectProperty ;
-                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
-                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMitigatedRiskOf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isMitigatedRiskOf> rdf:type owl:ObjectProperty ;
-                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
-                                                                     rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isOForAP
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isOForAP> rdf:type owl:ObjectProperty ;
-                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> ;
-                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForAP
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForAP> rdf:type owl:ObjectProperty ;
-                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                            rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForMSRAP
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSForMSRAP> rdf:type owl:ObjectProperty ;
-                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_definesRiskAssessment> ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                               rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSuperElementOf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_isSuperElementOf> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_monitorsFailureMode
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_monitorsFailureMode> rdf:type owl:ObjectProperty ;
-                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_detectsFailureMode> ;
-                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_occuredWithStamp
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_occuredWithStamp> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFailureMode
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFailureMode> rdf:type owl:ObjectProperty ;
-                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> ;
-                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> rdf:type owl:ObjectProperty ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                    rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode> rdf:type owl:ObjectProperty ;
-                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFailureMode> ;
-                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                                       rdfs:range <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams> rdf:type owl:DatatypeProperty .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadMonActExecutionParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadMonActExecutionParams> rdf:type owl:DatatypeProperty ;
-                                                                            rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams> ;
-                                                                            rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedMonAct> ;
-                                                                            rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadSRExecutionParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadSRExecutionParams> rdf:type owl:DatatypeProperty ;
-                                                                        rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hadExecutionParams> ;
-                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR> ;
-                                                                        rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating> rdf:type owl:DatatypeProperty ;
-                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> ;
-                                                               rdfs:range [ rdf:type rdfs:Datatype ;
-                                                                            owl:oneOf [ rdf:type rdf:List ;
-                                                                                        rdf:first "H" ;
-                                                                                        rdf:rest [ rdf:type rdf:List ;
-                                                                                                   rdf:first "L" ;
-                                                                                                   rdf:rest [ rdf:type rdf:List ;
-                                                                                                              rdf:first "M" ;
-                                                                                                              rdf:rest rdf:nil
-                                                                                                            ]
-                                                                                                 ]
-                                                                                      ]
-                                                                          ] .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasAPRating_inf> rdf:type owl:DatatypeProperty ;
-                                                                   rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> ;
-                                                                   rdfs:range [ rdf:type rdfs:Datatype ;
-                                                                                owl:oneOf [ rdf:type rdf:List ;
-                                                                                            rdf:first "H" ;
-                                                                                            rdf:rest [ rdf:type rdf:List ;
-                                                                                                       rdf:first "L" ;
-                                                                                                       rdf:rest [ rdf:type rdf:List ;
-                                                                                                                  rdf:first "M" ;
-                                                                                                                  rdf:rest rdf:nil
-                                                                                                                ]
-                                                                                                     ]
-                                                                                          ]
-                                                                              ] .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasActionDescription
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasActionDescription> rdf:type owl:DatatypeProperty ;
-                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ;
-                                                                        rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasBooleanValue
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasBooleanValue> rdf:type owl:DatatypeProperty ;
-                                                                   rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> ;
-                                                                   rdfs:range xsd:boolean .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasCurrentKnowedgeState
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasCurrentKnowedgeState> rdf:type owl:DatatypeProperty ;
-                                                                           rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
-                                                                           rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating> rdf:type owl:DatatypeProperty ;
-                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> ;
-                                                              rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDRating_inf> rdf:type owl:DatatypeProperty ;
-                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> ;
-                                                                  rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> rdf:type owl:DatatypeProperty ;
-                                                               rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> ;
-                                                               rdfs:range xsd:decimal .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> rdf:type owl:DatatypeProperty ;
-                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
-                                                                        rdfs:comment "Hier sind die Sensorwerte, die jeder Sensor haben kann. Bisher sind nur Dezimale und Boolean-Werte verfügbar, da das die sind, die hier gebraucht werden." .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExactDecValue
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasExactDecValue> rdf:type owl:DatatypeProperty ;
-                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
-                                                                    rdfs:range xsd:decimal .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating> rdf:type owl:DatatypeProperty ;
-                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> ;
-                                                              rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFRating_inf> rdf:type owl:DatatypeProperty ;
-                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> ;
-                                                                  rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeDescription
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeDescription> rdf:type owl:DatatypeProperty ;
-                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                             rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> rdf:type owl:DatatypeProperty ;
-                                                                        rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                                        rdfs:range xsd:string ;
-                                                                        rdfs:comment """Braucht das Format wie dort angegeben. Hier soll ein Sensorsnapshot entstehen, sodass alles vergleichen weden kann. Wird nur ein Wert so wie hier angegeben, wird auch nur dieser mit den Standardwerten im Programm verglichen.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021> a owl:Ontology .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/CSkill_PunchingProcess> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction> a cl:MonitoringAction,
+        owl:NamedIndividual ;
+    dp:hasMonActParams """{
+  "rows": [
+    { "step": 0, "g": "meta", "k": "jobId", "t": "nodeId", "v": "MAIN.fbJob" },
+    { "step": 0, "g": "method", "k": "methodId", "t": "nodeId", "v": "MAIN.fbJob.M_Methode1" },
+    { "step": 0, "g": "input",  "k": "x", "i": 0, "t": "int32", "v": 0},
+    { "step": 0, "g": "output",  "k": "yOut", "i": 0, "t": "int32", "v": "119"}
+  ]
+}""" ;
+    op:hasMExecutionStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945383841780000_2025-09-16_13-07-34_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945503889679600_2025-09-16_13-09-34_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945623925147400_2025-09-16_13-11-34_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945743992326800_2025-09-16_13-13-34_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945863989086000_2025-09-16_13-15-34_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945984067359000_2025-09-16_13-17-34_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-946104088810500_2025-09-16_13-19-34_1> ;
+    op:monitorsFailureMode <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1> a cl:DetectionCriterion,
+        owl:NamedIndividual ;
+    dp:hasBooleanValue false ;
+    op:observedBySensor <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1> a cl:Action,
+        cl:SystemReaction,
+        owl:NamedIndividual ;
+    dp:hasSysReactParams """{
+  "rows": [
+    { "step": 0, "g": "meta", "k": "jobId", "t": "nodeId", "v": "MAIN.fbJob" },
+    { "step": 0, "g": "method", "k": "methodId", "t": "nodeId", "v": "MAIN.fbJob.M_Methode1" },
+    { "step": 0, "g": "input",  "k": "x", "i": 0, "t": "int32", "v": 0},
+    { "step": 0, "g": "output",  "k": "yOut", "i": 0, "t": "int32", "v": "119"}
+  ]
+}""" ;
+    op:hasSRExecutionStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945563936947000_2025-09-16_13-10-34>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945803979128700_2025-09-16_13-14-34>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-946044062366500_2025-09-16_13-18-35> ;
+    op:reactsOnFailureMode <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1> a cl:DetectionCriterion,
+        owl:NamedIndividual ;
+    dp:hasLowerBound 0.001 ;
+    dp:hasUnit "s" ;
+    dp:hasUpperBound 5.007 ;
+    op:observedBySensor <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1> a cl:DetectionCriterion,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine1> a cl:ProcessElement,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine2> a cl:ProcessElement,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk2> a cl:Risk,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/RobotWithVacuumGripper> a cl:ProcessElement,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA02> a cl:Sensors,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltBackwardWithA01> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltForwardWithA01> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadDownWithA02> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadUpWithA02> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS01> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS02> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS01> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS02> a cl:Function,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-945443855874300_2025-09-16_13-08-22> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-945683982695800_2025-09-16_13-12-22> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-945924033443300_2025-09-16_13-16-22> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-946164123736600_2025-09-16_13-20-22> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
+
+cl:4MElementMan a owl:Class ;
+    rdfs:subClassOf cl:ProcessElement .
+
+cl:4MElementMaterial a owl:Class ;
+    rdfs:subClassOf cl:ProcessElement .
+
+cl:4MElementMethod a owl:Class ;
+    rdfs:subClassOf cl:ProcessElement .
+
+cl:Actors a owl:Class ;
+    rdfs:subClassOf cl:4MElementMachine .
+
+cl:DFMEA-MSR a owl:Class ;
+    rdfs:subClassOf cl:DFMEA .
+
+cl:PFMEA-MSR a owl:Class ;
+    rdfs:subClassOf cl:PFMEA .
+
+cl:StructureElement a owl:Class ;
+    rdfs:subClassOf cl:Element .
+
+dp:hadMonActExecutionParams a owl:DatatypeProperty ;
+    rdfs:domain cl:ExecutedMonAct ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dp:hasExecutionParams .
+
+dp:hadSRExecutionParams a owl:DatatypeProperty ;
+    rdfs:domain cl:ExecutedSR ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dp:hasExecutionParams .
+
+dp:hasAPRating a owl:DatatypeProperty ;
+    rdfs:domain cl:ActionPriority ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "H" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "L" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "M" ;
+                                    rdf:rest () ] ] ] ] ;
+    rdfs:subPropertyOf dp:hasRating .
+
+dp:hasAPRating_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:ActionPriority ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "H" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "L" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "M" ;
+                                    rdf:rest () ] ] ] ] ;
+    rdfs:subPropertyOf dp:hasRating .
+
+dp:hasActionDescription a owl:DatatypeProperty ;
+    rdfs:domain cl:Action ;
+    rdfs:range xsd:integer .
+
+dp:hasBooleanValue a owl:DatatypeProperty ;
+    rdfs:range xsd:boolean ;
+    rdfs:subPropertyOf dp:hasDetectionParamter .
+
+dp:hasCurrentKnowedgeState a owl:DatatypeProperty ;
+    rdfs:domain cl:Risk ;
+    rdfs:range xsd:string .
+
+dp:hasDRating a owl:DatatypeProperty ;
+    rdfs:domain cl:Detection ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
+
+dp:hasDRating_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Detection ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
+
+dp:hasExactDecValue a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf dp:hasDecValue .
+
+dp:hasFRating a owl:DatatypeProperty ;
+    rdfs:domain cl:Frequency ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
+
+dp:hasFRating_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Frequency ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
+
+dp:hasFailureModeDescription a owl:DatatypeProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range xsd:string .
+
+dp:hasFailureModeParams a owl:DatatypeProperty ;
+    rdfs:comment """Braucht das Format wie dort angegeben. Hier soll ein Sensorsnapshot entstehen, sodass alles vergleichen weden kann. Wird nur ein Wert so wie hier angegeben, wird auch nur dieser mit den Standardwerten im Programm verglichen.
 Späterer Plan ist, dass das mit den Default-Werten der einizelnen Skills befüllt wid, den diese FailureMode verhindert, wenn per se nichts drin ist.
 
 Format: 
 {
-  \"rows\": [
-    { \"id\": \"ns=4;s=OPCUA.bool1\",  \"t\": \"bool\", \"v\": true }
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
   ]
-}""" .
+}""" ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range xsd:string .
 
+dp:hasLowerBound a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf dp:hasDecValue .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound> rdf:type owl:DatatypeProperty ;
-                                                                 rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
-                                                                 rdfs:range xsd:decimal .
+dp:hasMRating a owl:DatatypeProperty ;
+    rdfs:domain cl:Monitoring ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
+dp:hasMRating_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Monitoring ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating> rdf:type owl:DatatypeProperty ;
-                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
-                                                              rdfs:range xsd:integer .
+dp:hasMSRAPRating a owl:DatatypeProperty ;
+    rdfs:domain cl:MSRActionPriority ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "H" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "L" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "M" ;
+                                    rdf:rest () ] ] ] ] ;
+    rdfs:subPropertyOf dp:hasRating .
 
+dp:hasMSRAPRating_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:MSRActionPriority ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:oneOf [ a rdf:List ;
+                    rdf:first "H" ;
+                    rdf:rest [ a rdf:List ;
+                            rdf:first "L" ;
+                            rdf:rest [ a rdf:List ;
+                                    rdf:first "M" ;
+                                    rdf:rest () ] ] ] ] ;
+    rdfs:subPropertyOf dp:hasRating .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMRating_inf> rdf:type owl:DatatypeProperty ;
-                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> ;
-                                                                  rdfs:range xsd:integer .
+dp:hasMonActMethodId a owl:DatatypeProperty ;
+    rdfs:subPropertyOf dp:hasMethodId .
 
+dp:hasMonActObjId a owl:DatatypeProperty ;
+    rdfs:domain cl:MonitoringAction ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dp:hasObjId .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating> rdf:type owl:DatatypeProperty ;
-                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> ;
-                                                                  rdfs:range [ rdf:type rdfs:Datatype ;
-                                                                               owl:oneOf [ rdf:type rdf:List ;
-                                                                                           rdf:first "H" ;
-                                                                                           rdf:rest [ rdf:type rdf:List ;
-                                                                                                      rdf:first "L" ;
-                                                                                                      rdf:rest [ rdf:type rdf:List ;
-                                                                                                                 rdf:first "M" ;
-                                                                                                                 rdf:rest rdf:nil
-                                                                                                               ]
-                                                                                                    ]
-                                                                                         ]
-                                                                             ] .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMSRAPRating_inf> rdf:type owl:DatatypeProperty ;
-                                                                      rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> ;
-                                                                      rdfs:range [ rdf:type rdfs:Datatype ;
-                                                                                   owl:oneOf [ rdf:type rdf:List ;
-                                                                                               rdf:first "H" ;
-                                                                                               rdf:rest [ rdf:type rdf:List ;
-                                                                                                          rdf:first "L" ;
-                                                                                                          rdf:rest [ rdf:type rdf:List ;
-                                                                                                                     rdf:first "M" ;
-                                                                                                                     rdf:rest rdf:nil
-                                                                                                                   ]
-                                                                                                        ]
-                                                                                             ]
-                                                                                 ] .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId> rdf:type owl:DatatypeProperty ;
-                                                               rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                               rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActMethodId
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActMethodId> rdf:type owl:DatatypeProperty ;
-                                                                     rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActObjId
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActObjId> rdf:type owl:DatatypeProperty ;
-                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> ;
-                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                  rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams> rdf:type owl:DatatypeProperty ;
-                                                                   rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                   rdfs:range xsd:string ;
-                                                                   rdfs:comment """Schreibweise:
+dp:hasMonActParams a owl:DatatypeProperty ;
+    rdfs:comment """Schreibweise:
 {
-  \"rows\": [
-    { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": MAIN.fbJob\" },
-    { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
-    { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
-    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"calc\"}
+  "rows": [
+    { "step": 0, "g": "meta", "k": "jobId", "t": "nodeId", "v": MAIN.fbJob" },
+    { "step": 0, "g": "method", "k": "methodId", "t": "nodeId", "v": "MAIN.fbJob.M_Methode1" },
+    { "step": 0, "g": "input",  "k": "x", "i": 0, "t": "int32", "v": 0},
+    { "step": 0, "g": "output",  "k": "yOut", "i": 0, "t": "int32", "v": "calc"}
   ]
-}""" .
+}""" ;
+    rdfs:domain cl:MonitoringAction ;
+    rdfs:range xsd:string .
 
+dp:hasORating a owl:DatatypeProperty ;
+    rdfs:domain cl:Occurence ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating> rdf:type owl:DatatypeProperty ;
-                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> ;
-                                                              rdfs:range xsd:integer .
+dp:hasORating_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Occurence ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
+dp:hasOccuredFailureParams a owl:DatatypeProperty ;
+    rdfs:domain cl:OccuredFailure .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasORating_inf> rdf:type owl:DatatypeProperty ;
-                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> ;
-                                                                  rdfs:range xsd:integer .
+dp:hasOccuredFailureSummary a owl:DatatypeProperty ;
+    rdfs:domain cl:OccuredFailure .
 
+dp:hasRationaleDescription a owl:DatatypeProperty ;
+    rdfs:domain cl:RationaleForFrequency ;
+    rdfs:range xsd:string .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> rdf:type owl:DatatypeProperty .
+dp:hasRiskDescription a owl:DatatypeProperty ;
+    rdfs:domain cl:Risk ;
+    rdfs:range xsd:string .
 
+dp:hasRiskID a owl:DatatypeProperty ;
+    rdfs:domain cl:Risk ;
+    rdfs:range xsd:string .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> rdf:type owl:DatatypeProperty .
+dp:hasSRatingForCustomerPlant a owl:DatatypeProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
+dp:hasSRatingForCustomerPlant_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRationaleDescription
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRationaleDescription> rdf:type owl:DatatypeProperty ;
-                                                                           rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency> ;
-                                                                           rdfs:range xsd:string .
+dp:hasSRatingForFinalUser a owl:DatatypeProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
+dp:hasSRatingForFinalUser_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskDescription
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskDescription> rdf:type owl:DatatypeProperty ;
-                                                                      rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
-                                                                      rdfs:range xsd:string .
+dp:hasSRatingForOwnPlant a owl:DatatypeProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
+dp:hasSRatingForOwnPlant_inf a owl:DatatypeProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range xsd:integer ;
+    rdfs:subPropertyOf dp:hasRating .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskID
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRiskID> rdf:type owl:DatatypeProperty ;
-                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> ;
-                                                             rdfs:range xsd:string .
+dp:hasSysReactMethodId a owl:DatatypeProperty ;
+    rdfs:domain cl:SystemReaction ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dp:hasMethodId .
 
+dp:hasSysReactObjId a owl:DatatypeProperty ;
+    rdfs:domain cl:SystemReaction ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dp:hasObjId .
 
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant> rdf:type owl:DatatypeProperty ;
-                                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                                              rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForCustomerPlant_inf> rdf:type owl:DatatypeProperty ;
-                                                                                  rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                                  rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                                                  rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser> rdf:type owl:DatatypeProperty ;
-                                                                          rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                          rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                                          rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForFinalUser_inf> rdf:type owl:DatatypeProperty ;
-                                                                              rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                              rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                                              rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant> rdf:type owl:DatatypeProperty ;
-                                                                         rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                         rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                                         rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant_inf
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSRatingForOwnPlant_inf> rdf:type owl:DatatypeProperty ;
-                                                                             rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasRating> ;
-                                                                             rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> ;
-                                                                             rdfs:range xsd:integer .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactMethodId
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactMethodId> rdf:type owl:DatatypeProperty ;
-                                                                       rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMethodId> ;
-                                                                       rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                                       rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactObjId
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactObjId> rdf:type owl:DatatypeProperty ;
-                                                                    rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasObjId> ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                                    rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactParams
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactParams> rdf:type owl:DatatypeProperty ;
-                                                                     rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                                     rdfs:range xsd:string ;
-                                                                     rdfs:comment """Buchstaben:
+dp:hasSysReactParams a owl:DatatypeProperty ;
+    rdfs:comment """Buchstaben:
 - g: Gruppe, eine von meta, method, input, output
 
 - k: Schlüssel oder Parametername, z. B. speed, status
@@ -651,7 +377,7 @@ Format:
 
 - seq: strikt monotone Ganzzahl (0,1,2,…) über alle Rows, damit du die exakte Ereignisreihenfolge rekonstruierst
 
-- callId: stabile ID (z. B. \"0\", \"1\" oder UUID) pro einzelner Methoden-Invocation innerhalb eines Steps (hilfreich, falls Retrys oder Teil-Events geloggt werden sollen)
+- callId: stabile ID (z. B. "0", "1" oder UUID) pro einzelner Methoden-Invocation innerhalb eines Steps (hilfreich, falls Retrys oder Teil-Events geloggt werden sollen)
 
 !!!Minimalregeln!!!!
 
@@ -669,429 +395,492 @@ Format:
 
 - optionale meta-Rows (Start/Ende, ok/Fehler, Dauer)
 {
-  \"rows\": [
-    { \"seq\": 0,  \"step\": 0, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"jobId\",    \"t\": \"string\", \"v\": \"c1a7...\" },
-    { \"seq\": 1,  \"step\": 0, \"callId\": \"0\", \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeid\", \"id\": \"ns=4;s=OPCUA.MyUaMethodA\", \"v\": \"ns=4;s=OPCUA.MyUaMethodA\" },
-    { \"seq\": 2,  \"step\": 0, \"callId\": \"0\", \"g\": \"input\",  \"k\": \"speed\",    \"i\": 0, \"id\": \"ns=4;s=OPCUA.speed\", \"t\": \"int32\", \"v\": 120, \"uom\": \"rpm\" },
-    { \"seq\": 3,  \"step\": 0, \"callId\": \"0\", \"g\": \"input\",  \"k\": \"dir\",      \"i\": 1, \"id\": \"ns=4;s=OPCUA.dir\",   \"t\": \"int32\", \"v\": 1 },
-    { \"seq\": 4,  \"step\": 0, \"callId\": \"0\", \"g\": \"output\", \"k\": \"status\",   \"i\": 0, \"id\": \"ns=4;s=OPCUA.status\",\"t\": \"bool\",  \"v\": true },
-    { \"seq\": 5,  \"step\": 0, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"ok\",                     \"t\": \"bool\",   \"v\": true },
-    { \"seq\": 6,  \"step\": 0, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"duration_ms\",           \"t\": \"uint32\", \"v\": 37 },
+  "rows": [
+    { "seq": 0,  "step": 0, "callId": "0", "g": "meta",   "k": "jobId",    "t": "string", "v": "c1a7..." },
+    { "seq": 1,  "step": 0, "callId": "0", "g": "method", "k": "methodId", "t": "nodeid", "id": "ns=4;s=OPCUA.MyUaMethodA", "v": "ns=4;s=OPCUA.MyUaMethodA" },
+    { "seq": 2,  "step": 0, "callId": "0", "g": "input",  "k": "speed",    "i": 0, "id": "ns=4;s=OPCUA.speed", "t": "int32", "v": 120, "uom": "rpm" },
+    { "seq": 3,  "step": 0, "callId": "0", "g": "input",  "k": "dir",      "i": 1, "id": "ns=4;s=OPCUA.dir",   "t": "int32", "v": 1 },
+    { "seq": 4,  "step": 0, "callId": "0", "g": "output", "k": "status",   "i": 0, "id": "ns=4;s=OPCUA.status","t": "bool",  "v": true },
+    { "seq": 5,  "step": 0, "callId": "0", "g": "meta",   "k": "ok",                     "t": "bool",   "v": true },
+    { "seq": 6,  "step": 0, "callId": "0", "g": "meta",   "k": "duration_ms",           "t": "uint32", "v": 37 },
 
-    { \"seq\": 7,  \"step\": 1, \"callId\": \"0\", \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeid\", \"id\": \"ns=4;s=OPCUA.MyUaMethodB\", \"v\": \"ns=4;s=OPCUA.MyUaMethodB\" },
-    { \"seq\": 8,  \"step\": 1, \"callId\": \"0\", \"g\": \"input\",  \"k\": \"timeout\",  \"i\": 0, \"id\": \"ns=4;s=OPCUA.timeout\",\"t\": \"uint32\",\"v\": 5000 },
-    { \"seq\": 9,  \"step\": 1, \"callId\": \"0\", \"g\": \"output\", \"k\": \"errorCode\",\"i\": 0, \"id\": \"ns=4;s=OPCUA.err\",    \"t\": \"uint16\",\"v\": 0 },
-    { \"seq\": 10, \"step\": 1, \"callId\": \"0\", \"g\": \"meta\",   \"k\": \"ok\",                     \"t\": \"bool\",   \"v\": true }
+    { "seq": 7,  "step": 1, "callId": "0", "g": "method", "k": "methodId", "t": "nodeid", "id": "ns=4;s=OPCUA.MyUaMethodB", "v": "ns=4;s=OPCUA.MyUaMethodB" },
+    { "seq": 8,  "step": 1, "callId": "0", "g": "input",  "k": "timeout",  "i": 0, "id": "ns=4;s=OPCUA.timeout","t": "uint32","v": 5000 },
+    { "seq": 9,  "step": 1, "callId": "0", "g": "output", "k": "errorCode","i": 0, "id": "ns=4;s=OPCUA.err",    "t": "uint16","v": 0 },
+    { "seq": 10, "step": 1, "callId": "0", "g": "meta",   "k": "ok",                     "t": "bool",   "v": true }
   ]
-}""" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit> rdf:type owl:DatatypeProperty ;
-                                                           rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDetectionParamter> ;
-                                                           rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound> rdf:type owl:DatatypeProperty ;
-                                                                 rdfs:subPropertyOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasDecValue> ;
-                                                                 rdfs:range xsd:decimal .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_isUnknownFailure
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_isUnknownFailure> rdf:type owl:DatatypeProperty ;
-                                                                    rdfs:domain <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure> ;
-                                                                    rdfs:range xsd:boolean .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMan
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMan> rdf:type owl:Class ;
-                                                                   rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMaterial
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMaterial> rdf:type owl:Class ;
-                                                                        rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMethod
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMethod> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ActionPriority> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Actors
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Actors> rdf:type owl:Class ;
-                                                             rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA> rdf:type owl:Class ;
-                                                            rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA-MSR
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA-MSR> rdf:type owl:Class ;
-                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DFMEA> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DesignFunction> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Detection> rdf:type owl:Class ;
-                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> rdf:type owl:Class ;
-                                                                         rdfs:comment """Beinhaltet Kriterien für die Detektion von Fehlern wie bspw. Sensorwerte. Es wird angenommen, dass jedes Kriterium durch einen Sensor gemessen werden muss, aus diesem Grund wird der SystemTimer hier auch als Sensor modelliert, der die Zeit misst.
-
-Logik: Detection Actions, die zu Systemreaktionen führen sollen und daher automatisiert ablaufen, müssen zwangsläufig Kriterien besitzen, mit denen sie den Fehler mithilfe von Sensorwerten messen.
-
-Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers zu ermitteln.""" ,
-                                                                                      "Wwird nur eingesetzt, sobald ein kritischer Fehler auftaucht, aber noch keine Fehlerreaktion vorhanden ist. Hier werden alle möglichen Detektionsmerkmale und wie (durch welche Sensoren/Aktoren und welche OPCUA-Werte) sie getestet werden können, aufgeführt." .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedMonAct
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedMonAct> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ExecutedSR> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Frequency> rdf:type owl:Class ;
-                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MSRActionPriority> rdf:type owl:Class ;
-                                                                        rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Monitoring> rdf:type owl:Class ;
-                                                                 rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionAction> ;
-                                                                       rdfs:comment "Für das Anwendungsbeispiel schon alles hinterlegt in der PLC. Neue Methoden in dieser Klasse sind für das Reasoning von Fehlerdiagnosen gedacht" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_OccuredFailure> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Occurence> rdf:type owl:Class ;
-                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA> rdf:type owl:Class ;
-                                                            rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FMEA> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA-MSR
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA-MSR> rdf:type owl:Class ;
-                                                                rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PFMEA> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> ;
-                                                                     rdfs:comment "Elements in PFMEA like Process Steps" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessFunction> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RationaleForFrequency> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> rdf:type owl:Class ;
-                                                              rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_4MElementMachine> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Severity> rdf:type owl:Class ;
-                                                               rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_RiskAssessment> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_StructureElement
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_StructureElement> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Element> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_PreventiveAction> ;
-                                                                     rdfs:comment "Intersection mit Function? Denn eigentlich müssen ja diese System Reactions auch als Functions für eine Maschine hinterlegt sein, sonst sind sie per se nicht ausführbar." .
-
-
-#################################################################
-#    Individuals
-#################################################################
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/CSkill_PunchingProcess
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/CSkill_PunchingProcess> rdf:type owl:NamedIndividual ,
-                                                                                <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> rdf:type owl:NamedIndividual ,
-                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_createsRisk> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> """{
-  \"rows\": [
-    { \"id\": \"ns=4;s=OPCUA.bool1\",  \"t\": \"bool\", \"v\": true }
+}""" ;
+    rdfs:domain cl:SystemReaction ;
+    rdfs:range xsd:string .
+
+dp:hasUnit a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dp:hasDetectionParamter .
+
+dp:hasUpperBound a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf dp:hasDecValue .
+
+dp:isUnknownFailure a owl:DatatypeProperty ;
+    rdfs:domain cl:OccuredFailure ;
+    rdfs:range xsd:boolean .
+
+op:createsRisk a owl:ObjectProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range cl:Risk .
+
+op:definesDetection a owl:ObjectProperty ;
+    rdfs:domain cl:DetectionAction ;
+    rdfs:range cl:Detection ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:definesFrequency a owl:ObjectProperty ;
+    rdfs:domain cl:RationaleForFrequency ;
+    rdfs:range cl:Frequency ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:definesMonitoring a owl:ObjectProperty ;
+    rdfs:domain cl:MonitoringAction ;
+    rdfs:range cl:Monitoring ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:definesOccurence a owl:ObjectProperty ;
+    rdfs:domain cl:PreventiveAction ;
+    rdfs:range cl:Occurence ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:definesRisk a owl:ObjectProperty ;
+    rdfs:domain cl:Action ;
+    rdfs:range cl:Risk .
+
+op:definesSeverity a owl:ObjectProperty ;
+    rdfs:domain cl:SystemReaction ;
+    rdfs:range cl:Severity ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:enablesDesignFunctionForFinalUser a owl:ObjectProperty ;
+    rdfs:domain cl:Function ;
+    rdfs:range cl:DesignFunction ;
+    rdfs:subPropertyOf op:enablesFunction .
+
+op:enablesDesignFunctionForNextLevel a owl:ObjectProperty ;
+    rdfs:domain cl:Function ;
+    rdfs:range cl:DesignFunction ;
+    rdfs:subPropertyOf op:enablesFunction .
+
+op:enablesProcessFunctionForCustomerFactory a owl:ObjectProperty ;
+    rdfs:domain cl:Function ;
+    rdfs:range cl:ProcessFunction ;
+    rdfs:subPropertyOf op:enablesFunction .
+
+op:enablesProcessFunctionForOwnFactory a owl:ObjectProperty ;
+    rdfs:domain cl:Function ;
+    rdfs:range cl:ProcessFunction ;
+    rdfs:subPropertyOf op:enablesFunction .
+
+op:examinesElement a owl:ObjectProperty ;
+    rdfs:domain cl:FMEA ;
+    rdfs:range cl:Element .
+
+op:executedBecauseOfFM a owl:ObjectProperty ;
+    rdfs:domain cl:Action ;
+    rdfs:range cl:OccuredFailure .
+
+op:hasDetectionCriterion a owl:ObjectProperty ;
+    rdfs:domain cl:DetectionAction ;
+    rdfs:range cl:DetectionCriterion .
+
+op:hasFailureEffectForCustomerPlant a owl:ObjectProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range cl:FailureMode ;
+    rdfs:subPropertyOf op:hasFailureEffect .
+
+op:hasFailureEffectForFinalUser a owl:ObjectProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range cl:FailureMode ;
+    rdfs:subPropertyOf op:hasFailureEffect .
+
+op:hasFailureEffectForOwnPlant a owl:ObjectProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range cl:FailureMode ;
+    rdfs:subPropertyOf op:hasFailureEffect .
+
+op:hasFunction a owl:ObjectProperty ;
+    rdfs:domain cl:Element ;
+    rdfs:range cl:Function .
+
+op:hasMExecutionStamp a owl:ObjectProperty ;
+    rdfs:domain cl:MonitoringAction ;
+    rdfs:range cl:ExecutedMonAct ;
+    rdfs:subPropertyOf op:hasExecutionStamp .
+
+op:hasNextProcessStep a owl:ObjectProperty ;
+    rdfs:domain cl:ProcessElement ;
+    rdfs:range cl:ProcessElement .
+
+op:hasRiskAssessment a owl:ObjectProperty ;
+    rdfs:domain cl:Risk ;
+    rdfs:range cl:RiskAssessment .
+
+op:hasSRExecutionStamp a owl:ObjectProperty ;
+    rdfs:domain cl:SystemReaction ;
+    rdfs:range cl:ExecutedSR ;
+    rdfs:subPropertyOf op:hasExecutionStamp .
+
+op:hasWorstFailureEffectForCustomerPlant a owl:ObjectProperty ;
+    rdfs:subPropertyOf op:hasWorstFailureEffect .
+
+op:hasWorstFailureEffectForOwnPlant a owl:ObjectProperty ;
+    rdfs:subPropertyOf op:hasWorstFailureEffect .
+
+op:hasWorstFailureEffectForUser a owl:ObjectProperty ;
+    rdfs:subPropertyOf op:hasWorstFailureEffect .
+
+op:is4MProcessCauseElementOf a owl:ObjectProperty ;
+    rdfs:domain cl:Element ;
+    rdfs:range cl:ProcessElement .
+
+op:isDForAP a owl:ObjectProperty ;
+    rdfs:domain cl:Detection ;
+    rdfs:range cl:ActionPriority ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:isFForMSRAP a owl:ObjectProperty ;
+    rdfs:domain cl:Monitoring ;
+    rdfs:range cl:MSRActionPriority ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:isMForMSRAP a owl:ObjectProperty ;
+    rdfs:domain cl:Monitoring ;
+    rdfs:range cl:MSRActionPriority ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:isMitigatedRiskOf a owl:ObjectProperty ;
+    rdfs:domain cl:Risk ;
+    rdfs:range cl:Risk .
+
+op:isOForAP a owl:ObjectProperty ;
+    rdfs:domain cl:Occurence ;
+    rdfs:range cl:ActionPriority ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:isSForAP a owl:ObjectProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range cl:ActionPriority ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:isSForMSRAP a owl:ObjectProperty ;
+    rdfs:domain cl:Severity ;
+    rdfs:range cl:MSRActionPriority ;
+    rdfs:subPropertyOf op:definesRiskAssessment .
+
+op:isSuperElementOf a owl:ObjectProperty ;
+    rdfs:domain cl:Element ;
+    rdfs:range cl:Element .
+
+op:monitorsFailureMode a owl:ObjectProperty ;
+    rdfs:domain cl:MonitoringAction ;
+    rdfs:range cl:FailureMode ;
+    rdfs:subPropertyOf op:detectsFailureMode .
+
+op:observedBySensor a owl:ObjectProperty ;
+    rdfs:domain cl:DetectionCriterion ;
+    rdfs:range cl:Sensors .
+
+op:occuredWithStamp a owl:ObjectProperty ;
+    rdfs:domain cl:OccuredFailure ;
+    rdfs:range cl:FailureMode .
+
+op:preventedFunction a owl:ObjectProperty ;
+    rdfs:domain cl:OccuredFailure ;
+    rdfs:range cl:Function ;
+    rdfs:subPropertyOf op:preventsFunction .
+
+op:reactsOnFailureMode a owl:ObjectProperty ;
+    rdfs:domain cl:SystemReaction ;
+    rdfs:range cl:FailureMode ;
+    rdfs:subPropertyOf op:preventsFailureMode .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ÜÜÜ> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
   ]
-}""" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> rdf:type owl:NamedIndividual ,
-                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_hasFailureEffectForOwnPlant> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> ;
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> """{
-  \"rows\": [
-    { \"id\": \"ns=4;s=OPCUA.Z1\",  \"t\": \"Int16\", \"v\": 0 }
-  ]
-}""" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> rdf:type owl:NamedIndividual ,
-                                                                                  <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> rdf:type owl:NamedIndividual ,
-                                                                         <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_MonitoringAction> rdf:type owl:NamedIndividual ,
-                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_MonitoringAction> ;
-                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_monitorsFailureMode> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
-                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasMonActParams> """{
-  \"rows\": [
-    { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob\" },
-    { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
-    { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
-    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"119\"}
-  ]
-}""" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1> rdf:type owl:NamedIndividual ,
-                                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
-                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> ;
-                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasBooleanValue> "false"^^xsd:boolean .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_Sysreact1> rdf:type owl:NamedIndividual ,
-                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Action> ,
-                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_SystemReaction> ;
-                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_reactsOnFailureMode> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
-                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasSysReactParams> """{
-  \"rows\": [
-    { \"step\": 0, \"g\": \"meta\", \"k\": \"jobId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob\" },
-    { \"step\": 0, \"g\": \"method\", \"k\": \"methodId\", \"t\": \"nodeId\", \"v\": \"MAIN.fbJob.M_Methode1\" },
-    { \"step\": 0, \"g\": \"input\",  \"k\": \"x\", \"i\": 0, \"t\": \"int32\", \"v\": 0},
-    { \"step\": 0, \"g\": \"output\",  \"k\": \"yOut\", \"i\": 0, \"t\": \"int32\", \"v\": \"119\"}
-  ]
-}""" .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1> rdf:type owl:NamedIndividual ,
-                                                                                 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> ;
-                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_observedBySensor> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer> ;
-                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasLowerBound> 0.001 ;
-                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUnit> "s" ;
-                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasUpperBound> 5.007 .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FaultParams_ExFailureMode1> rdf:type owl:NamedIndividual ,
-                                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_DetectionCriterion> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine1> rdf:type owl:NamedIndividual ,
-                                                                          <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine2
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/PunchingMachine2> rdf:type owl:NamedIndividual ,
-                                                                          <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> rdf:type owl:NamedIndividual ,
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk2
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk2> rdf:type owl:NamedIndividual ,
-                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Risk> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/RobotWithVacuumGripper
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/RobotWithVacuumGripper> rdf:type owl:NamedIndividual ,
-                                                                                <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_ProcessElement> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> rdf:type owl:NamedIndividual ,
-                                                                   <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA02
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA02> rdf:type owl:NamedIndividual ,
-                                                                   <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltBackwardWithA01
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltBackwardWithA01> rdf:type owl:NamedIndividual ,
-                                                                                               <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltForwardWithA01
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MoveConveyorBeltForwardWithA01> rdf:type owl:NamedIndividual ,
-                                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadDownWithA02
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadDownWithA02> rdf:type owl:NamedIndividual ,
-                                                                                        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadUpWithA02
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_MovePunchHeadUpWithA02> rdf:type owl:NamedIndividual ,
-                                                                                      <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS01
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS01> rdf:type owl:NamedIndividual ,
-                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS02
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithCS02> rdf:type owl:NamedIndividual ,
-                                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS01
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS01> rdf:type owl:NamedIndividual ,
-                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS02
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS02> rdf:type owl:NamedIndividual ,
-                                                                              <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer> rdf:type owl:NamedIndividual ,
-                                                                     <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Sensors> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> rdf:type owl:NamedIndividual ,
-                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                           <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> rdf:type owl:NamedIndividual ,
-                                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_Function> ;
-                                                           <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_enablesProcessFunctionForOwnFactory> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
-
-
-###  http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ÜÜÜ
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ÜÜÜ> rdf:type owl:NamedIndividual ,
-                                                             <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/class_FailureMode> ;
-                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/op_preventsFunction> <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> ;
-                                                    <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/dp_hasFailureModeParams> """{
-  \"rows\": [
-    { \"id\": \"ns=4;s=OPCUA.Z1\",  \"t\": \"Int16\", \"v\": 27 }
-  ]
-}""" .
-
-
-#################################################################
-#    Annotations
-#################################################################
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
 owl:topDataProperty rdfs:comment "Alle Date Properties, die sich hier befinden, können im weiteren Ausblick in Klassen umgewandelt werden und somit für weitere Zwecke benutzt werden. Aufgrund des Umfangs dieser Arbeit muss hier aber leider mit Data Properties gearbeitet werden." .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> a cl:FailureMode,
+        owl:NamedIndividual .
 
-###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945383841780000_2025-09-16_13-07-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945503889679600_2025-09-16_13-09-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945563936947000_2025-09-16_13-10-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "SRDone: OK" ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945623925147400_2025-09-16_13-11-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945743992326800_2025-09-16_13-13-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945803979128700_2025-09-16_13-14-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "SRDone: OK" ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945863989086000_2025-09-16_13-15-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945984067359000_2025-09-16_13-17-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946044062366500_2025-09-16_13-18-35> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "SRDone: OK" ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946104088810500_2025-09-16_13-19-34> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
+    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945383841780000_2025-09-16_13-07-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945383841780000_2025-09-16_13-07-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945503889679600_2025-09-16_13-09-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945503889679600_2025-09-16_13-09-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945623925147400_2025-09-16_13-11-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945623925147400_2025-09-16_13-11-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945743992326800_2025-09-16_13-13-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945743992326800_2025-09-16_13-13-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945863989086000_2025-09-16_13-15-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945863989086000_2025-09-16_13-15-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945984067359000_2025-09-16_13-17-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945984067359000_2025-09-16_13-17-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-946104088810500_2025-09-16_13-19-34_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946104088810500_2025-09-16_13-19-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> a cl:Risk,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945563936947000_2025-09-16_13-10-34> a cl:ExecutedSR ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945563936947000_2025-09-16_13-10-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945803979128700_2025-09-16_13-14-34> a cl:ExecutedSR ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945803979128700_2025-09-16_13-14-34> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-946044062366500_2025-09-16_13-18-35> a cl:ExecutedSR ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946044062366500_2025-09-16_13-18-35> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> a cl:Sensors,
+        owl:NamedIndividual .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SystemTimer> a cl:Sensors,
+        owl:NamedIndividual .
+
+cl:DFMEA a owl:Class ;
+    rdfs:subClassOf cl:FMEA .
+
+cl:PFMEA a owl:Class ;
+    rdfs:subClassOf cl:FMEA .
+
+op:detectsFailureMode a owl:ObjectProperty ;
+    rdfs:domain cl:DetectionAction ;
+    rdfs:range cl:FailureMode .
+
+op:preventsFailureMode a owl:ObjectProperty ;
+    rdfs:domain cl:PreventiveAction ;
+    rdfs:range cl:FailureMode .
+
+op:preventsFunction a owl:ObjectProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range cl:Function .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> a cl:Function,
+        owl:NamedIndividual .
+
+cl:4MElementMachine a owl:Class ;
+    rdfs:subClassOf cl:ProcessElement .
+
+cl:DesignFunction a owl:Class ;
+    rdfs:subClassOf cl:Function .
+
+cl:ProcessFunction a owl:Class ;
+    rdfs:subClassOf cl:Function .
+
+cl:RationaleForFrequency a owl:Class .
+
+dp:hasExecutionParams a owl:DatatypeProperty .
+
+dp:hasMethodId a owl:DatatypeProperty ;
+    rdfs:domain cl:MonitoringAction ;
+    rdfs:range xsd:string .
+
+dp:hasObjId a owl:DatatypeProperty .
+
+op:hasExecutionStamp a owl:ObjectProperty .
+
+cl:FMEA a owl:Class .
+
+cl:Frequency a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:PreventiveAction a owl:Class ;
+    rdfs:subClassOf cl:Action .
+
+dp:hasDecValue a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf dp:hasDetectionParamter .
+
+dp:hasDetectionParamter a owl:DatatypeProperty ;
+    rdfs:comment "Hier sind die Sensorwerte, die jeder Sensor haben kann. Bisher sind nur Dezimale und Boolean-Werte verfügbar, da das die sind, die hier gebraucht werden." ;
+    rdfs:domain cl:DetectionCriterion .
+
+op:hasWorstFailureEffect a owl:ObjectProperty ;
+    rdfs:subPropertyOf op:hasFailureEffect .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> a cl:Function,
+        owl:NamedIndividual .
+
+cl:Detection a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:DetectionAction a owl:Class ;
+    rdfs:subClassOf cl:Action .
+
+cl:Occurence a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:Sensors a owl:Class ;
+    rdfs:subClassOf cl:4MElementMachine .
+
+op:enablesFunction a owl:ObjectProperty ;
+    rdfs:domain cl:Function ;
+    rdfs:range cl:Function .
+
+op:hasFailureEffect a owl:ObjectProperty ;
+    rdfs:domain cl:FailureMode ;
+    rdfs:range cl:FailureMode .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> a cl:Function,
+        owl:NamedIndividual ;
+    op:enablesProcessFunctionForOwnFactory <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
+
+cl:ActionPriority a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:ExecutedSR a owl:Class ;
+    rdfs:subClassOf cl:SystemReaction .
+
+cl:MSRActionPriority a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:Monitoring a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:Action a owl:Class .
+
+cl:DetectionCriterion a owl:Class ;
+    rdfs:comment """Beinhaltet Kriterien für die Detektion von Fehlern wie bspw. Sensorwerte. Es wird angenommen, dass jedes Kriterium durch einen Sensor gemessen werden muss, aus diesem Grund wird der SystemTimer hier auch als Sensor modelliert, der die Zeit misst.
+
+Logik: Detection Actions, die zu Systemreaktionen führen sollen und daher automatisiert ablaufen, müssen zwangsläufig Kriterien besitzen, mit denen sie den Fehler mithilfe von Sensorwerten messen.
+
+Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers zu ermitteln.""",
+        "Wwird nur eingesetzt, sobald ein kritischer Fehler auftaucht, aber noch keine Fehlerreaktion vorhanden ist. Hier werden alle möglichen Detektionsmerkmale und wie (durch welche Sensoren/Aktoren und welche OPCUA-Werte) sie getestet werden können, aufgeführt." .
+
+cl:Element a owl:Class .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> a cl:Function,
+        owl:NamedIndividual ;
+    op:enablesProcessFunctionForOwnFactory <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
+
+cl:MonitoringAction a owl:Class ;
+    rdfs:comment "Für das Anwendungsbeispiel schon alles hinterlegt in der PLC. Neue Methoden in dieser Klasse sind für das Reasoning von Fehlerdiagnosen gedacht" ;
+    rdfs:subClassOf cl:DetectionAction .
+
+cl:RiskAssessment a owl:Class .
+
+cl:SystemReaction a owl:Class ;
+    rdfs:comment "Intersection mit Function? Denn eigentlich müssen ja diese System Reactions auch als Functions für eine Maschine hinterlegt sein, sonst sind sie per se nicht ausführbar." ;
+    rdfs:subClassOf cl:PreventiveAction .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 0 }
+  ]
+}""" ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+cl:ExecutedMonAct a owl:Class ;
+    rdfs:subClassOf cl:MonitoringAction .
+
+cl:Severity a owl:Class ;
+    rdfs:subClassOf cl:RiskAssessment .
+
+cl:ProcessElement a owl:Class ;
+    rdfs:comment "Elements in PFMEA like Process Steps" ;
+    rdfs:subClassOf cl:Element .
+
+cl:Risk a owl:Class .
+
+op:definesRiskAssessment a owl:ObjectProperty .
+
+dp:hasRating a owl:DatatypeProperty .
+
+cl:OccuredFailure a owl:Class ;
+    rdfs:subClassOf cl:FailureMode .
+
+cl:FailureMode a owl:Class .
+
+cl:Function a owl:Class .
+

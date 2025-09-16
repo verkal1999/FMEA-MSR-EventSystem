@@ -25,7 +25,6 @@ struct KgIngestionParams {
     std::string ExecsysReaction;    // IRIs der ausgeführten System-Reactions
     std::vector<std::string> ExecmonReactions;    // IRIs der ausgeführten Monitoring-Actions
     std::string failureMode;    // optional
-
     nlohmann::json toJson() const {
         using nlohmann::json;
         json j = {

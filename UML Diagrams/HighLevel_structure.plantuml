@@ -1,130 +1,172 @@
-@startuml Class Structure
+@startuml Eventbased ExceptionHandling - Class Diagram (compact)
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
-'left to right direction
 top to bottom direction
-'scale max 1200 width
-'scale max 800 height
+hide empty members
 
+' ======= Basistypen =======
+enum EventType {
+  evD2
+  evReactionPlanned
+  evReactionDone
+  evProcessFail
+  evGotFM
+  evUnknownFM
+  evIngestionPlanned
+  evIngestionDone
+}
+
+class Event {
+  +type: EventType
+  +payload: any
+  +ts: time_point
+}
+
+class Plan {
+  +correlationId: string
+  +resourceId: string
+  +ops: vector<Operation>
+}
+
+enum OpType {
+  CallMethod
+  WriteBool
+  PulseBool
+  KGIngestion
+}
+
+class Operation {
+  +type: OpType
+  +callObjNodeId: string
+  +callMethNodeId: string
+  +inputs: UAValueMap
+  +expOuts: UAValueMap
+  +attach: shared_ptr<void>
+}
+
+class InventorySnapshot {
+  +rows: vector<InventoryRow>
+  +bools: map<string,bool>
+  +strings: map<string,string>
+  +int16s: map<string,int16_t>
+}
+
+class InventoryRow {
+  +nodeClass: string
+  +nodeId: string
+  +dtypeOrSig: string
+}
+
+' ======= Beobachter & Bus =======
 abstract class ReactiveObserver {
-    +priority: int
-    {abstract} +onEvent(event: Event): void
-    +setEventHandled(event: Event): bool
-}
-'factory design pattern
-class ReactionManager {
-    -mut_ : std::mutex
-    +priority:int = 4
-    +onEvent(event: Event): void
-    +createPlan(JSON_Respone:string):Plan
-}
-struct Plan{
-    +correlationId:string  
-    +resourceId: string
-    +ops: vector<Operation>            
-    abortRequired: bool;
-    degradeAllowed bool;
-}
-abstract class CommandForce  {
-    {abstract} +execute(Task): void
+  +priority: int
+  {abstract} +onEvent(ev: Event): void
 }
 
-enum EventType{
-    evD2
-    evD3
-    evD1
-    evReactionPlanned
-    evReactionDone
-    evKGResult
-    evKGTimeout
+class EventBus {
+  +post(ev: Event): void
+  +post_now(ev: Event): void
+  +process(): void
+  +subscribe<T>(obj, &T::onEvent): void
+  +unsubscribe<T>(obj, &T::onEvent): void
 }
 
-class KG {}
-class EventBus{
-    -Callbacks: List[EventType, &Class::onEvent]
-    -mut_ : std::mutex
-    +post(ev:Event):void
-    +subscribe<Event>(obj, &Class::onEvent) : void
-    +unsubscribe<Event>(obj, &Class::onEvent) : void
-    +start()
-    +stop()
-}
-class AckLogger {}
+EventBus "1" *-- "1..*" Event
+EventBus "1" --> "1..*" ReactiveObserver : notify
 
-struct Event{
-    +type: EventType
-    +payload: Payload
-}
-
-interface KGInterface {
-    +queryForAction(event: Event): List<Action>
-    +parseResponse(str): List<Action>
-    +ingestFailure(event: Event): void
-}
-
-struct InventoryRow {
-    + std::string nodeClass;   
-    + std::string nodeId;      
-    + std::string dtypeOrSig; 
-}
-
+' ======= PLC & Python =======
 class PLCMonitor {
-  +connect(): void
-  +disconnect(): void
-  +run():void
-  +onDataChange(nodeId: string, value: any): void
-  -bus: EventBus
-  +createSnapshot():vector<InventoryRow>
-  +wasTimeout(): bool
-  +getGEMMAState():str
-  -mut_ : std::mutex
-'Mutex bei parallelem Zugriff und aufpassen, dass Tas
+  +buildInventorySnapshotNow(): InventorySnapshot
+  +writeBool(nodeId: string, v: bool): bool
+  +callMethodTyped(obj: string, meth: string, in: UAValueMap, timeoutMs: int): UAValueMap
 }
 
-interface ICommand {
-  +execute(plan: Plan) : Result
+class PythonRuntime {
+  +getFailureModeParameters(lastSkill: string): string
+  +getMonitoringActionForFM(fm: string): string
+  +getSystemReactionForFM(fm: string): string
+  +ingestOccurredFailure(paramsJson: string): int
 }
 
-class CommandForce {
-  - mon_ : PLCMonitor&
-  - oq_  : IOrderQueue*
-  + execute(p: Plan): int
+PLCMonitor --> EventBus : post(evD2)
+PythonRuntime <-[#gray,dashed]- ReactionManager : uses
+PythonRuntime <-[#gray,dashed]- KGIngestionForce : uses
+
+' ======= Manager & Recorder =======
+class ReactionManager {
+  +priority: int = 4
+  +onEvent(ev: Event): void
+  -compareAgainstCache(inv: InventorySnapshot, expects: UAValueMap): vector<string>
+  -buildFallbackPulsePlan(corr: string): Plan
 }
 
 class FailureRecorder {
-
+  +onEvent(ev: Event): void
+  -buildParams(corr: string): shared_ptr<void> ' KgIngestionParams
 }
 
-' === Factory-Seite ===
-interface ICommandFactory {
-  +create(plan: Plan) : ICommand
+class AckLogger {
+  +onEvent(ev: Event): void
+}
+
+ReactiveObserver <|-- ReactionManager
+ReactiveObserver <|-- FailureRecorder
+ReactiveObserver <|-- AckLogger
+
+ReactionManager ..> EventBus : subscribe/post
+ReactionManager ..> PLCMonitor : uses
+FailureRecorder ..> EventBus : subscribe
+AckLogger ..> EventBus : subscribe
+ReactionManager *-- Plan
+
+' ======= Forces & Factory =======
+interface ICommandForce {
+  +execute(plan: Plan): int
+}
+
+interface IWinnerFilter {
+  +filter(winners: vector<string>, corr: string, process: string): vector<string>
+}
+
+class CommandForce implements ICommandForce {
+  -mon_: PLCMonitor&
+  +execute(plan: Plan): int
+}
+
+class MonitoringActionForce implements IWinnerFilter {
+  +filter(...): vector<string>
+  -buildCallMethodPlan(payloadJson: string): Plan
+}
+
+class SystemReactionForce implements IWinnerFilter {
+  +filter(...): vector<string>
+  -buildCallMethodPlan(payloadJson: string, appendPulse: bool): Plan
+}
+
+class KGIngestionForce implements ICommandForce {
+  +execute(plan: Plan): int
 }
 
 class CommandForceFactory {
-  +create(plan: Plan):ICommand
+  +createForOp(op: Operation): ICommandForce
+  +createWinnerFilter(fetcherCb, defaultTimeoutMs: int): IWinnerFilter
 }
-' === Beziehungen ===
-CommandForce -up-|> ICommand
-CommandForceFactory -up-|> ICommandFactory
 
-' Factory erzeugt Produkt
 CommandForceFactory ..> CommandForce : «creates»
+CommandForceFactory ..> MonitoringActionForce : «creates»
+CommandForceFactory ..> SystemReactionForce : «creates»
+CommandForceFactory ..> KGIngestionForce : «creates»
 
-' Client nutzt nur Abstraktionen
-ReactionManager ..> ICommandFactory
-ReactionManager ..> ICommand : «uses»
-ReactionManager *-- Plan: contains
-PLCMonitor --> EventBus : publishes on
-PLCMonitor --> InventoryRow : creates
-EventBus "1" --> "1...*" ReactiveObserver : notify
-ReactiveObserver <|-- ReactionManager 
-ReactiveObserver <|-- AckLogger 
-ReactiveObserver <|-- FailureRecorder
-FailureRecorder --> ICommandFactory
-ReactionManager  --> KGInterface : uses
-EventBus "1" *-- "1...*" Event : contains
-KG ..|> KGInterface : interact
-ReactionManager --> PLCMonitor: Knows
-CommandForce --> PLCMonitor: Knows
+ReactionManager ..> CommandForceFactory
+FailureRecorder ..> CommandForceFactory
+CommandForce --> PLCMonitor : uses
+MonitoringActionForce --> PLCMonitor : uses
+SystemReactionForce --> PLCMonitor : uses
+
+' ======= Flussrelevante Beziehungen =======
+PLCMonitor --> InventorySnapshot : creates
+EventBus --> ReactionManager : evD2
+EventBus --> FailureRecorder : all/errs
+EventBus --> AckLogger : acks
 
 @enduml
