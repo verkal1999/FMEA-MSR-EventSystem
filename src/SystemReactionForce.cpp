@@ -121,6 +121,18 @@ SystemReactionForce::filter(const std::vector<std::string>& winners,
                     bus_.post({ EventType::evProcessFail, std::chrono::steady_clock::now(),
                         std::any{ ProcessFailAck{ corr, processNameForAck,
                                                 std::string("Output mismatch at '") + op.callMethNodeId + "'" } } });
+
+                    auto cf = CommandForceFactory::create(CommandForceFactory::Kind::UseMonitor, mon_);
+                    Operation op;
+                    op.type      = OpType::PulseBool;
+                    op.ns        = 4;
+                    op.nodeId    = "OPCUA.DiagnoseFinished";
+                    op.timeoutMs = 100;           // Pulsbreite
+                    Plan p;
+                    p.correlationId = plan.correlationId;
+                    p.resourceId    = plan.resourceId.empty()? "PLC" : plan.resourceId;
+                    p.ops.push_back(op);
+                    cf->execute(p);
                 }
                 // Gesamtergebnis für diesen Schritt
                 const bool okThisStep = callOk && match;

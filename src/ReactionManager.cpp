@@ -74,6 +74,15 @@ ReactionManager::ReactionManager(PLCMonitor& mon, EventBus& bus)
     });
 }
 
+ReactionManager::~ReactionManager() {
+    if (worker_.joinable()) {
+        worker_.request_stop();      // Stop-Flag setzen
+        { std::lock_guard<std::mutex> lk(job_mx_); }
+        job_cv_.notify_all();        // WARTER wecken, damit Prädikat neu geprüft wird
+        // jthread-Destruktor joint automatisch
+    }
+}
+
 // ---------- Event-Entry -------------------------------------------------------
 void ReactionManager::onEvent(const Event& ev) {
     const char* evName = nullptr;

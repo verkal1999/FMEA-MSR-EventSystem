@@ -201,6 +201,7 @@ UA_StatusCode browseOneDeep(UA_Client *client,
     UA_BrowseResponse_clear(&brs);
     return rc;
 }
+
 static bool resolveBrowsePathToNode(UA_Client* client,
                                     const std::vector<UA_QualifiedName>& qnames,
                                     UA_NodeId& outTarget /* deep copy */) {
@@ -246,11 +247,11 @@ static bool resolveBrowsePathToNode(UA_Client* client,
 
     UA_TranslateBrowsePathsToNodeIdsResponse_clear(&resp);
     return ok;
-}
+} 
 
     static std::string ltextToStd(const UA_LocalizedText &lt) {
         return uaToStdString(lt.text);
-    }
+    } 
 
 static void dumpChildrenOf(UA_Client* c, const UA_NodeId& node, const char* title) {
     // BrowseDescription wie in browseOneDeep – keine Heap-Arrays nötig

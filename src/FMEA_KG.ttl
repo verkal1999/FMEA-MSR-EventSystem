@@ -21,13 +21,10 @@
     { "step": 0, "g": "output",  "k": "yOut", "i": 0, "t": "int32", "v": "119"}
   ]
 }""" ;
-    op:hasMExecutionStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945383841780000_2025-09-16_13-07-34_1>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945503889679600_2025-09-16_13-09-34_1>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945623925147400_2025-09-16_13-11-34_1>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945743992326800_2025-09-16_13-13-34_1>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945863989086000_2025-09-16_13-15-34_1>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945984067359000_2025-09-16_13-17-34_1>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-946104088810500_2025-09-16_13-19-34_1> ;
+    op:hasMExecutionStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1116713611445800_2025-09-18_12-43-03_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1116833669500100_2025-09-18_12-45-03_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1120554877263900_2025-09-18_13-47-04_1>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1120674935439200_2025-09-18_13-49-04_1> ;
     op:monitorsFailureMode <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_PositionTestSkill1> a cl:DetectionCriterion,
@@ -46,9 +43,9 @@
     { "step": 0, "g": "output",  "k": "yOut", "i": 0, "t": "int32", "v": "119"}
   ]
 }""" ;
-    op:hasSRExecutionStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945563936947000_2025-09-16_13-10-34>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945803979128700_2025-09-16_13-14-34>,
-        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-946044062366500_2025-09-16_13-18-35> ;
+    op:hasSRExecutionStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1116353534575000_2025-09-18_12-37-03>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1116773627893800_2025-09-18_12-44-03>,
+        <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1120614916857100_2025-09-18_13-48-04> ;
     op:reactsOnFailureMode <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Ex_TimeWindowTestSkill1> a cl:DetectionCriterion,
@@ -100,25 +97,25 @@
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Skill_SenseWithLBS02> a cl:Function,
         owl:NamedIndividual .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-945443855874300_2025-09-16_13-08-22> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-1116633475764900_2025-09-18_12-41-43> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "No unique system reaction; fallback used." ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-1116653593600200_2025-09-18_12-41-51> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-945683982695800_2025-09-16_13-12-22> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-1120509254859700_2025-09-18_13-46-07> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-945924033443300_2025-09-16_13-16-22> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-946164123736600_2025-09-16_13-20-22> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-1120734980360100_2025-09-18_13-49-52> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
     dp:isUnknownFailure true ;
@@ -615,98 +612,71 @@ owl:topDataProperty rdfs:comment "Alle Date Properties, die sich hier befinden, 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> a cl:FailureMode,
         owl:NamedIndividual .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945383841780000_2025-09-16_13-07-34> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
-    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945503889679600_2025-09-16_13-09-34> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
-    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945563936947000_2025-09-16_13-10-34> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116353534575000_2025-09-18_12-37-03> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "SRDone: OK" ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945623925147400_2025-09-16_13-11-34> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116713611445800_2025-09-18_12-43-03> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945743992326800_2025-09-16_13-13-34> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
-    op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945803979128700_2025-09-16_13-14-34> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116773627893800_2025-09-18_12-44-03> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "SRDone: OK" ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945863989086000_2025-09-16_13-15-34> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116833669500100_2025-09-18_12-45-03> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945984067359000_2025-09-16_13-17-34> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1120554877263900_2025-09-18_13-47-04> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946044062366500_2025-09-16_13-18-35> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1120614916857100_2025-09-18_13-48-04> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "SRDone: OK" ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode1> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946104088810500_2025-09-16_13-19-34> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1120674935439200_2025-09-18_13-49-04> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "No system reaction defined for this failure." ;
     op:occuredWithStamp <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945383841780000_2025-09-16_13-07-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945383841780000_2025-09-16_13-07-34> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1116713611445800_2025-09-18_12-43-03_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116713611445800_2025-09-18_12-43-03> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945503889679600_2025-09-16_13-09-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945503889679600_2025-09-16_13-09-34> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1116833669500100_2025-09-18_12-45-03_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116833669500100_2025-09-18_12-45-03> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945623925147400_2025-09-16_13-11-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945623925147400_2025-09-16_13-11-34> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1120554877263900_2025-09-18_13-47-04_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1120554877263900_2025-09-18_13-47-04> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945743992326800_2025-09-16_13-13-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945743992326800_2025-09-16_13-13-34> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945863989086000_2025-09-16_13-15-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945863989086000_2025-09-16_13-15-34> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-945984067359000_2025-09-16_13-17-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945984067359000_2025-09-16_13-17-34> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-946104088810500_2025-09-16_13-19-34_1> a cl:ExecutedMonAct ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946104088810500_2025-09-16_13-19-34> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/M_evD2-1120674935439200_2025-09-18_13-49-04_1> a cl:ExecutedMonAct ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1120674935439200_2025-09-18_13-49-04> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> a cl:Risk,
         owl:NamedIndividual .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945563936947000_2025-09-16_13-10-34> a cl:ExecutedSR ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945563936947000_2025-09-16_13-10-34> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1116353534575000_2025-09-18_12-37-03> a cl:ExecutedSR ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116353534575000_2025-09-18_12-37-03> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-945803979128700_2025-09-16_13-14-34> a cl:ExecutedSR ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-945803979128700_2025-09-16_13-14-34> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1116773627893800_2025-09-18_12-44-03> a cl:ExecutedSR ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116773627893800_2025-09-18_12-44-03> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-946044062366500_2025-09-16_13-18-35> a cl:ExecutedSR ;
-    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-946044062366500_2025-09-16_13-18-35> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1120614916857100_2025-09-18_13-48-04> a cl:ExecutedSR ;
+    op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1120614916857100_2025-09-18_13-48-04> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SensorA01> a cl:Sensors,
         owl:NamedIndividual .
@@ -756,6 +726,9 @@ dp:hasObjId a owl:DatatypeProperty .
 
 op:hasExecutionStamp a owl:ObjectProperty .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> a cl:Function,
+        owl:NamedIndividual .
+
 cl:FMEA a owl:Class .
 
 cl:Frequency a owl:Class ;
@@ -785,9 +758,6 @@ op:hasWorstFailureEffect a owl:ObjectProperty ;
     op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
     op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> a cl:Function,
-        owl:NamedIndividual .
 
 cl:Detection a owl:Class ;
     rdfs:subClassOf cl:RiskAssessment .
@@ -825,32 +795,6 @@ cl:MSRActionPriority a owl:Class ;
 cl:Monitoring a owl:Class ;
     rdfs:subClassOf cl:RiskAssessment .
 
-cl:Action a owl:Class .
-
-cl:DetectionCriterion a owl:Class ;
-    rdfs:comment """Beinhaltet Kriterien für die Detektion von Fehlern wie bspw. Sensorwerte. Es wird angenommen, dass jedes Kriterium durch einen Sensor gemessen werden muss, aus diesem Grund wird der SystemTimer hier auch als Sensor modelliert, der die Zeit misst.
-
-Logik: Detection Actions, die zu Systemreaktionen führen sollen und daher automatisiert ablaufen, müssen zwangsläufig Kriterien besitzen, mit denen sie den Fehler mithilfe von Sensorwerten messen.
-
-Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers zu ermitteln.""",
-        "Wwird nur eingesetzt, sobald ein kritischer Fehler auftaucht, aber noch keine Fehlerreaktion vorhanden ist. Hier werden alle möglichen Detektionsmerkmale und wie (durch welche Sensoren/Aktoren und welche OPCUA-Werte) sie getestet werden können, aufgeführt." .
-
-cl:Element a owl:Class .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> a cl:Function,
-        owl:NamedIndividual ;
-    op:enablesProcessFunctionForOwnFactory <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
-
-cl:MonitoringAction a owl:Class ;
-    rdfs:comment "Für das Anwendungsbeispiel schon alles hinterlegt in der PLC. Neue Methoden in dieser Klasse sind für das Reasoning von Fehlerdiagnosen gedacht" ;
-    rdfs:subClassOf cl:DetectionAction .
-
-cl:RiskAssessment a owl:Class .
-
-cl:SystemReaction a owl:Class ;
-    rdfs:comment "Intersection mit Function? Denn eigentlich müssen ja diese System Reactions auch als Functions für eine Maschine hinterlegt sein, sonst sind sie per se nicht ausführbar." ;
-    rdfs:subClassOf cl:PreventiveAction .
-
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
@@ -861,8 +805,34 @@ cl:SystemReaction a owl:Class ;
     op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> a cl:Function,
+        owl:NamedIndividual ;
+    op:enablesProcessFunctionForOwnFactory <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
+
+cl:Action a owl:Class .
+
+cl:DetectionCriterion a owl:Class ;
+    rdfs:comment """Beinhaltet Kriterien für die Detektion von Fehlern wie bspw. Sensorwerte. Es wird angenommen, dass jedes Kriterium durch einen Sensor gemessen werden muss, aus diesem Grund wird der SystemTimer hier auch als Sensor modelliert, der die Zeit misst.
+
+Logik: Detection Actions, die zu Systemreaktionen führen sollen und daher automatisiert ablaufen, müssen zwangsläufig Kriterien besitzen, mit denen sie den Fehler mithilfe von Sensorwerten messen.
+
+Diese sind sehr wichtig, um die richitge Systemreaktion im Falle eines Fehlers zu ermitteln.""",
+        "Wwird nur eingesetzt, sobald ein kritischer Fehler auftaucht, aber noch keine Fehlerreaktion vorhanden ist. Hier werden alle möglichen Detektionsmerkmale und wie (durch welche Sensoren/Aktoren und welche OPCUA-Werte) sie getestet werden können, aufgeführt." .
+
 cl:ExecutedMonAct a owl:Class ;
     rdfs:subClassOf cl:MonitoringAction .
+
+cl:Element a owl:Class .
+
+cl:MonitoringAction a owl:Class ;
+    rdfs:comment "Für das Anwendungsbeispiel schon alles hinterlegt in der PLC. Neue Methoden in dieser Klasse sind für das Reasoning von Fehlerdiagnosen gedacht" ;
+    rdfs:subClassOf cl:DetectionAction .
+
+cl:RiskAssessment a owl:Class .
+
+cl:SystemReaction a owl:Class ;
+    rdfs:comment "Intersection mit Function? Denn eigentlich müssen ja diese System Reactions auch als Functions für eine Maschine hinterlegt sein, sonst sind sie per se nicht ausführbar." ;
+    rdfs:subClassOf cl:PreventiveAction .
 
 cl:Severity a owl:Class ;
     rdfs:subClassOf cl:RiskAssessment .
@@ -875,10 +845,10 @@ cl:Risk a owl:Class .
 
 op:definesRiskAssessment a owl:ObjectProperty .
 
-dp:hasRating a owl:DatatypeProperty .
-
 cl:OccuredFailure a owl:Class ;
     rdfs:subClassOf cl:FailureMode .
+
+dp:hasRating a owl:DatatypeProperty .
 
 cl:FailureMode a owl:Class .
 
