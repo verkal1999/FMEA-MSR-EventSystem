@@ -12,6 +12,7 @@
 #include "InventorySnapshot.h"
 #include "InventorySnapshotUtils.h"
 #include "FailureRecorder.h"
+#include "TimeBlogger.h"
 
 
 namespace py = pybind11;
@@ -118,6 +119,9 @@ int main() {
         });
     });
     std::cout << "[Client] subscribed: ns=4;s=TriggerD2\n";
+    
+    auto tb = std::make_shared<TimeBlogger>(bus);
+    tb->subscribeAll();
 
     // 8) Main-Loop
     for (;;) {

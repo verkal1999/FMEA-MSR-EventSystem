@@ -34,6 +34,11 @@ struct IngestionDoneAck {
     std::string message;          // z.B. "printed params"
 };
 
+using MonActPlannedAck = ReactionPlannedAck;  // evMonActPlanned
+using MonActDoneAck    = ReactionDoneAck;     // evMonActDone
+using SRPlannedAck     = ReactionPlannedAck;  // evSRPlanned
+using SRDoneAck        = ReactionDoneAck;     // evSRDone
+
 struct MonActFinishedAck {
     std::string correlationId;
     std::vector<std::string> skills;       // IRIs der ausgeführten Monitoring-Actions
@@ -50,5 +55,21 @@ struct UnknownFMAck {
 struct GotFMAck {
     std::string correlationId;
     std::string failureModeName;   // z.B. "UnknownFM" oder letzter Prozess      // kurze Erklärung ("KG: no failure modes for <skill>")
+};
+
+struct KGResultAck {
+    std::string correlationId;
+    std::string rowsJson;             // KG-Ergebnis als JSON-String
+    bool        ok = true;            // Gesamtergebnis
+};
+
+struct KGTimeoutAck {
+    std::string correlationId;        // nur zum Tracing
+};
+
+struct DStateAck {
+    std::string correlationId;
+    std::string stateName;            // "D1" / "D2" / "D3"
+    std::string summary;              // optionaler Kurztext
 };
 

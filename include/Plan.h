@@ -19,7 +19,8 @@ enum class OpType {
     BlockResource,
     RerouteOrders,
     UnblockResource,
-    KGIngestion             // KG-Ingestion (nicht-PLC)
+    KGIngestion,             // KG-Ingestion (nicht-PLC)
+    WriteCSV
 };
 
 /// Eine einzelne Operation (Schritt) in einem Plan.

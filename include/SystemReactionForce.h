@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <functional>
-#include "MonActionForce.h"      // liefert IWinnerFilter
+#include "IWinnerFilter.h"      // liefert IWinnerFilter
 class PLCMonitor;
 class EventBus;
 

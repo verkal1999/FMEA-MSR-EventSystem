@@ -28,7 +28,9 @@ struct CommandForceFactory {
     static std::unique_ptr<IWinnerFilter>
     createSystemReactionFilter(PLCMonitor& mon, EventBus& bus, Fetcher fetcher, unsigned defaultTimeoutMs);
 
-    // <— NEU: OpType-Dispatcher für ICommandForce
+    
+
+
     static std::unique_ptr<ICommandForce>
     createForOp(const Operation& op, PLCMonitor* mon, EventBus& bus, IOrderQueue* oq = nullptr);
 

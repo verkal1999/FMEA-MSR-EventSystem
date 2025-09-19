@@ -27,7 +27,7 @@ public:
     enum class LogLevel { Error=0, Warn=1, Info=2, Debug=3, Trace=4, Verbose=5 };
 
     ReactionManager(PLCMonitor& mon, EventBus& bus);
-    ~ReactionManager() override = default;
+    ~ReactionManager();
 
     void onEvent(const Event& ev) override;
 

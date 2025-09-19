@@ -32,7 +32,7 @@ add_executable(opcua_client
   src/main.cpp
   src/PLCMonitor.cpp
   src/EventBus.cpp
-  src/ReactionManager.cpp   # ← falls umbenannt
+  src/ReactionManager.cpp   
   src/PythonRuntime.cpp
   src/CommandForce.cpp
   src/CommandForceFactory.cpp
@@ -42,6 +42,8 @@ add_executable(opcua_client
   src/FailureRecorder.cpp
   src/KGIngestionForce.cpp
   src/InventorySnapshotUtils.cpp
+  src/TimeBlogger.cpp
+  src/WriteCsvForce.cpp
 )
 
 target_sources(opcua_client PRIVATE
@@ -66,7 +68,7 @@ target_sources(opcua_client PRIVATE
   include/KGIngestionForce.h
   include/InventorySnapshot.h
   include/InventorySnapshotUtils.h
-  
+  include/TimeBlogger.h
 )
 
 # Includes (eigene + open62541 generated)

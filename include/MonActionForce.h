@@ -2,19 +2,14 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include "IWinnerFilter.h"
 
 class PLCMonitor;
 class EventBus;
 struct Plan;
 
 // Gewinner-Filter-Schnittstelle (für MonitoringActions)
-struct IWinnerFilter {
-    virtual ~IWinnerFilter() = default;
-    virtual std::vector<std::string>
-    filter(const std::vector<std::string>& winners,
-           const std::string& correlationId,
-           const std::string& processNameForAck) = 0;
-};
+
 
 // Konkrete CommandForce für MonitoringActions
 class MonitoringActionForce final : public IWinnerFilter {

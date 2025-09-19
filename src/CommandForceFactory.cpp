@@ -5,8 +5,10 @@
 #include "KgIngestionForce.h"
 #include "PLCMonitor.h"
 #include "EventBus.h"
+#include "WriteCsvForce.h"
 
 std::unique_ptr<ICommandForce>
+
 CommandForceFactory::create(Kind k, PLCMonitor& mon, IOrderQueue* oq) {
     switch (k) {
         case Kind::UseMonitor:
@@ -50,6 +52,8 @@ CommandForceFactory::createForOp(const Operation& op,
         case OpType::CallSystemReaction:
             // Nicht ICommandForce – die laufen über die IWinnerFilter-Fabrik.
             return nullptr;
+        case OpType::WriteCSV:
+            return std::make_unique<WriteCSVForce>();
     }
     return nullptr;
 }
