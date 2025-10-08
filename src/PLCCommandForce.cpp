@@ -1,4 +1,4 @@
-#include "CommandForce.h"
+#include "PLCCommandForce.h"
 #include "PLCMonitor.h"
 
 #include <string>    // std::stoi
@@ -6,10 +6,10 @@
 #include <thread>
 #include <chrono>
 
-CommandForce::CommandForce(PLCMonitor& mon, IOrderQueue* oq)
+PLCCommandForce::PLCCommandForce(PLCMonitor& mon, IOrderQueue* oq)
     : mon_(mon), oq_(oq) {}
 
-int CommandForce::execute(const Plan& p) {
+int PLCCommandForce::execute(const Plan& p) {
     bool ok = true;
 
     for (const auto& op : p.ops) {
@@ -18,7 +18,7 @@ int CommandForce::execute(const Plan& p) {
             const bool value = (op.arg == "true" || op.arg == "1");
             mon_.post([&m = mon_, op, value]{
                 const bool wr = m.writeBool(op.nodeId, op.ns, value);
-                std::cout << "[CommandForce] WriteBool " << op.nodeId
+                std::cout << "[PLCCommandForce] WriteBool " << op.nodeId
                           << " ns=" << op.ns << " value=" << (value ? "true" : "false")
                           << " -> " << (wr ? "OK" : "FAIL") << "\n";
             });
@@ -39,7 +39,7 @@ int CommandForce::execute(const Plan& p) {
         if (doPreclear) {
             pm->post([pm, nodeId, ns]{
                 const bool wr = pm->writeBool(nodeId, ns, false);
-                std::cout << "[CommandForce] PulseBool PRECLEAR " << nodeId
+                std::cout << "[PLCCommandForce] PulseBool PRECLEAR " << nodeId
                         << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
             });
             // Kleine Entprell-/SPS-Zeit, damit LOW sicher ankommt
@@ -49,14 +49,14 @@ int CommandForce::execute(const Plan& p) {
         // HIGH setzen (steigende Flanke auslösen)
         pm->post([pm, nodeId, ns]{
             const bool wr = pm->writeBool(nodeId, ns, true);
-            std::cout << "[CommandForce] PulseBool HI " << nodeId
+            std::cout << "[PLCCommandForce] PulseBool HI " << nodeId
                     << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
         });
 
         // Nach widthMs wieder auf LOW – sauber über Monitor-Timer
         pm->postDelayed(widthMs, [pm, nodeId, ns]{
             const bool wr = pm->writeBool(nodeId, ns, false);
-            std::cout << "[CommandForce] PulseBool LO " << nodeId
+            std::cout << "[PLCCommandForce] PulseBool LO " << nodeId
                     << " ns=" << ns << " -> " << (wr ? "OK" : "FAIL") << "\n";
         });
 
@@ -67,7 +67,7 @@ int CommandForce::execute(const Plan& p) {
             // TODO: Implementiere writeInt32 in PLCMonitor, dann hier aktivieren
             int value = 0;
             try { value = std::stoi(op.arg); } catch (...) { value = 0; ok = false; }
-            std::cout << "[CommandForce] WriteInt32 TODO node=" << op.nodeId
+            std::cout << "[PLCCommandForce] WriteInt32 TODO node=" << op.nodeId
                       << " ns=" << op.ns << " value=" << value << " (not implemented)\n";
             // mon_.post([&m = mon_, op, value]{ m.writeInt32(op.nodeId, op.ns, value); });
             break;
@@ -75,7 +75,7 @@ int CommandForce::execute(const Plan& p) {
 
         case OpType::CallMethod: {
             // TODO: op.arg als JSON der Method-Argumente parsen und callMethod aufrufen
-            std::cout << "[CommandForce] CallMethod TODO node=" << op.nodeId
+            std::cout << "[PLCCommandForce] CallMethod TODO node=" << op.nodeId
                       << " ns=" << op.ns << " args='" << op.arg << "' (not implemented)\n";
             // mon_.post([&m = mon_, op]{ m.callMethod(...); });
             break;
@@ -88,7 +88,7 @@ int CommandForce::execute(const Plan& p) {
         }
 
         case OpType::ReadCheck: {
-            std::cout << "[CommandForce] ReadCheck TODO node=" << op.nodeId
+            std::cout << "[PLCCommandForce] ReadCheck TODO node=" << op.nodeId
                       << " ns=" << op.ns << " expect='" << op.arg
                       << "' timeoutMs=" << op.timeoutMs << " (not implemented)\n";
             // Optional: synchron lesen & prüfen -> ok = ok && result;
@@ -97,20 +97,20 @@ int CommandForce::execute(const Plan& p) {
 
         case OpType::BlockResource: {
             if (oq_) ok = oq_->blockResource(op.nodeId) && ok;
-            else std::cout << "[CommandForce] BlockResource(" << op.nodeId << ") (noop)\n";
+            else std::cout << "[PLCCommandForce] BlockResource(" << op.nodeId << ") (noop)\n";
             break;
         }
 
         case OpType::RerouteOrders: {
             if (oq_) ok = oq_->reroute(op.nodeId, op.arg) && ok;
-            else std::cout << "[CommandForce] RerouteOrders(" << op.nodeId
+            else std::cout << "[PLCCommandForce] RerouteOrders(" << op.nodeId
                            << ", criteria=" << op.arg << ") (noop)\n";
             break;
         }
 
         case OpType::UnblockResource: {
             if (oq_) ok = oq_->unblockResource(op.nodeId) && ok;
-            else std::cout << "[CommandForce] UnblockResource(" << op.nodeId << ") (noop)\n";
+            else std::cout << "[PLCCommandForce] UnblockResource(" << op.nodeId << ") (noop)\n";
             break;
         }
         }

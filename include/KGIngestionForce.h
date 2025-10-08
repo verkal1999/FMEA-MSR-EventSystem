@@ -1,5 +1,5 @@
 #pragma once
-#include "CommandForce.h"
+#include "PLCCommandForce.h"
 #include "CommandForceFactory.h"
 #include "EventBus.h"
 #include <pybind11/embed.h>

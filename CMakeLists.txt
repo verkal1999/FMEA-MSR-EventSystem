@@ -34,7 +34,7 @@ add_executable(opcua_client
   src/EventBus.cpp
   src/ReactionManager.cpp   
   src/PythonRuntime.cpp
-  src/CommandForce.cpp
+  src/PLCCommandForce.cpp
   src/CommandForceFactory.cpp
   src/MonActionForce.cpp
   src/SystemReactionForce.cpp
@@ -55,7 +55,7 @@ target_sources(opcua_client PRIVATE
   include/PythonRuntime.h
   include/PLCMonitor.h
   include/Plan.h
-  include/CommandForce.h
+  include/PLCCommandForce.h
   include/CommandForceFactory.h
   include/Acks.h
   include/AckLogger.h

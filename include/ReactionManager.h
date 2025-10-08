@@ -14,7 +14,7 @@
 #include "MonActionForce.h"
 #include "SystemReactionForce.h"
 #include "CommandForceFactory.h"
-#include "CommandForce.h"
+#include "PLCCommandForce.h"
 #include "Event.h"
 #include "PLCMonitor.h"
 #include "Plan.h"

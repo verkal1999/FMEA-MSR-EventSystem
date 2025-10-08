@@ -1,5 +1,5 @@
 #include "CommandForceFactory.h"
-#include "CommandForce.h"
+#include "PLCCommandForce.h"
 #include "MonActionForce.h"
 #include "SystemReactionForce.h"
 #include "KgIngestionForce.h"
@@ -13,7 +13,7 @@ CommandForceFactory::create(Kind k, PLCMonitor& mon, IOrderQueue* oq) {
     switch (k) {
         case Kind::UseMonitor:
         default:
-            return std::make_unique<CommandForce>(mon, oq);
+            return std::make_unique<PLCCommandForce>(mon, oq);
     }
 }
 
@@ -42,7 +42,7 @@ CommandForceFactory::createForOp(const Operation& op,
         case OpType::RerouteOrders:
         case OpType::UnblockResource:
             if (!mon) return nullptr;
-            return std::make_unique<CommandForce>(*mon, oq);
+            return std::make_unique<PLCCommandForce>(*mon, oq);
 
         case OpType::KGIngestion:
             return std::make_unique<KgIngestionForce>(bus);

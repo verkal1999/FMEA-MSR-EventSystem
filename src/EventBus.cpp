@@ -1,6 +1,8 @@
 #include "EventBus.h"
 #include <algorithm> // sort, remove_if
 
+
+
 SubscriptionToken EventBus::subscribe(EventType t,
                                       const std::shared_ptr<ReactiveObserver>& obs,
                                       int priority) {
@@ -16,7 +18,7 @@ SubscriptionToken EventBus::subscribe(EventType t,
     listeners_[t].push_back(Entry{ std::weak_ptr<ReactiveObserver>(obs), id, priority });
     tok = SubscriptionToken{ t, id };
     return tok;
-}
+} 
 
 void EventBus::unsubscribe(const SubscriptionToken& tok) {
     if (!tok) return;

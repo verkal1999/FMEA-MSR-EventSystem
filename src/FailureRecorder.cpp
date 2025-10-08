@@ -1,7 +1,7 @@
 #include "FailureRecorder.h"
 #include "Acks.h"
 #include "CommandForceFactory.h"
-#include "CommandForce.h"          // vollständige ICommandForce-Definition
+#include "PLCCommandForce.h"          // vollständige ICommandForce-Definition
 #include <iomanip>
 #include <sstream>
 
@@ -11,6 +11,8 @@ using nlohmann::json;
 void FailureRecorder::subscribeAll() {
     auto self = shared_from_this();
     bus_.subscribe(EventType::evD2,               self, 3);
+    bus_.subscribe(EventType::evD1,               self, 3);
+    bus_.subscribe(EventType::evD3,               self, 3);
     bus_.subscribe(EventType::evMonActFinished,   self, 3); // Executed MonActions
     bus_.subscribe(EventType::evSysReactFinished, self, 3); // Executed SysReacts
     bus_.subscribe(EventType::evProcessFail,      self, 3); // Trigger Ingestion

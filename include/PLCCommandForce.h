@@ -5,9 +5,9 @@
 
 // Vorwärtsdeklarationen, um Header schlank zu halten:
 class PLCMonitor;
-class CommandForce : public ICommandForce {
+class PLCCommandForce : public ICommandForce {
 public:
-    explicit CommandForce(PLCMonitor& mon, IOrderQueue* oq = nullptr);
+    explicit PLCCommandForce(PLCMonitor& mon, IOrderQueue* oq = nullptr);
     int execute(const Plan& p) override;
 
 private:

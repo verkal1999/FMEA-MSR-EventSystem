@@ -5,7 +5,7 @@
 #include "EventBus.h"
 #include "Acks.h"
 #include "Plan.h"
-#include "CommandForce.h"
+#include "PLCCommandForce.h"
 #include "CommandForceFactory.h"  // falls du die Factory nutzen willst
 #include <format>
 #include <chrono>

@@ -7,7 +7,7 @@
 #include <pybind11/embed.h>
 #include <type_traits>
 #include "Acks.h"
-#include "CommandForce.h"
+#include "PLCCommandForce.h"
 #include "CommandForceFactory.h"
 #include "EventBus.h"
 #include "PythonWorker.h"
