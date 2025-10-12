@@ -180,6 +180,28 @@ void FailureRecorder::onEvent(const Event& ev) {
             }
             break;
         }
+        case EventType::evD1: {
+            if (auto p = std::any_cast<D2Snapshot>(&ev.payload)) {
+                const std::string corr = p->correlationId;
+                const std::string js   = snapshotToJson_flat(p->inv).dump();
+                std::lock_guard<std::mutex> lk(mx_);
+                resetCorrUnlocked(corr);            // <- ALT-STATE sicher löschen
+                activeCorr_.insert(corr);           // <- Session aktivieren
+                snapshotJsonByCorr_[corr] = js;     // <- frischer Snapshot
+            }
+            break;
+        }
+        case EventType::evD3: {
+            if (auto p = std::any_cast<D2Snapshot>(&ev.payload)) {
+                const std::string corr = p->correlationId;
+                const std::string js   = snapshotToJson_flat(p->inv).dump();
+                std::lock_guard<std::mutex> lk(mx_);
+                resetCorrUnlocked(corr);            // <- ALT-STATE sicher löschen
+                activeCorr_.insert(corr);           // <- Session aktivieren
+                snapshotJsonByCorr_[corr] = js;     // <- frischer Snapshot
+            }
+            break;
+        }
         case EventType::evGotFM: {
             if (auto a = std::any_cast<GotFMAck>(&ev.payload)) {
                 std::lock_guard<std::mutex> lk(mx_);

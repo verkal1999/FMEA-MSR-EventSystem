@@ -849,7 +849,6 @@ bool PLCMonitor::subscribeInt16(const std::string& nodeIdStr, UA_UInt16 nsIndex,
 bool PLCMonitor::subscribeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex,
                                double samplingMs, UA_UInt32 queueSize, BoolChangeCallback cb) {
     if(!client_) return false;
-    onBoolChange_ = std::move(cb);
 
     if(subId_ == 0) {
         UA_CreateSubscriptionRequest sReq = UA_CreateSubscriptionRequest_default();
@@ -877,10 +876,13 @@ bool PLCMonitor::subscribeBool(const std::string& nodeIdStr, UA_UInt16 nsIndex,
             this, &PLCMonitor::dataChangeHandler, nullptr);
 
     UA_NodeId_clear(&monReq.itemToMonitor.nodeId);
+    if(monRes.statusCode != UA_STATUSCODE_GOOD) return false;
 
-    if(monRes.statusCode != UA_STATUSCODE_GOOD)
-        return false;
-
+    {
+        std::lock_guard<std::mutex> lk(cbmx_);
+        boolCbs_[monRes.monitoredItemId] = std::move(cb);
+    }
+    // monIdBool_ behalten wir nur aus Kompatibilitätsgründen, ist aber nicht mehr nötig:
     monIdBool_ = monRes.monitoredItemId;
     return true;
 }
@@ -894,6 +896,10 @@ void PLCMonitor::unsubscribe() {
     monIdBool_  = 0;
     onInt16Change_ = nullptr;
     onBoolChange_  = nullptr;
+    {
+        std::lock_guard<std::mutex> lk(cbmx_);
+        boolCbs_.clear();
+    }
 }
 
 void PLCMonitor::dataChangeHandler(UA_Client*,
@@ -903,7 +909,7 @@ void PLCMonitor::dataChangeHandler(UA_Client*,
     PLCMonitor* self = static_cast<PLCMonitor*>(monCtx ? monCtx : subCtx);
     if(!self || !value || !value->hasValue) return;
 
-    // INT16
+    // INT16 bleibt wie gehabt
     if(self->onInt16Change_ &&
        UA_Variant_isScalar(&value->value) &&
        value->value.type == &UA_TYPES[UA_TYPES_INT16] &&
@@ -913,16 +919,25 @@ void PLCMonitor::dataChangeHandler(UA_Client*,
         return;
     }
 
-    // BOOL
-    if(self->onBoolChange_ &&
-       UA_Variant_isScalar(&value->value) &&
+    // BOOL: passendes Callback per monId suchen
+    if(UA_Variant_isScalar(&value->value) &&
        value->value.type == &UA_TYPES[UA_TYPES_BOOLEAN] &&
        value->value.data) {
         UA_Boolean b = *static_cast<UA_Boolean*>(value->value.data);
-        self->onBoolChange_(b, *value);
-        return;
+
+        BoolChangeCallback cb;
+        {
+            std::lock_guard<std::mutex> lk(self->cbmx_);
+            auto it = self->boolCbs_.find(monId);
+            if (it != self->boolCbs_.end()) cb = it->second;
+        }
+        if (cb) { cb(b, *value); return; }
+
+        // Fallback: altes Single-Callback (falls woanders noch genutzt)
+        if (self->onBoolChange_) { self->onBoolChange_(b, *value); return; }
     }
 }
+
 
 // ==== Task-Queue =============================================================
 void PLCMonitor::post(UaFn fn) {

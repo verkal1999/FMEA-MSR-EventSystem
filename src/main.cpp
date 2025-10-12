@@ -25,6 +25,7 @@ int main() {
     //     Python ausführen können. Der GIL bleibt bis zum Ende von main() freigegeben.
     static std::unique_ptr<py::gil_scoped_release> main_gil_release;
     main_gil_release = std::make_unique<py::gil_scoped_release>();
+    //py::gil_scoped_release main_gil_release;
 
     // PythonWorker starten
     PythonWorker::instance().start();
@@ -64,7 +65,7 @@ int main() {
 
     PLCMonitor::Options opt;
     opt.endpoint       = "opc.tcp://DESKTOP-LNJR8E0:4840";
-    opt.username       = "Admin";
+    opt.username       = "VDAdmin";
     opt.password       = "123456";
     opt.certDerPath    = R"(..\..\certificates\client_cert.der)";
     opt.keyDerPath     = R"(..\..\certificates\client_key.der)";
@@ -83,8 +84,8 @@ int main() {
     auto rm        = std::make_shared<ReactionManager>(mon, bus);
     rm->setLogLevel(ReactionManager::LogLevel::Info);
     auto subD2     = bus.subscribe_scoped(EventType::evD2, rm, 4);
-    auto subD1 = bus.subscribe_scoped(EventType::evD1, rm, 4);
-    auto subD3 = bus.subscribe_scoped(EventType::evD3, rm, 4);
+    //auto subD1 = bus.subscribe_scoped(EventType::evD1, rm, 4);
+    //auto subD3 = bus.subscribe_scoped(EventType::evD3, rm, 4);
     auto ackLogger = std::make_shared<AckLogger>();
     auto subPlan   = bus.subscribe_scoped(EventType::evSRPlanned, ackLogger, 1);
     auto subDone   = bus.subscribe_scoped(EventType::evSRDone,    ackLogger, 1);
@@ -100,6 +101,91 @@ int main() {
     auto subUnknown = bus.subscribe_scoped(EventType::evUnknownFM, ackLogger, 1);
 
     // 7) Trigger-Subscription → Event
+    mon.subscribeBool("OPCUA.TriggerD3", opt.nsIndex, 0.0, 10,
+        [&](bool b, const UA_DataValue& dv) {
+            static std::atomic<bool> initialized{false};
+            static std::atomic<bool> prev{false};
+
+            std::cout << "[TrigD3] b=" << (b ? "true" : "false")
+                    << " sourceTs=" << static_cast<UA_UInt64>(dv.sourceTimestamp)
+                    << " serverTs=" << static_cast<UA_UInt64>(dv.serverTimestamp)
+                    << "\n";
+
+            if (!initialized.exchange(true)) { prev = b; return; }
+            if (!b) { prev = false; return; }
+            if (prev.exchange(true)) return;
+
+            mon.post([&]{
+                InventorySnapshot inv;
+                const bool ok = buildInventorySnapshotNow(mon, "PLC", inv);
+                std::cout << "[Debug] Snapshot D3 = " << (ok ? "OK":"FAIL") << "\n";
+                dumpInventorySnapshot(inv);
+
+                const auto now = std::chrono::steady_clock::now();
+                const std::string corr = "evD3-" + std::to_string(now.time_since_epoch().count());
+
+                bus.post({ EventType::evD3, now, std::any{ D2Snapshot{ corr, std::move(inv) } } });
+                bus.post({ EventType::evUnknownFM, now,
+                        std::any{ UnknownFMAck{ corr, "UnknownFM", "Triggered by D3" } } });
+            });
+        });
+    mon.subscribeBool("OPCUA.TriggerD1", opt.nsIndex, 0.0, 10,
+        [&](bool b, const UA_DataValue& dv) {
+            static std::atomic<bool> initialized{false};
+            static std::atomic<bool> prev{false};
+
+            std::cout << "[TrigD1] b=" << (b ? "true" : "false")
+                    << " sourceTs=" << static_cast<UA_UInt64>(dv.sourceTimestamp)
+                    << " serverTs=" << static_cast<UA_UInt64>(dv.serverTimestamp)
+                    << "\n";
+
+            if (!initialized.exchange(true)) { prev = b; return; }
+            if (!b) { prev = false; return; }
+            if (prev.exchange(true)) return;
+
+            mon.post([&]{
+                InventorySnapshot inv;
+                const bool ok = buildInventorySnapshotNow(mon, "PLC", inv);
+                std::cout << "[Debug] Snapshot D1 = " << (ok ? "OK":"FAIL") << "\n";
+                dumpInventorySnapshot(inv);
+
+                const auto now = std::chrono::steady_clock::now();
+                const std::string corr = "evD1-" + std::to_string(now.time_since_epoch().count());
+
+                bus.post({ EventType::evD1, now, std::any{ D2Snapshot{ corr, std::move(inv) } } });
+                bus.post({ EventType::evUnknownFM, now,
+                        std::any{ UnknownFMAck{ corr, "UnknownFM", "Triggered by D1" } } });
+            });
+        });
+    mon.subscribeBool("OPCUA.TriggerD2", opt.nsIndex, 0.0, 10,
+        [&](bool b, const UA_DataValue& dv) {
+            static std::atomic<bool> initialized{false};
+            static std::atomic<bool> prev{false};
+
+            std::cout << "[TrigD2] b=" << (b ? "true" : "false")
+                    << " sourceTs=" << static_cast<UA_UInt64>(dv.sourceTimestamp)
+                    << " serverTs=" << static_cast<UA_UInt64>(dv.serverTimestamp)
+                    << "\n";
+
+            if (!initialized.exchange(true)) { prev = b; return; }
+            if (!b) { prev = false; return; }
+            if (prev.exchange(true)) return;
+
+            mon.post([&]{
+                InventorySnapshot inv;
+                const bool ok = buildInventorySnapshotNow(mon, "PLC", inv);
+                std::cout << "[Debug] Snapshot D2 = " << (ok ? "OK":"FAIL") << "\n";
+                dumpInventorySnapshot(inv);
+
+                const auto now = std::chrono::steady_clock::now();
+                const std::string corr = "evD2-" + std::to_string(now.time_since_epoch().count());
+
+                bus.post({ EventType::evD2, now, std::any{ D2Snapshot{ corr, std::move(inv) } } });
+                bus.post({ EventType::evUnknownFM, now,
+                        std::any{ UnknownFMAck{ corr, "UnknownFM", "Triggered by D2" } } });
+            });
+        });
+    /*
     std::atomic<bool> d2Prev{false};
     mon.subscribeBool("OPCUA.TriggerD2", opt.nsIndex, 0.0, 10, [&](bool b, const UA_DataValue&) {
         static std::atomic<bool> d2Prev{false};
@@ -117,9 +203,9 @@ int main() {
             bus.post({ EventType::evD2, std::chrono::steady_clock::now(),
                     std::any{ D2Snapshot{ corr, std::move(inv) } } });
         });
-    });
+    }); */
     std::cout << "[Client] subscribed: ns=4;s=TriggerD2\n";
-    
+        
     auto tb = std::make_shared<TimeBlogger>(bus);
     tb->subscribeAll();
 

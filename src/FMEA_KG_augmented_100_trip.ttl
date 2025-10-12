@@ -775,6 +775,1106 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
     rdfs:domain cl:OccuredFailure ;
     rdfs:range xsd:boolean .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode1> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode10> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode100> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode11> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode12> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode13> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode14> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode15> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode16> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode17> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode18> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode19> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode2> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode20> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode21> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode22> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode23> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode24> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode25> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode26> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode27> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode28> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode29> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode3> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode30> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode31> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode32> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode33> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode34> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode35> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode36> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode37> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode38> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode39> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode4> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode40> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode41> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode42> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode43> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode44> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode45> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode46> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode47> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode48> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode49> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode5> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode50> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode51> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode52> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode53> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode54> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode55> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode56> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode57> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode58> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode59> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode6> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode60> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode61> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode62> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode63> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode64> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode65> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode66> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode67> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode68> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode69> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode7> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode70> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode71> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode72> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode73> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode74> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode75> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode76> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode77> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode78> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode79> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode8> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode80> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode81> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode82> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode83> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode84> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode85> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode86> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode87> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode88> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode89> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode9> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode90> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode91> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode92> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode93> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode94> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode95> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode96> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode97> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode98> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode99> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.bool1",  "t": "bool", "v": true }
+  ]
+}""" ;
+    op:createsRisk <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 op:createsRisk a owl:ObjectProperty ;
     rdfs:domain cl:FailureMode ;
     rdfs:range cl:Risk .
@@ -1541,9 +2641,6 @@ owl:topDataProperty rdfs:comment "Alle Date Properties, die sich hier befinden, 
         owl:NamedIndividual ;
     op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-8468126984900_2025-09-19_12-17-17> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> a cl:Risk,
-        owl:NamedIndividual .
-
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/SR_evD2-1116353534575000_2025-09-18_12-37-03> a cl:ExecutedSR,
         owl:NamedIndividual ;
     op:executedBecauseOfFM <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/FM_evD2-1116353534575000_2025-09-18_12-37-03> .
@@ -1809,24 +2906,10 @@ op:definesRiskAssessment a owl:ObjectProperty .
 
 dp:hasRating a owl:DatatypeProperty .
 
-cl:FailureMode a owl:Class .
-
 cl:Function a owl:Class .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> a cl:Function,
         owl:NamedIndividual .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> a cl:FailureMode,
-        owl:NamedIndividual ;
-    dp:hasFailureModeParams """{
-  "rows": [
-    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 0 }
-  ]
-}""" ;
-    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
-    op:hasWorstFEForOwnPlantAfterSR <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeStepFail> ;
-    op:hasWorstFEForOwnPlantBeforeSR <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
-    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> a cl:Function,
         owl:NamedIndividual ;
@@ -1849,10 +2932,27 @@ cl:ExecutedMonAct a owl:Class ;
 cl:ExecutedSR a owl:Class ;
     rdfs:subClassOf cl:SystemReaction .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> a cl:Function,
-        owl:NamedIndividual ;
-    op:enablesProcessFunctionForOwnFactory <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/Risk1> a cl:Risk,
+        owl:NamedIndividual .
+
+cl:FailureMode a owl:Class .
 
 cl:OccuredFailure a owl:Class ;
     rdfs:subClassOf cl:FailureMode .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureMode2> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 0 }
+  ]
+}""" ;
+    op:hasFailureEffectForOwnPlant <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
+    op:hasWorstFEForOwnPlantAfterSR <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeStepFail> ;
+    op:hasWorstFEForOwnPlantBeforeSR <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExFailureModeProcessFail> ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill2> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> a cl:Function,
+        owl:NamedIndividual ;
+    op:enablesProcessFunctionForOwnFactory <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/ExTechnProcess1> .
 

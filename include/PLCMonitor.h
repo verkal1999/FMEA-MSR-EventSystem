@@ -20,6 +20,7 @@
 
 class PLCMonitor {
 public:
+  
     // ---------- Task-Posting (läuft im Thread, der runIterate() aufruft) ----------
     using UaFn = std::function<void()>;
     void post(UaFn fn);
@@ -152,6 +153,8 @@ private:
     UA_UInt32            monIdBool_{0};
     Int16ChangeCallback  onInt16Change_;
     BoolChangeCallback   onBoolChange_;
+    std::mutex cbmx_;
+    std::unordered_map<UA_UInt32, BoolChangeCallback> boolCbs_;
 
     static void dataChangeHandler(UA_Client*, UA_UInt32, void*, UA_UInt32, void*, UA_DataValue*);
 };
