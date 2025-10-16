@@ -1,6 +1,6 @@
 # FMEA-MSR Event System
 
-A runtime exception-handling framework for manufacturing that couples a fast C++ control path (OPC UA PLC monitoring, event bus, reactions) with a Python knowledge-graph bridge for PFMEA-MSR–driven decisions.
+This repository is part of a master project thesis. The built system is a prototype for a runtime exception-handling framework for manufacturing that couples a fast C++ control path (OPC UA PLC monitoring, event bus, reactions) with a Python knowledge-graph bridge for PFMEA-MSR–driven decisions.
 
 ## Key capabilities
 - **PLC Monitoring over OPC UA** – Subscribe to trigger bits, read/write variables, and call PLC methods with secure sessions.
