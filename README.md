@@ -37,6 +37,7 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
 # 3) Build
 cmake --build build -j
+```bash
 
 If you didn’t pass --recurse-submodules, run:
 git submodule update --init --recursive.
