@@ -1,4 +1,3 @@
-```markdown
 # tools/
 
 Helper utilities for local development and testing.
