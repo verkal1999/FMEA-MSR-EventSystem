@@ -37,3 +37,18 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
 # 3) Build
 cmake --build build -j
+
+If you didn’t pass --recurse-submodules, run:
+git submodule update --init --recursive.
+
+## Run
+1. Set your OPC UA endpoint and security (cert/key paths).
+2. Ensure the Python module path for your KG code is on sys.path.
+3. Start the executable from build/.
+4. On trigger events, the system snapshots state, posts events, optionally queries/ingests KG data, and writes timing CSVs in logs/time/.
+
+## Configuration tips
+Security: Use Sign&Encrypt (e.g., Basic256Sha256) with your own certificate and private key.
+OPC UA nodes: Adjust the trigger and method NodeIds to match your PLC/test server.
+Logging: Timing CSVs are written under build/Debug/logs/time/. Keep long-running tests in a separate folder per run.
+
