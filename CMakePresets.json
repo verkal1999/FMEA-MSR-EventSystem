@@ -8,10 +8,13 @@
       "generator": "Visual Studio 17 2022",
       "architecture": { "value": "x64" },
       "binaryDir": "${sourceDir}/build",
+      "environment": { "VCPKG_ROOT": "C:/vcpkg" },
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
         "UA_ENABLE_ENCRYPTION": "OPENSSL",
-        "UA_ENABLE_MBEDTLS": "OFF"
+        "UA_ENABLE_MBEDTLS": "OFF",
+        "PYBIND11_FINDPYTHON": "ON",
+        "Python3_EXECUTABLE": "C:/Users/Alexander Verkhov/AppData/Local/Programs/Python/Python312/python.exe"
       }
     }
   ],

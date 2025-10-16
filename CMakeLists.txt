@@ -18,6 +18,9 @@ set(UA_ENABLE_ENCRYPTION OPENSSL CACHE STRING "" FORCE)
 set(UA_ENABLE_OPENSSL    ON      CACHE BOOL   "" FORCE)
 set(UA_ENABLE_MBEDTLS    OFF     CACHE BOOL   "" FORCE)
 find_package(OpenSSL REQUIRED)
+# --- Python/pybind11 modern & stabil ---
+set(PYBIND11_FINDPYTHON ON CACHE BOOL "" FORCE)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 # Subprojekte (wie zuvor)
 add_subdirectory(open62541)

@@ -255,6 +255,30 @@
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-10058323276000_2025-10-12_18-01-27> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "Triggered by D2" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-10058323276000_2025-10-12_18-01-38> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "SRDone: OK" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-10118318321200_2025-10-12_18-02-27> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "Triggered by D2" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-10118318321200_2025-10-12_18-02-38> a cl:OccuredFailure ;
+    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
+    dp:hasOccuredFailureSummary "SRDone: OK" ;
+    dp:isUnknownFailure true ;
+    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-1116633475764900_2025-09-18_12-41-43> a cl:OccuredFailure,
         owl:NamedIndividual ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill2\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
@@ -325,120 +349,12 @@
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56215439059800_2025-10-13_06-50-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56215439059800_2025-10-13_06-50-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56275385345100_2025-10-13_06-51-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56275385345100_2025-10-13_06-51-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56335434864400_2025-10-13_06-52-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56335434864400_2025-10-13_06-52-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56395430496400_2025-10-13_06-53-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56395430496400_2025-10-13_06-53-55> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56455465475100_2025-10-13_06-54-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56455465475100_2025-10-13_06-54-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-5647212129500_2025-09-19_11-30-07> a cl:OccuredFailure,
         owl:NamedIndividual ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill3\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "KG: no failure modes for skill 'TestSkill3'" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56515493662700_2025-10-13_06-55-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56515493662700_2025-10-13_06-55-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56575489006000_2025-10-13_06-56-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56575489006000_2025-10-13_06-56-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56635543949800_2025-10-13_06-57-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56635543949800_2025-10-13_06-57-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56695528981500_2025-10-13_06-58-44> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-56695528981500_2025-10-13_06-58-54> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-5827236664400_2025-09-19_11-33-07> a cl:OccuredFailure,
         owl:NamedIndividual ;
@@ -576,61 +492,37 @@
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill3> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8703085693500_2025-10-12_17-38-52> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-9878297006800_2025-10-12_17-58-27> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "Triggered by D2" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8703085693500_2025-10-12_17-39-02> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-9878297006800_2025-10-12_17-58-39> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "SRDone: OK" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8763026996400_2025-10-12_17-39-52> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-9938280691900_2025-10-12_17-59-27> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "Triggered by D2" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8763026996400_2025-10-12_17-40-02> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-9938280691900_2025-10-12_17-59-37> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "SRDone: OK" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8823054539000_2025-10-12_17-40-52> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-9998265300100_2025-10-12_18-00-27> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "Triggered by D2" ;
     dp:isUnknownFailure true ;
     op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8823054539000_2025-10-12_17-41-02> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8883114567300_2025-10-12_17-41-52> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8883114567300_2025-10-12_17-42-02> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "SRDone: OK" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8943096769800_2025-10-12_17-42-52> a cl:OccuredFailure ;
-    dp:hasOccuredFailureParams "==InventorySnapshot=={\"rows\":[{\"id\":\"ns=4;s=OPCUA.bool1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.bool3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD2\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Z1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.Z3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.TriggerD1\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.TriggerD3\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedSkill\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.lastExecutedProcess\",\"nodeClass\":\"Variable\",\"t\":\"STRING (-> String)\"},{\"id\":\"ns=4;s=OPCUA.M1\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M2\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.M3\",\"nodeClass\":\"Variable\",\"t\":\"Int16\"},{\"id\":\"ns=4;s=OPCUA.DiagnoseFinished\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_found\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=OPCUA.Alt_abort\",\"nodeClass\":\"Variable\",\"t\":\"Boolean\"},{\"id\":\"ns=4;s=MAIN.fbJob\",\"nodeClass\":\"Object\",\"t\":\"-\"},{\"id\":\"ns=4;s=MAIN.fbJob.M_Methode1\",\"nodeClass\":\"Method\",\"t\":\"in: [Int32], out: [Int32]\"}],\"vars\":[{\"id\":\"OPCUA.TriggerD3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD1\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool3\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.bool1\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.Alt_found\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.DiagnoseFinished\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.Alt_abort\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.TriggerD2\",\"t\":\"bool\",\"v\":true},{\"id\":\"OPCUA.bool2\",\"t\":\"bool\",\"v\":false},{\"id\":\"OPCUA.lastExecutedProcess\",\"t\":\"string\",\"v\":\"ExTechnProcess1\"},{\"id\":\"OPCUA.lastExecutedSkill\",\"t\":\"string\",\"v\":\"TestSkill1\"},{\"id\":\"OPCUA.M2\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M3\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.M1\",\"t\":\"int16\",\"v\":0},{\"id\":\"OPCUA.Z2\",\"t\":\"int16\",\"v\":0}]}==InventorySnapshot==" ;
-    dp:hasOccuredFailureSummary "Triggered by D2" ;
-    dp:isUnknownFailure true ;
-    op:preventedFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
-
-<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-8943096769800_2025-10-12_17-43-02> a cl:OccuredFailure ;
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/UFM_evD2-9998265300100_2025-10-12_18-00-37> a cl:OccuredFailure ;
     dp:hasOccuredFailureParams "==InventorySnapshot====InventorySnapshot==" ;
     dp:hasOccuredFailureSummary "SRDone: OK" ;
     dp:isUnknownFailure true ;
@@ -982,7 +874,178 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode101> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode102> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode103> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode104> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode105> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode106> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode107> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode108> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode109> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode11> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode110> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode111> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode112> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode113> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode114> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode115> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode116> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode117> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode118> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode119> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1000,7 +1063,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode120> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode121> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode122> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode123> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode124> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode125> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode126> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode127> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode128> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode129> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode13> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode130> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode131> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode132> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode133> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode134> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode135> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode136> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode137> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode138> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode139> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1018,7 +1261,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode140> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode141> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode142> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode143> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode144> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode145> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode146> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode147> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode148> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode149> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode15> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode150> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode151> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode152> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode153> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode154> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode155> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode156> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode157> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode158> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode159> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1036,7 +1459,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode160> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode161> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode162> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode163> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode164> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode165> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode166> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode167> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode168> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode169> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode17> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode170> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode171> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode172> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode173> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode174> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode175> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode176> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode177> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode178> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode179> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1054,7 +1657,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode180> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode181> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode182> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode183> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode184> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode185> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode186> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode187> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode188> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode189> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode19> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode190> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode191> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode192> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode193> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode194> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode195> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode196> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode197> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode198> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode199> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1081,7 +1864,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode200> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode201> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode202> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode203> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode204> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode205> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode206> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode207> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode208> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode209> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode21> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode210> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode211> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode212> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode213> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode214> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode215> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode216> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode217> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode218> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode219> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1099,7 +2062,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode220> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode221> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode222> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode223> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode224> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode225> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode226> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode227> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode228> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode229> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode23> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode230> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode231> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode232> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode233> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode234> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode235> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode236> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode237> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode238> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode239> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1117,7 +2260,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode240> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode241> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode242> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode243> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode244> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode245> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode246> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode247> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode248> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode249> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode25> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode250> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode251> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode252> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode253> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode254> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode255> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode256> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode257> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode258> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode259> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1135,7 +2458,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode260> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode261> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode262> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode263> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode264> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode265> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode266> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode267> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode268> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode269> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode27> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode270> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode271> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode272> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode273> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode274> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode275> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode276> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode277> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode278> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode279> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1153,7 +2656,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode280> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode281> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode282> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode283> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode284> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode285> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode286> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode287> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode288> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode289> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode29> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode290> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode291> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode292> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode293> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode294> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode295> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode296> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode297> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode298> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode299> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1180,7 +2863,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode300> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode301> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode302> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode303> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode304> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode305> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode306> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode307> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode308> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode309> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode31> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode310> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode311> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode312> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode313> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode314> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode315> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode316> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode317> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode318> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode319> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1198,7 +3061,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode320> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode321> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode322> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode323> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode324> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode325> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode326> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode327> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode328> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode329> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode33> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode330> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode331> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode332> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode333> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode334> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode335> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode336> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode337> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode338> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode339> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1216,7 +3259,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode340> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode341> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode342> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode343> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode344> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode345> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode346> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode347> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode348> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode349> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode35> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode350> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode351> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode352> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode353> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode354> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode355> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode356> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode357> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode358> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode359> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1234,7 +3457,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode360> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode361> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode362> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode363> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode364> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode365> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode366> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode367> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode368> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode369> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode37> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode370> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode371> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode372> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode373> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode374> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode375> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode376> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode377> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode378> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode379> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1252,7 +3655,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode380> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode381> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode382> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode383> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode384> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode385> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode386> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode387> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode388> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode389> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode39> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode390> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode391> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode392> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode393> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode394> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode395> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode396> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode397> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode398> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode399> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1279,7 +3862,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode400> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode401> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode402> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode403> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode404> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode405> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode406> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode407> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode408> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode409> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode41> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode410> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode411> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode412> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode413> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode414> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode415> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode416> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode417> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode418> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode419> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1297,7 +4060,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode420> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode421> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode422> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode423> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode424> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode425> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode426> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode427> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode428> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode429> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode43> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode430> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode431> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode432> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode433> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode434> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode435> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode436> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode437> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode438> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode439> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1315,7 +4258,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode440> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode441> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode442> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode443> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode444> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode445> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode446> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode447> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode448> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode449> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode45> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode450> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode451> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode452> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode453> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode454> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode455> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode456> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode457> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode458> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode459> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1333,7 +4456,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode460> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode461> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode462> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode463> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode464> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode465> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode466> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode467> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode468> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode469> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode47> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode470> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode471> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode472> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode473> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode474> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode475> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode476> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode477> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode478> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode479> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1351,7 +4654,187 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
 }""" ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode480> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode481> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode482> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode483> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode484> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode485> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode486> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode487> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode488> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode489> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode49> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode490> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode491> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode492> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode493> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode494> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode495> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode496> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode497> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode498> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode499> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -1370,6 +4853,15 @@ dp:isUnknownFailure a owl:DatatypeProperty ;
     op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode50> a cl:FailureMode,
+        owl:NamedIndividual ;
+    dp:hasFailureModeParams """{
+  "rows": [
+    { "id": "ns=4;s=OPCUA.Z1",  "t": "Int16", "v": 27 }
+  ]
+}""" ;
+    op:preventsFunction <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> .
+
+<http://www.semanticweb.org/FMEA_VDA_AIAG_2021/generated_ExFailureMode500> a cl:FailureMode,
         owl:NamedIndividual ;
     dp:hasFailureModeParams """{
   "rows": [
@@ -2927,10 +6419,10 @@ cl:ExecutedMonAct a owl:Class ;
 cl:ExecutedSR a owl:Class ;
     rdfs:subClassOf cl:SystemReaction .
 
-cl:FailureMode a owl:Class .
-
 cl:OccuredFailure a owl:Class ;
     rdfs:subClassOf cl:FailureMode .
+
+cl:FailureMode a owl:Class .
 
 <http://www.semanticweb.org/FMEA_VDA_AIAG_2021/TestSkill1> a cl:Function,
         owl:NamedIndividual ;
