@@ -164,4 +164,3 @@ int KgIngestionForce::execute(const Plan& p) {
 
     return ok ? 1 : 0;
 }
-

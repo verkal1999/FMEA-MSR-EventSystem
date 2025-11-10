@@ -72,4 +72,3 @@ struct DStateAck {
     std::string stateName;            // "D1" / "D2" / "D3"
     std::string summary;              // optionaler Kurztext
 };
-

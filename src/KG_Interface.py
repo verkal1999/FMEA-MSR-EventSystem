@@ -5,7 +5,7 @@ from typing import Sequence
 
 class KGInterface:
     def __init__(self):
-        self.ontology_path = r"C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src\FMEA_KG.ttl"
+        self.ontology_path = r"C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\MSRGuard\src\FMEA_KG.ttl"
         self.ont_iri = "http://www.semanticweb.org/FMEA_VDA_AIAG_2021/"
         self.class_prefix = self.ont_iri + "class_"
         self.op_prefix = self.ont_iri + "op_"

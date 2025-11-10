@@ -39,7 +39,7 @@ int main() {
 
         // Hier den Ordner eintragen, der *KG_Interface.py* oder *KG_Interface/__init__.py* enthält:
         // Tipp: UTF-8 Literal + std::string vermeidet char*-Spezialfälle.
-        const std::string src_dir = R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\Test\src)";
+        const std::string src_dir = R"(C:\Users\Alexander Verkhov\OneDrive\Dokumente\MPA\Implementierung_MPA\MSRGuard\src)";
         path.insert(0, py::cast(src_dir));
 
         // 2) Optional: venv-Site-Packages hinzufügen (falls benutzt)
