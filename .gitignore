@@ -1,6 +1,5 @@
 # Build-Verzeichnisse und Ausgabedateien
 /build/
-/out/
 *.exe
 *.dll
 *.so

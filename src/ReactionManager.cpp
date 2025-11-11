@@ -3,6 +3,7 @@
 // Sie verarbeitet D2/D3-Snapshots, holt Failure-Mode-Kandidaten aus dem KG,
 // wählt passende Failure Modes aus, baut Pläne für Monitoring Actions und System Reactions
 // und führt diese Pläne über CommandForceFactory / PLCMonitor aus.
+
 #include "ReactionManager.h"
 #include <algorithm>
 #include <chrono>

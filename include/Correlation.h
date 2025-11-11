@@ -12,7 +12,8 @@
 #include <atomic>
 #include <string>
 #include <chrono>
-
+// Erzeugt eine neue, global eindeutige Correlation-Id mit einem beliebigen Prefix.
+// Thread-sicher durch atomaren Zähler + Monotone Uhr.
 inline std::string makeCorrelationId(const char* prefix) {
     static std::atomic<unsigned long long> ctr{1}; // atomarer Zähler für Eindeutigkeit
     const auto n  = ctr.fetch_add(1);

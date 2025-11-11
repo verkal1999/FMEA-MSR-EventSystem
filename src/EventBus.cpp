@@ -1,12 +1,14 @@
 // EventBus.cpp
-// Ereignisbus, der Observer registriert und Events asynchron an alle Listener verteilt.
-// Kern des Event-getriebenen Frameworks in deiner MPA, entkoppelt Sender und Empfänger.
+// Zentrale Event-Vermittlung im System.
+// Bietet subscribe()/unsubscribe() und verteilt Events asynchron an alle
+// registrierten ReactiveObserver, sortiert nach Priorität und Anmeldereihenfolge.
 
 #include "EventBus.h"
 #include <algorithm> // sort, remove_if
 
 
-
+// Einen Observer für einen EventType registrieren.
+// priority: höhere Werte werden zuerst bedient (4 > 3 > 2 > 1).
 SubscriptionToken EventBus::subscribe(EventType t,
                                       const std::shared_ptr<ReactiveObserver>& obs,
                                       int priority) {
@@ -19,35 +21,58 @@ SubscriptionToken EventBus::subscribe(EventType t,
 
     std::lock_guard<std::mutex> lk(mx_);
     const auto id = nextId_.fetch_add(1, std::memory_order_relaxed);
-    listeners_[t].push_back(Entry{
-        std::weak_ptr<ReactiveObserver>(obs),
-        id,
-        priority
-    });
+    listeners_[t].push_back(Entry{ std::weak_ptr<ReactiveObserver>(obs), id, priority });
     tok = SubscriptionToken{ t, id };
     return tok;
-}
+} 
 
+// Eine bestehende Subscription wieder abmelden.
 void EventBus::unsubscribe(const SubscriptionToken& tok) {
     if (!tok) return;
     std::lock_guard<std::mutex> lk(mx_);
     auto it = listeners_.find(tok.type);
     if (it == listeners_.end()) return;
+
     auto& vec = it->second;
     vec.erase(std::remove_if(vec.begin(), vec.end(),
-             [&](const Entry& e){ return e.id == tok.id; }),
-             vec.end());
+              [&](const Entry& e){ return e.id == tok.id; }),
+              vec.end());
+}
+// Ein Event posten (Thread-sicher).
+// Die Events landen in einer Queue und werden später über process()/dispatch_one()
+// verarbeitet.
+void EventBus::post(Event ev) {
+    std::lock_guard<std::mutex> lk(mx_);
+    q_.push_back(std::move(ev));
 }
 
-void EventBus::post(const Event& ev) {
-    {
-        std::lock_guard<std::mutex> lk(q_mx_);
-        queue_.push(ev);
+void EventBus::post_now(const Event& ev) {
+    dispatch_one(ev);
+}
+// Verarbeite bis zu maxEvents Events aus der Queue.
+// Das ist die "Pump"-Funktion, die im Main-Loop regelmäßig aufgerufen wird.
+void EventBus::process(size_t maxEvents) {
+    // Schleife: ziehe Events aus der Queue, bis entweder die Queue leer ist
+    // oder maxEvents erreicht wurden.
+    for (size_t i = 0; i < maxEvents; ++i) {
+        Event ev;
+        {
+            std::lock_guard<std::mutex> lk(mx_);
+            if (q_.empty()) break;
+            ev = std::move(q_.front());
+            q_.pop_front();
+        }
+        dispatch_one(ev);
     }
-    // Der Event wird nur in die Queue gestellt, verarbeitet wird er später in process().
+}
+
+void EventBus::clear_queue() {
+    std::lock_guard<std::mutex> lk(mx_);
+    q_.clear();
 }
 
 void EventBus::dispatch_one(const Event& ev) {
+    // Schnappschuss der Listener (Lock kurz halten)
     std::vector<Entry> copy;
     {
         std::lock_guard<std::mutex> lk(mx_);
@@ -56,16 +81,14 @@ void EventBus::dispatch_one(const Event& ev) {
         copy = it->second;
     }
 
+    // Sortierung: zuerst höhere Priorität, dann ältere Subscription (stabil)
     std::sort(copy.begin(), copy.end(),
         [](const Entry& a, const Entry& b){
-            if (a.priority != b.priority)
-                return a.priority > b.priority;
+            if (a.priority != b.priority) return a.priority > b.priority; // 4 > 3 > 2 > 1
             return a.id < b.id; // ältere zuerst
         });
 
     bool anyDead = false;
-
-    // Schleife: iteriert über alle Elemente in copy.
     for (const auto& e : copy) {
         if (auto sp = e.wp.lock()) {
             sp->onEvent(ev);
@@ -73,22 +96,7 @@ void EventBus::dispatch_one(const Event& ev) {
             anyDead = true;
         }
     }
-
     if (anyDead) sweep_dead(ev.type);
-}
-
-void EventBus::process(size_t maxEvents) {
-    // Schleife: klassische Zählschleife, die über Indizes oder Zähler läuft.
-    for (size_t i = 0; i < maxEvents; ++i) {
-        Event ev;
-        {
-            std::lock_guard<std::mutex> lk(q_mx_);
-            if (queue_.empty()) break;
-            ev = queue_.front();
-            queue_.pop();
-        }
-        dispatch_one(ev);
-    }
 }
 
 void EventBus::sweep_dead(EventType t) {
