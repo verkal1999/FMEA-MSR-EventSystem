@@ -1,6 +1,6 @@
-# FMEA-MSR Event System
+# FMEA-MSR Event System (MSRGuard)
 
-This repository is part of a master project thesis. The built system is a prototype for a runtime exception-handling framework for manufacturing that couples a fast C++ control path (OPC UA PLC monitoring, event bus, reactions) with a Python knowledge-graph bridge for PFMEA-MSR–driven decisions.
+This repository is part of a master project thesis. The built system is a prototype for a runtime exception-handling framework for manufacturing that couples a fast C++ control path (OPC UA PLC monitoring, event bus, reactions) with a Python knowledge-graph bridge for PFMEA-MSR–driven decisions. This FMEA Exception Handling Framework is called the MSRGuard.
 
 ## Main Idea of MSRGuard (FMEA Exception-Handling-Framework)
 Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR from VDA&AIAG Standard into manufacturing control. Key Objective was to create an extensible framework that can be used by varios I4.0-Systems as shown in following Figure
@@ -23,20 +23,76 @@ Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR fro
 - [`/.vscode`](.vscode/README.md) – VS Code settings, presets, and launch configs.
 - [`/extern`](extern/README.md) – Vendored helpers (if any).
 
-## Prerequisites
+# Used Design Patterns
+
+## Observer Pattern
+
+The **Observer Pattern** is used to implement the event-driven core of the system.
+
+`EventBus` acts as the *subject*, and all components that react to events (e.g. `ReactionManager`, `FailureRecorder`, `TimeBlogger`, `AckLogger`, …) implement a common observer interface and subscribe to specific `EventType`s.  
+
+Whenever something relevant happens (a D2/D3 snapshot, a Failure Mode decision, a System Reaction result, a KG ingestion, …), an `Event` is posted to the `EventBus`. The bus then notifies all observers in a decoupled way, without the sender having to know who is listening.
+
+This allows:
+- loose coupling between PLC monitoring, knowledge graph interaction, and reaction logic  
+- easy extension by just subscribing new observers to existing events  
+- clear tracing of the whole failure-handling pipeline via `correlationId`
+
+![Observer Pattern](UML%20Diagrams/Patterns/ObserverPattern.png)
+
+---
+
+## Factory Method and Abstract Factory
+
+The project combines **Factory Method** and **Abstract Factory** to create the different “forces” that execute plans.
+
+The `CommandForceFactory` encapsulates the creation of concrete `ICommandForce` implementations based on the requested `OpType` / operation context:
+
+- `PLCCommandForce` for PLC-level operations (writes, pulses, waits, checks, resource blocking, …)  
+- `KgIngestionForce` for pushing failure information into the knowledge graph  
+- `WriteCSVForce` for writing time-series / analysis data to CSV
+
+This lets the rest of the code work purely with the `ICommandForce` interface while the factory decides *which* concrete executor is appropriate for a given `Operation` or `Plan`.
+
+![Factory Pattern1](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory1.png)
+
+In addition, the project uses an **Abstract Factory**–like setup around `IWinnerFilter`:
+
+- `IWinnerFilter` defines a common interface for “winner filters” that take a set of candidate Failure Modes and narrow them down.
+- `MonitoringActionForce` implements `IWinnerFilter` by executing monitoring actions retrieved from the KG and checking their outputs.  
+- `SystemReactionForce` implements `IWinnerFilter` by executing system reactions and verifying their feedback against expectations.
+
+Together with the factory functions (`createWinnerFilter`, `createSystemReactionFilter`), this forms an abstract factory that can produce different “action forces” specialised on deciding which Failure Mode and reaction path is actually valid, using monitoring actions and system reactions defined in the knowledge graph.
+
+![Factory Pattern2](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory2.png)
+
+---
+
+## Command Pattern
+
+The **Command Pattern** is used to represent executable logic in a structured and replayable way.
+
+Each **command** is represented as a `Plan`:
+
+- `Plan` acts as a command object and groups a sequence of `Operation`s.
+- Each `Operation` describes *what* should be done (e.g. `WriteBool`, `CallMethod`, `WaitMs`, `KGIngestion`, `WriteCSV`, …) but not *how* it is executed.
+
+Concrete `ICommandForce` implementations (`PLCCommandForce`, `KgIngestionForce`, `WriteCSVForce`, …) act as the **command executors**: they interpret the `Plan` and perform the corresponding actions against the PLC, the knowledge graph, or the filesystem.
+
+This separation allows:
+
+- building and transforming plans from JSON / KG results (see `PlanJsonUtils`)  
+- logging and replaying command sequences  
+- swapping the executor (e.g. PLC vs. mock vs. test harness) without changing the plan structure
+
+![Command Pattern](UML%20Diagrams/Patterns/CommandPattern.png)
+
+
+## Prerequisites to get the MSRGuard running
 - **CMake** ≥ 3.25 and a **C++20** compiler (GCC/Clang/MSVC).
 - **Python** 3.11 or 3.12 available at runtime for the KG bridge (ensure your Python site-packages are discoverable).
 - **OpenSSL** (for OPC UA Sign&Encrypt).
 - **Git** with submodule support.
-
-# Used Design Patterns
-## Observer Pattern
-![Observer Pattern](UML%20Diagrams/Patterns/ObserverPattern.png)
-## Factory Method and Abstract Factory
-![Factory Pattern1](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory1.png)
-![Factory Pattern2](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory2.png)
-## Command Pattern
-![Command Pattern](UML%20Diagrams/Patterns/CommandPattern.png)
 
 ## Quick start
 
