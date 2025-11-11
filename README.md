@@ -25,6 +25,9 @@ This repository is part of a master project thesis. The built system is a protot
 - **OpenSSL** (for OPC UA Sign&Encrypt).
 - **Git** with submodule support.
 
+## Used Design Patterns
+![Observer Pattern](UML Diagrams/Patterns/ObserverPattern.png)
+
 ## Quick start
 
 ```bash
