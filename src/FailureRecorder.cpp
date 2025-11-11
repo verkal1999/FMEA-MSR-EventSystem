@@ -1,3 +1,8 @@
+// FailureRecorder.cpp
+// Komponente, die für jede correlationId Failure-bezogene Informationen sammelt,
+// Snapshots in JSON konvertiert, Failure Modes, Monitoring Actions und System Reactions
+// mitschreibt und daraus später die KG-Ingestion-Parameter aufbaut.
+
 #include "FailureRecorder.h"
 #include "Acks.h"
 #include "CommandForceFactory.h"

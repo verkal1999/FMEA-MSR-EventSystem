@@ -1,3 +1,11 @@
+// PlanJsonUtils
+// - Hilfsfunktionen, um KG-/Python-Rückgaben im "rows"-Format (JSON) in Plan/Operation
+//   zu überführen und umgekehrt UAValue/UAValueMap nach JSON zu serialisieren.
+// - buildCallMethodPlanFromPayload(...) extrahiert aus dem Payload (inkl. optionalem IRI-Header)
+//   die Zeilen für CallMethod-Operationen (Objekt-ID, Methoden-ID, Inputs, erwartete Outputs).
+// - Die erzeugten Pläne werden von MonitoringActionForce und SystemReactionForce verwendet,
+//   um die aus dem KG stammenden Monitoring- bzw. System-Reaktionen auszuführen.
+// - fixParamsRawIfNeeded(...) kann ggf. die JSON-Struktur reparieren (z. B. Header-Zeile).
 #include "PlanJsonUtils.h"
 #include <map>
 

@@ -1,3 +1,15 @@
+// Plan.h – Beschreibung von Reaktionsplänen und Operationen
+//
+// Ein Plan ist die zentrale Ausführungseinheit:
+//  - Er enthält eine geordnete Liste von Operationen (ops), die von
+//    ICommandForce-Implementierungen (PLCCommandForce, KgIngestionForce, …)
+//    sequentiell abgearbeitet wird.
+//  - Die Operationen sind bewusst „kleine Bausteine“ (WriteBool, CallMethod,
+//    WaitMs, BlockResource, KGIngestion, …), um flexibel von KG/JSON zu C++
+//    mappen zu können (siehe PlanJsonUtils).
+//
+// correlationId : verbindet Plan mit D2/D3, KG-Ergebnissen, Ingestion usw.
+// resourceId    : logische Ressource/Anlage, auf die sich der Plan bezieht.
 #pragma once
 #include <string>
 #include <vector>
@@ -12,8 +24,8 @@ enum class OpType {
     WriteInt32,
     // Aufrufe (semantisch getrennt):
     CallMethod,             // generischer Method-Call (falls genutzt)
-    CallMonitoringActions,  // <— NEU: MonActionForce-Domain
-    CallSystemReaction,     // <— NEU: SystemReactionForce-Domain
+    CallMonitoringActions,  // <— MonActionForce-Domain
+    CallSystemReaction,     // <— SystemReactionForce-Domain
     WaitMs,
     ReadCheck,
     BlockResource,

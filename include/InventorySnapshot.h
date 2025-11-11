@@ -1,10 +1,16 @@
-// InventorySnapshot.h
+// Repräsentiert einen typisierten Snapshot des OPC-UA-Adressraums der SPS.
+// - NodeKey:      Schlüssel (Namespace, Typ, String-ID) für Variablenknoten.
+// - InventorySnapshot.rows  : reine Strukturinformationen (NodeClass, NodeId, Datentyp).
+// - InventorySnapshot.bools/strings/int16s/floats:
+//                   aktuell gelesene Werte der Variablen an einer Stelle in der Zeit.
+// - D2Snapshot:   Event-Payload (correlationId + Snapshot), wie von D2/D3 erzeugt
+//                 und im ReactionManager/FailureRecorder verwendet.
 #pragma once
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include "PLCMonitor.h"  // für PLCMonitor::InventoryRow
-
+// Schlüssel zur Identifikation eines Knotens (für die Werte-Maps im Snapshot).
 struct NodeKey {
     uint16_t    ns   = 4;
     char        type = 's';     // 's'|'i'|'g'|'b'
@@ -13,6 +19,7 @@ struct NodeKey {
         return ns == o.ns && type == o.type && id == o.id;
     }
 };
+// Hash-Funktor für NodeKey, damit er als Schlüssel in unordered_map verwendbar ist.
 struct NodeKeyHash {
     size_t operator()(const NodeKey& k) const noexcept {
         return std::hash<uint16_t>{}(k.ns)
@@ -22,6 +29,8 @@ struct NodeKeyHash {
 };
 
 // Ex RM: typisierter Snapshot
+// rows   : reine Struktur (Namensraum, NodeClass, Typ, …)
+// bools, strings, int16s, floats : aktuelle Werte zu den NodeKeys.
 struct InventorySnapshot {
     std::vector<PLCMonitor::InventoryRow> rows;
     std::unordered_map<NodeKey, bool,        NodeKeyHash> bools;
@@ -31,6 +40,7 @@ struct InventorySnapshot {
 };
 
 // Payload-Typ für evD2 (Correlation + Snapshot)
+// Wird von main/PLCMonitor bei TriggerD2/D3 erzeugt und über den EventBus verschickt.
 struct D2Snapshot {
     std::string        correlationId;
     InventorySnapshot  inv;

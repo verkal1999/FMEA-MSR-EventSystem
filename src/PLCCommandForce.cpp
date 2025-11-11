@@ -1,3 +1,11 @@
+// PLCCommandForce (ICommandForce-Implementierung für SPS-Operationen)
+// - Implementiert execute(const Plan&) und führt sequentiell die Operationen aus p.ops aus.
+// - Unterstützte OpTypes: WriteBool, PulseBool, WriteInt32, WaitMs, ReadCheck,
+//   BlockResource, RerouteOrders, UnblockResource (vgl. MPA_Draft CommandForceFactory).
+// - Die eigentliche Kommunikation mit der SPS erfolgt über PLCMonitor (post/postDelayed).
+// - Rückgabewert 1/0 signalisiert Erfolg/Fehlschlag der ausgeführten Plan-Schritte.
+// Die Instanz wird über CommandForceFactory::create(UseMonitor, ...) bzw.
+// createForOp(...) vom ReactionManager und weiteren Komponenten genutzt.
 #include "PLCCommandForce.h"
 #include "PLCMonitor.h"
 

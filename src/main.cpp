@@ -1,3 +1,6 @@
+// main.cpp
+// Einstiegspunkt der Anwendung: initialisiert Python, den EventBus, den PLCMonitor
+// und verbindet die Komponenten gemäß deinem MPA-Draft (Trigger D1/D2/D3, KG-Abfragen usw.).
 #include "PLCMonitor.h"
 #include "EventBus.h"
 #include "ReactionManager.h"

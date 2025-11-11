@@ -1,8 +1,13 @@
-// ==============================
 // File: Correlation.h
 // Zweck: Erzeugt eindeutige Correlation-IDs für Tracing über Teilkomponenten.
 //        Format: "<prefix>-<nanoseconds>-<counter>".
-// ==============================
+// 
+// In der MPA wird diese ID u. a. genutzt, um:
+//  - D1/D2/D3-Snapshots,
+//  - KG-Requests/-Responses,
+//  - MonitoringActions und SystemReactions,
+//  - Ingestion-Events
+// eindeutig zu korrelieren.
 #pragma once
 #include <atomic>
 #include <string>

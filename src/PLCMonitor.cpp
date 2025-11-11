@@ -1,3 +1,7 @@
+// PLCMonitor.cpp
+// Abstraktionsschicht zum OPC-UA-Client (open62541) für die Kommunikation mit der SPS.
+// Kümmert sich um Verbindungen, Reconnect, Lesen/Schreiben, Subscriptions und Hilfsfunktionen,
+// die du im MPA-Draft als Schnittstelle zwischen Framework und PLC spezifiziert hast.
 #include "PLCMonitor.h"
 
 #include <chrono>

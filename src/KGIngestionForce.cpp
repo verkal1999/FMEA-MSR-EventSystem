@@ -1,4 +1,6 @@
-// KgIngestionForce.cpp (ersetzt/ergänzt)
+// KGIngestionForce.cpp
+// CommandForce, die die eigentliche KG-Ingestion über das KG_Interface (Python) anstößt.
+// Sie übersetzt die Operation in KGIngestionParams und delegiert dann an den PythonWorker.
 #include "KgIngestionForce.h"
 #include "Acks.h"
 #include <pybind11/embed.h>

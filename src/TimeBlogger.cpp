@@ -1,3 +1,6 @@
+// TimeBlogger.cpp
+// Komponente, die Zeiten zwischen Events misst, pro correlationId eine Timeline aufbaut
+// und diese später in eine CSV-Datei schreiben kann, um das Verhalten des Systems zu analysieren.
 #include "TimeBlogger.h"
 #include "EventBus.h"   
 #include "AckLogger.h"   

@@ -1,4 +1,12 @@
-
+// SystemReactionForce (IWinnerFilter-Strategie für PFMEA-MSR-Systemreaktionen)
+// - Wird vom ReactionManager über CommandForceFactory::createSystemReactionFilter(...) genutzt.
+// - Für jeden Gewinner-FailureMode wird die SystemReaction-Payload aus dem KG geladen.
+// - PlanJsonUtils baut daraus einen CallMethod-Plan, optional mit DiagnoseFinished-Puls am Ende.
+// - CallMethod-Schritte werden über PLCMonitor::callMethodTyped ausgeführt; erwartete Outputs
+//   (expOuts) werden mit den realen UA-Outputs verglichen.
+// - Für einfache SPS-Schritte (PulseBool, WriteBool, WaitMs, Block/Unblock, Reroute) wird
+//   erneut CommandForceFactory::create(UseMonitor, ...) verwendet.
+// - Über EventBus werden ReactionPlannedAck / ReactionDoneAck und SysReactFinishedAck gepostet.
 #include "SystemReactionForce.h"
 #include "PlanJsonUtils.h"
 #include "PLCMonitor.h"

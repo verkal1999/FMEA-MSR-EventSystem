@@ -1,3 +1,12 @@
+// MonitoringActionForce (IWinnerFilter-Strategie)
+// - Wird vom ReactionManager über CommandForceFactory::createWinnerFilter(...) erzeugt.
+// - Nimmt Gewinner-Kandidaten (Failure-Mode-IRIs) entgegen und holt für jeden
+//   die zugehörige MonitoringAction-Payload aus dem KG (Fetcher).
+// - Baut daraus mit PlanJsonUtils einen Plan aus reinen OpType::CallMethod-Schritten
+//   (ohne DiagnoseFinished-Puls) und führt diese über PLCMonitor::callMethodTyped aus.
+// - Erwartete Outputs (expOuts) werden gegen die tatsächlichen UA-Werte verglichen.
+// - Es bleiben nur die Failure-IRIs im Ergebnis, deren Monitoring-Aktion vollständig OK war.
+
 #include "MonActionForce.h"
 #include "PlanJsonUtils.h"
 #include "PLCMonitor.h"

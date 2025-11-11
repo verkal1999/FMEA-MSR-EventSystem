@@ -1,4 +1,11 @@
-// WriteCSVForce.cpp
+// WriteCSVForce (ICommandForce-Implementierung für CSV-Export)
+// - Führt execute(const Plan&) für genau eine Operation mit WriteCsvParams aus.
+// - Die Parameter (Dateipfad, Zeilen, Header-Flag) liegen typisiert in Operation::attach.
+// - Öffnet/erzeugt die Datei, legt fehlende Verzeichnisse an und schreibt die Zeilen
+//   CSV-konform (csvEscape: doppelte Quotes, CRLF gem. RFC 4180).
+// - Zugriff ist über einen Prozess-weiten Mutex serialisiert, damit TimeBlogger & Co.
+//   threadsicher in dieselbe Datei loggen können.
+
 #include "WriteCSVForce.h"
 #include "WriteCsvParams.h"
 #include <any>
