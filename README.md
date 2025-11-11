@@ -3,7 +3,8 @@
 This repository is part of a master project thesis. The built system is a prototype for a runtime exception-handling framework for manufacturing that couples a fast C++ control path (OPC UA PLC monitoring, event bus, reactions) with a Python knowledge-graph bridge for PFMEA-MSR–driven decisions.
 
 ## Main Idea of MSRGuard (FMEA Exception-Handling-Framework)
-Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR from VDA&AIAG Standard into manufacturing control. Key Objective was to create an extensible framework that can be used by varios I4.0-Systems.
+Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR from VDA&AIAG Standard into manufacturing control. Key Objective was to create an extensible framework that can be used by varios I4.0-Systems as shown in following Figure
+![Main Idea](UML%20Diagrams/Core_Idea.png)
 
 ## Key capabilities
 - **PLC Monitoring over OPC UA** – Subscribe to trigger bits, read/write variables, and call PLC methods with secure sessions.
@@ -28,14 +29,14 @@ Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR fro
 - **OpenSSL** (for OPC UA Sign&Encrypt).
 - **Git** with submodule support.
 
-## Used Design Patterns
-# Observer Pattern
+# Used Design Patterns
+## Observer Pattern
 ![Observer Pattern](UML%20Diagrams/Patterns/ObserverPattern.png)
-# Factory Method and Abstract Factory
-![Observer Pattern](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory1.png)
-![Observer Pattern](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory2.png)
-# Command Pattern
-![Observer Pattern](UML%20Diagrams/Patterns/CommandPattern.png)
+## Factory Method and Abstract Factory
+![Factory Pattern1](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory1.png)
+![Factory Pattern2](UML%20Diagrams/Patterns/FactoryMethod_AbstractFactory2.png)
+## Command Pattern
+![Command Pattern](UML%20Diagrams/Patterns/CommandPattern.png)
 
 ## Quick start
 
