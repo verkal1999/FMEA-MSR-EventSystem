@@ -23,7 +23,7 @@ Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR fro
 - [`/.vscode`](.vscode/README.md) – VS Code settings, presets, and launch configs.
 - [`/extern`](extern/README.md) – Vendored helpers (if any).
 
-# Used Design Patterns
+# System Architecture Design Patterns
 
 ## Observer Pattern
 
