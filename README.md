@@ -3,8 +3,9 @@
 This repository is part of a master project thesis. The built system is a prototype for a runtime exception-handling framework for manufacturing that couples a fast C++ control path (OPC UA PLC monitoring, event bus, reactions) with a Python knowledge-graph bridge for PFMEA-MSR–driven decisions. This FMEA Exception Handling Framework is called the MSRGuard.
 
 ## Main Idea of MSRGuard (FMEA Exception-Handling-Framework)
-Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR from VDA&AIAG Standard into manufacturing control. Key Objective was to create an extensible framework that can be used by varios I4.0-Systems as shown in following Figure
+Creating an Exception-Handling-Framework for Runtime Integration of FMEA-MSR from VDA&AIAG Standard into manufacturing control. Key Objective was to create an extensible framework that can be used by varios I4.0-Systems as shown in following Figure:
 ![Main Idea](UML%20Diagrams/Core_Idea.png)
+To fulfill realtime demands of industrial systems a part of the code written as SPS-Code in the PLC using a GEMMA aas the control structure.
 
 ## Key capabilities
 - **PLC Monitoring over OPC UA** – Subscribe to trigger bits, read/write variables, and call PLC methods with secure sessions.
