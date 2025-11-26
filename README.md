@@ -23,7 +23,7 @@ To fulfill realtime demands of industrial systems a part of the code written as 
 - [`/UML Diagrams`](UML%20Diagrams/README.md) – Architecture and sequence diagrams.
 - [`/.vscode`](.vscode/README.md) – VS Code settings, presets, and launch configs.
 - [`/extern`](extern/README.md) – Vendored helpers (if any).
-- [`/TWINCAT`](TwinCAT/README.md) – Example TwinCAT-Project to test the MSRGUARD
+- [`/TestProjectTwinCATEvents`](TestProjectTwinCATEvents/README.md) – Example TwinCAT-Project to test the MSRGUARD
 
 # System Architecture Design Patterns
 
