@@ -2,6 +2,8 @@
 This is a TwinCAT exampe project to test the MSRGuard. To open and run it, TwinCAT3 has to be installed.
 The MSRGuard was testes in an environment with the TwinCAT3 Build 4026.
 
+To open the program, use the TwinCAT Xae Shell and open the .sln.
+
 ##TwinCAT-Requirements
 In package manager the following packages were used:
 - TwinCAT Standard (Engineering and Runtime)
