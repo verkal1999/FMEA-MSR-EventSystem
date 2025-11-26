@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_InitFahrt_A6_A2" Id="{da7bbf34-3908-4f7b-839e-1689304e1ae1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_InitFahrt_A6_A2
+VAR_INPUT
+	A6 : BOOL := FALSE;
+	A2: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	Init_erreicht : BOOL := FALSE;
+END_VAR
+VAR
+	tInit : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF A6 THEN
+	tInit(IN := A6, PT := T#3S);
+ELSIF A2 THEN
+	tInit(IN := A2, PT := T#5S);
+END_IF
+
+IF tInit.Q THEN
+	Init_erreicht := TRUE;
+ELSE
+	Init_erreicht := FALSE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

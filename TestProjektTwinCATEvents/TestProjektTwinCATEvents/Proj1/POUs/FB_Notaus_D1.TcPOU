@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Notaus_D1" Id="{9dbb6b7b-4b3e-42a5-9b87-f79403debd35}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Notaus_D1
+VAR_INPUT
+	D1 : BOOL;
+END_VAR
+VAR_OUTPUT
+	Notaus_Entriegelt : BOOL;
+	Diagnose_gefordert : BOOL;
+END_VAR
+VAR
+	ton5s : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF D1 THEN
+    OPCUA.TriggerD1 := TRUE;         // interne publizierte Variable (kein AT %I*)
+    ton5s(IN := TRUE, PT := T#5S);
+ELSE
+    ton5s(IN := FALSE, PT := T#5S);
+END_IF;
+
+IF ton5s.Q THEN
+    OPCUA.TriggerD1 := FALSE;
+    Diagnose_gefordert := FALSE;
+    GVL.NotStopp := TRUE;
+    GVL.Fehler := FALSE;
+    GVL.Weiter := TRUE;
+END_IF;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

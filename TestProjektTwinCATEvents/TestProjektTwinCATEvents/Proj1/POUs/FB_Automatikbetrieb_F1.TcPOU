@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Automatikbetrieb_F1" Id="{e4d18b3c-87a4-4b15-8c5f-33bc5a6e60fb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC FB_Automatikbetrieb_F1
+VAR_INPUT
+    Automatikbetrieb_Starten : BOOL;
+	AutoRestartEnable   : BOOL;      // Schalter für Autorestart
+    // <<< NEU: parametrierbarer, periodischer Störgenerator >>>
+    PeriodicFaultEnable : BOOL := TRUE;       // Ein/Aus
+    PeriodicFaultPeriod : TIME := T#60s;      // z. B. jede Minute
+    FaultPulse          : TIME := T#100ms;    // wie lange „Störung“ getriggert wird
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE => erster Start wird TestSkill3 -> wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Automatikbetrieb_Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt1 : BOOL;
+    Schritt2 : BOOL;
+	Zwischen : STRING;
+    tSchritt1 : TON;
+    tSchritt2 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+
+    // <<< NEU >>>
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+//GVL.Start := TRUE;
+IF GVL.Start THEN
+	AutoRestartEnable := TRUE;
+END_IF
+// === Flanken bilden ===
+rStart(CLK := Automatikbetrieb_Starten);
+rStep1(CLK := Schritt1);
+
+// === Startsequenz auf positive Flanke, nur wenn nicht bereits aktiv ===
+IF (AutoRestartEnable AND NOT (Schritt1 OR Schritt2)) OR (Stoerung_erkannt AND GVL.Weiter) THEN
+    // Reset aller Zustände
+    Automatikbetrieb_Fertig := FALSE;
+    Stoerung_erkannt        := FALSE;
+	GVL.Weiter := FALSE;
+    // Start in Schritt 1
+    Schritt1 := TRUE;
+	OPCUA.lastExecutedProcess := 'ExTechnProcess1';
+    Schritt2 := FALSE;
+END_IF
+
+// === Timer an die Schritte koppeln ===
+tSchritt1(IN := Schritt1, PT := T#55S);
+tSchritt2(IN := Schritt2, PT := T#55S);
+
+IF rStep1.Q THEN
+    lastSkillIsOne := NOT lastSkillIsOne;
+    IF lastSkillIsOne THEN
+        OPCUA.lastExecutedSkill := 'TestSkill1';
+    ELSE
+        OPCUA.lastExecutedSkill := 'TestSkill1';
+    END_IF
+END_IF
+
+IF rStart.Q AND NOT (Schritt1 OR Schritt2) THEN
+    Automatikbetrieb_Fertig := FALSE;
+    Stoerung_erkannt := FALSE;
+    GVL.Weiter := FALSE;
+    Schritt1 := TRUE;
+    Schritt2 := FALSE;
+    OPCUA.lastExecutedProcess := 'ExTechnProcess1';
+END_IF
+
+// === Übergänge (sofern keine Störung aktiv ist) ===
+IF NOT Stoerung_erkannt THEN
+    // Schritt 1 -> 2 nach 30 s
+    IF Schritt1 AND tSchritt1.Q THEN
+        Schritt1 := FALSE;
+        Schritt2 := TRUE;
+		OPCUA.lastExecutedSkill := 'TestSkill1';
+    END_IF
+
+    // Schritt 2 -> Fertig nach 10 s
+    IF Schritt2 AND tSchritt2.Q THEN
+        Schritt2 := FALSE;
+        Automatikbetrieb_Fertig := TRUE;
+        // Hier KEIN automatischer Neustart; neuer Start benötigt erneute Startflanke
+    END_IF
+END_IF
+
+// === Störungen behandeln (manuell) ===
+IF rtStoer.Q THEN
+    Stoerung_erkannt := TRUE;
+END_IF
+
+/// frei laufender Periodentimer (unabhängig von Schritt1/2) für Störung
+tPer(IN := NOT tPer.Q, PT := PeriodicFaultPeriod);  // z.B. T#60s
+
+// Flanke bei Periodenende + definierter Puls
+rPer(CLK := tPer.Q);
+pPer(IN := rPer.Q, PT := FaultPulse);                // z.B. T#100ms
+
+// nur auslösen, wenn die Automatik gerade läuft
+IF (Schritt1 OR Schritt2) AND pPer.Q THEN
+    Stoerung_erkannt := TRUE;
+	GVL.Fehler := TRUE;
+END_IF
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

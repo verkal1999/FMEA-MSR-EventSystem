@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="OPCUA" Id="{4b2dc4dc-1434-42ac-98f4-d57f59ad79fa}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	{attribute 'OPC.UA.DA' := '1'}
+	bool1: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	bool2: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	bool3: BOOL := FALSE;
+	
+	{attribute 'OPC.UA.DA' := '1'}
+	Z1: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	Z2: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	Z3: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+    TriggerD2: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+    TriggerD1: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+    TriggerD3: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+    lastExecutedSkill: STRING := '';
+	{attribute 'OPC.UA.DA' := '1'}
+    lastExecutedProcess: STRING := '';
+	{attribute 'OPC.UA.DA' := '1'}
+    M1: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	M2: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	M3: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.Access' := 'readwrite'}
+	DiagnoseFinished: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.Access' := 'readwrite'}
+	Alt_found: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.Access' := 'readwrite'}
+	Alt_abort : BOOL := FALSE;
+	
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,4365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.20.60" creationDateTime="2025-10-20T07:57:40.286671" />
+  <contentHeader name="Proj1" modificationDateTime="2025-10-20T07:57:40.2956466">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous />
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/application" handleUnknown="implementation">
+      <resource name="Proj1">
+        <task name="PlcTask" interval="PT0S" priority="20">
+          <pouInstance name="MAIN" typeName="">
+            <documentation>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+            </documentation>
+          </pouInstance>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/tasksettings" handleUnknown="implementation">
+              <TaskSettings KindOfTask="Cyclic" Interval="10000" IntervalUnit="us" WithinSPSTimeSlicing="true">
+                <Watchdog Enabled="false" TimeUnit="ms" />
+              </TaskSettings>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>ce55445f-2a7a-440f-8e17-42151316c6f9</ObjectId>
+            </data>
+          </addData>
+        </task>
+        <globalVars name="GVL">
+          <variable name="Start">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="Stopp">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+          </variable>
+          <variable name="NotStopp">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="TRUE" />
+            </initialValue>
+          </variable>
+          <variable name="Fehler">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="Weiter">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <variable name="DiagnoseRequested">
+            <type>
+              <BOOL />
+            </type>
+          </variable>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+              <Attributes>
+                <Attribute Name="qualified_only" Value="" />
+              </Attributes>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/buildproperties" handleUnknown="implementation">
+              <BuildProperties>
+                <LinkAlways>true</LinkAlways>
+              </BuildProperties>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'qualified_only'}
+VAR_GLOBAL
+	Start : BOOL;
+	Stopp : BOOL := FALSE;
+	NotStopp : BOOL := TRUE;
+	Fehler			: BOOL;
+	Weiter			: BOOL;
+	DiagnoseRequested: BOOL;
+END_VAR</xhtml>
+              </InterfaceAsPlainText>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>7ea246ce-2a6d-4b87-aac6-827fdf3c548d</ObjectId>
+            </data>
+          </addData>
+        </globalVars>
+        <globalVars name="OPCUA">
+          <variable name="bool1">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="bool2">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="bool3">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="Z1">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="0" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="Z2">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="0" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="Z3">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="0" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="TriggerD2">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="TriggerD1">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="TriggerD3">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="lastExecutedSkill">
+            <type>
+              <string />
+            </type>
+            <initialValue>
+              <simpleValue value="''" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="lastExecutedProcess">
+            <type>
+              <string />
+            </type>
+            <initialValue>
+              <simpleValue value="''" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="M1">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="0" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="M2">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="0" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="M3">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="0" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="DiagnoseFinished">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                  <Attribute Name="OPC.UA.Access" Value="readwrite" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="Alt_found">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                  <Attribute Name="OPC.UA.Access" Value="readwrite" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <variable name="Alt_abort">
+            <type>
+              <BOOL />
+            </type>
+            <initialValue>
+              <simpleValue value="FALSE" />
+            </initialValue>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                <Attributes>
+                  <Attribute Name="OPC.UA.DA" Value="1" />
+                  <Attribute Name="OPC.UA.Access" Value="readwrite" />
+                </Attributes>
+              </data>
+            </addData>
+          </variable>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+              <Attributes>
+                <Attribute Name="qualified_only" Value="" />
+              </Attributes>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/buildproperties" handleUnknown="implementation">
+              <BuildProperties>
+                <LinkAlways>true</LinkAlways>
+              </BuildProperties>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	{attribute 'OPC.UA.DA' := '1'}
+	bool1: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	bool2: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	bool3: BOOL := FALSE;
+	
+	{attribute 'OPC.UA.DA' := '1'}
+	Z1: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	Z2: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	Z3: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+    TriggerD2: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+    TriggerD1: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+    TriggerD3: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+    lastExecutedSkill: STRING := '';
+	{attribute 'OPC.UA.DA' := '1'}
+    lastExecutedProcess: STRING := '';
+	{attribute 'OPC.UA.DA' := '1'}
+    M1: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	M2: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	M3: INT := 0;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.Access' := 'readwrite'}
+	DiagnoseFinished: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.Access' := 'readwrite'}
+	Alt_found: BOOL := FALSE;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.Access' := 'readwrite'}
+	Alt_abort : BOOL := FALSE;
+	
+	
+END_VAR</xhtml>
+              </InterfaceAsPlainText>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>4b2dc4dc-1434-42ac-98f4-d57f59ad79fa</ObjectId>
+            </data>
+          </addData>
+        </globalVars>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_Automatikbetrieb_F1" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="Automatikbetrieb_Starten">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="AutoRestartEnable">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Schalter für Autorestart</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="PeriodicFaultEnable">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="TRUE" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Ein/Aus</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="PeriodicFaultPeriod">
+                    <type>
+                      <TIME />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="TIME#1m0s0ms" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> z. B. jede Minute</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="FaultPulse">
+                    <type>
+                      <TIME />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="TIME#100ms" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> wie lange „Störung“ getriggert wird</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Automatikbetrieb_F1
+VAR_INPUT
+    Automatikbetrieb_Starten : BOOL;
+	AutoRestartEnable   : BOOL;      // Schalter für Autorestart
+    // &lt;&lt;&lt; NEU: parametrierbarer, periodischer Störgenerator &gt;&gt;&gt;
+    PeriodicFaultEnable : BOOL := TRUE;       // Ein/Aus
+    PeriodicFaultPeriod : TIME := T#60s;      // z. B. jede Minute
+    FaultPulse          : TIME := T#100ms;    // wie lange „Störung“ getriggert wird
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Automatikbetrieb_Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt1 : BOOL;
+    Schritt2 : BOOL;
+	Zwischen : STRING;
+    tSchritt1 : TON;
+    tSchritt2 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <localVars retain="true">
+                  <variable name="lastSkillIsOne">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Automatikbetrieb_F1
+VAR_INPUT
+    Automatikbetrieb_Starten : BOOL;
+	AutoRestartEnable   : BOOL;      // Schalter für Autorestart
+    // &lt;&lt;&lt; NEU: parametrierbarer, periodischer Störgenerator &gt;&gt;&gt;
+    PeriodicFaultEnable : BOOL := TRUE;       // Ein/Aus
+    PeriodicFaultPeriod : TIME := T#60s;      // z. B. jede Minute
+    FaultPulse          : TIME := T#100ms;    // wie lange „Störung“ getriggert wird
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Automatikbetrieb_Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt1 : BOOL;
+    Schritt2 : BOOL;
+	Zwischen : STRING;
+    tSchritt1 : TON;
+    tSchritt2 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+                <outputVars>
+                  <variable name="Automatikbetrieb_Fertig">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Stoerung_erkannt">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Automatikbetrieb_F1
+VAR_INPUT
+    Automatikbetrieb_Starten : BOOL;
+	AutoRestartEnable   : BOOL;      // Schalter für Autorestart
+    // &lt;&lt;&lt; NEU: parametrierbarer, periodischer Störgenerator &gt;&gt;&gt;
+    PeriodicFaultEnable : BOOL := TRUE;       // Ein/Aus
+    PeriodicFaultPeriod : TIME := T#60s;      // z. B. jede Minute
+    FaultPulse          : TIME := T#100ms;    // wie lange „Störung“ getriggert wird
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Automatikbetrieb_Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt1 : BOOL;
+    Schritt2 : BOOL;
+	Zwischen : STRING;
+    tSchritt1 : TON;
+    tSchritt2 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="Schritt1">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Schritt2">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Zwischen">
+                    <type>
+                      <string />
+                    </type>
+                  </variable>
+                  <variable name="tSchritt1">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <variable name="tSchritt2">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <variable name="rStart">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="rtStoer">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="rStep1">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="tPer">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Periodentimer</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="rPer">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Flanke bei Periodenende</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="pPer">
+                    <type>
+                      <derived name="TP" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> kurzer Puls für die Störung</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="perEn">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Enable nur wenn die Automatik läuft</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="dbg_Stoerung_Manuell">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> hattest du schon</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="tpRestart">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <variable name="RestartPulseLength">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Automatikbetrieb_F1
+VAR_INPUT
+    Automatikbetrieb_Starten : BOOL;
+	AutoRestartEnable   : BOOL;      // Schalter für Autorestart
+    // &lt;&lt;&lt; NEU: parametrierbarer, periodischer Störgenerator &gt;&gt;&gt;
+    PeriodicFaultEnable : BOOL := TRUE;       // Ein/Aus
+    PeriodicFaultPeriod : TIME := T#60s;      // z. B. jede Minute
+    FaultPulse          : TIME := T#100ms;    // wie lange „Störung“ getriggert wird
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Automatikbetrieb_Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt1 : BOOL;
+    Schritt2 : BOOL;
+	Zwischen : STRING;
+    tSchritt1 : TON;
+    tSchritt2 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">
+//GVL.Start := TRUE;
+IF GVL.Start THEN
+	AutoRestartEnable := TRUE;
+END_IF
+// === Flanken bilden ===
+rStart(CLK := Automatikbetrieb_Starten);
+rStep1(CLK := Schritt1);
+
+// === Startsequenz auf positive Flanke, nur wenn nicht bereits aktiv ===
+IF (AutoRestartEnable AND NOT (Schritt1 OR Schritt2)) OR (Stoerung_erkannt AND GVL.Weiter) THEN
+    // Reset aller Zustände
+    Automatikbetrieb_Fertig := FALSE;
+    Stoerung_erkannt        := FALSE;
+	GVL.Weiter := FALSE;
+    // Start in Schritt 1
+    Schritt1 := TRUE;
+	OPCUA.lastExecutedProcess := 'ExTechnProcess1';
+    Schritt2 := FALSE;
+END_IF
+
+// === Timer an die Schritte koppeln ===
+tSchritt1(IN := Schritt1, PT := T#55S);
+tSchritt2(IN := Schritt2, PT := T#55S);
+
+IF rStep1.Q THEN
+    lastSkillIsOne := NOT lastSkillIsOne;
+    IF lastSkillIsOne THEN
+        OPCUA.lastExecutedSkill := 'TestSkill1';
+    ELSE
+        OPCUA.lastExecutedSkill := 'TestSkill1';
+    END_IF
+END_IF
+
+IF rStart.Q AND NOT (Schritt1 OR Schritt2) THEN
+    Automatikbetrieb_Fertig := FALSE;
+    Stoerung_erkannt := FALSE;
+    GVL.Weiter := FALSE;
+    Schritt1 := TRUE;
+    Schritt2 := FALSE;
+    OPCUA.lastExecutedProcess := 'ExTechnProcess1';
+END_IF
+
+// === Übergänge (sofern keine Störung aktiv ist) ===
+IF NOT Stoerung_erkannt THEN
+    // Schritt 1 -&gt; 2 nach 30 s
+    IF Schritt1 AND tSchritt1.Q THEN
+        Schritt1 := FALSE;
+        Schritt2 := TRUE;
+		OPCUA.lastExecutedSkill := 'TestSkill1';
+    END_IF
+
+    // Schritt 2 -&gt; Fertig nach 10 s
+    IF Schritt2 AND tSchritt2.Q THEN
+        Schritt2 := FALSE;
+        Automatikbetrieb_Fertig := TRUE;
+        // Hier KEIN automatischer Neustart; neuer Start benötigt erneute Startflanke
+    END_IF
+END_IF
+
+// === Störungen behandeln (manuell) ===
+IF rtStoer.Q THEN
+    Stoerung_erkannt := TRUE;
+END_IF
+
+/// frei laufender Periodentimer (unabhängig von Schritt1/2) für Störung
+tPer(IN := NOT tPer.Q, PT := PeriodicFaultPeriod);  // z.B. T#60s
+
+// Flanke bei Periodenende + definierter Puls
+rPer(CLK := tPer.Q);
+pPer(IN := rPer.Q, PT := FaultPulse);                // z.B. T#100ms
+
+// nur auslösen, wenn die Automatik gerade läuft
+IF (Schritt1 OR Schritt2) AND pPer.Q THEN
+    Stoerung_erkannt := TRUE;
+	GVL.Fehler := TRUE;
+END_IF
+
+</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Automatikbetrieb_F1
+VAR_INPUT
+    Automatikbetrieb_Starten : BOOL;
+	AutoRestartEnable   : BOOL;      // Schalter für Autorestart
+    // &lt;&lt;&lt; NEU: parametrierbarer, periodischer Störgenerator &gt;&gt;&gt;
+    PeriodicFaultEnable : BOOL := TRUE;       // Ein/Aus
+    PeriodicFaultPeriod : TIME := T#60s;      // z. B. jede Minute
+    FaultPulse          : TIME := T#100ms;    // wie lange „Störung“ getriggert wird
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Automatikbetrieb_Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt1 : BOOL;
+    Schritt2 : BOOL;
+	Zwischen : STRING;
+    tSchritt1 : TON;
+    tSchritt2 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>e4d18b3c-87a4-4b15-8c5f-33bc5a6e60fb</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_Betriebsarten" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="Start">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="NotStop">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Weiter">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Fehler">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Start_Init">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Auto_Fertig">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> kommt von fbAuto.Automatikbetrieb_Fertig</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Auto_Stoerung">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> kommt von fbAuto.Stoerung_erkannt</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="A2_Requested">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Alt_abort">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Alt_found">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="D3_Requested">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Init_reached">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Cycle_ended">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Betriebsarten
+VAR_INPUT
+	Start, NotStop, Weiter, Fehler, Start_Init : BOOL;
+    Auto_Fertig   : BOOL; // kommt von fbAuto.Automatikbetrieb_Fertig
+    Auto_Stoerung : BOOL; // kommt von fbAuto.Stoerung_erkannt
+	A2_Requested: BOOL;
+	Alt_abort: BOOL;
+	Alt_found: BOOL;
+	D3_Requested: BOOL;
+	Init_reached: BOOL;
+	Cycle_ended: BOOL;
+	//Reset			: BOOL;
+	//Schalter		: BOOL;
+	//Schrittkette_GS : BOOL;
+END_VAR
+VAR_OUTPUT
+	A1 : BOOL; //Initialzustand
+	A2 : BOOL; //Stillstand angefordert am Ende des Zyklus
+//	A3 : BOOL; //Stillstand angefordert in einem bestimmten Zustand
+//	A4 : BOOL; //Erhaltener Stillstand
+	A5 : BOOL; //Vorbereitung zur Wiederaufnahme nach Störung
+	A6 : BOOL; //Fahrt in den Initialzustand
+	F1 : BOOL; //Normalbetrieb
+//	F2 : BOOL; //Anfahren
+//	F3 : BOOL; //Abfahren
+	F4 : BOOL; //Handbetrieb
+//	F5 : BOOL; //Schrittbetrieb
+//	F6 : BOOL; //Testbetrieb
+	D1 : BOOL; //Not-Aus
+	D2 : BOOL; //DIagnose und Störbehandlung
+	D3 : BOOL; //Produktion trotz Störung
+END_VAR
+VAR
+	bFirstScan : BOOL := TRUE;	
+
+	RS_InitialState: RS;	
+	RS_InitialDrive: RS;
+	RS_ManualOperationMode: RS;
+	RS_AutomaticOperationMode: RS;
+	RS_CycleEnded: RS;
+
+	R_TRIG_Manual: R_TRIG;
+	R_TRIG_Automatic: R_TRIG;
+	R_TRIG_InitialDrive: R_TRIG;
+	R_TRIG_CycleEnded: R_TRIG;
+	R_TRIG_Init: R_TRIG;
+	RS_D2: RS;
+	RS_F1: RS;
+	RS_D1: RS;
+	RS_A5: RS;
+	RS_A1: RS;
+
+	RS_D3: RS;
+
+	RS_A2: RS;
+	RS_A6: RS;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="A1">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Initialzustand</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="A2">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Stillstand angefordert am Ende des Zyklus</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="A5">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Vorbereitung zur Wiederaufnahme nach Störung</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="A6">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Fahrt in den Initialzustand</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="F1">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Normalbetrieb</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="F4">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Handbetrieb</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="D1">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Not-Aus</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="D2">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">DIagnose und Störbehandlung</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="D3">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">Produktion trotz Störung</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Betriebsarten
+VAR_INPUT
+	Start, NotStop, Weiter, Fehler, Start_Init : BOOL;
+    Auto_Fertig   : BOOL; // kommt von fbAuto.Automatikbetrieb_Fertig
+    Auto_Stoerung : BOOL; // kommt von fbAuto.Stoerung_erkannt
+	A2_Requested: BOOL;
+	Alt_abort: BOOL;
+	Alt_found: BOOL;
+	D3_Requested: BOOL;
+	Init_reached: BOOL;
+	Cycle_ended: BOOL;
+	//Reset			: BOOL;
+	//Schalter		: BOOL;
+	//Schrittkette_GS : BOOL;
+END_VAR
+VAR_OUTPUT
+	A1 : BOOL; //Initialzustand
+	A2 : BOOL; //Stillstand angefordert am Ende des Zyklus
+//	A3 : BOOL; //Stillstand angefordert in einem bestimmten Zustand
+//	A4 : BOOL; //Erhaltener Stillstand
+	A5 : BOOL; //Vorbereitung zur Wiederaufnahme nach Störung
+	A6 : BOOL; //Fahrt in den Initialzustand
+	F1 : BOOL; //Normalbetrieb
+//	F2 : BOOL; //Anfahren
+//	F3 : BOOL; //Abfahren
+	F4 : BOOL; //Handbetrieb
+//	F5 : BOOL; //Schrittbetrieb
+//	F6 : BOOL; //Testbetrieb
+	D1 : BOOL; //Not-Aus
+	D2 : BOOL; //DIagnose und Störbehandlung
+	D3 : BOOL; //Produktion trotz Störung
+END_VAR
+VAR
+	bFirstScan : BOOL := TRUE;	
+
+	RS_InitialState: RS;	
+	RS_InitialDrive: RS;
+	RS_ManualOperationMode: RS;
+	RS_AutomaticOperationMode: RS;
+	RS_CycleEnded: RS;
+
+	R_TRIG_Manual: R_TRIG;
+	R_TRIG_Automatic: R_TRIG;
+	R_TRIG_InitialDrive: R_TRIG;
+	R_TRIG_CycleEnded: R_TRIG;
+	R_TRIG_Init: R_TRIG;
+	RS_D2: RS;
+	RS_F1: RS;
+	RS_D1: RS;
+	RS_A5: RS;
+	RS_A1: RS;
+
+	RS_D3: RS;
+
+	RS_A2: RS;
+	RS_A6: RS;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="bFirstScan">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="TRUE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="RS_InitialState">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_InitialDrive">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_ManualOperationMode">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_AutomaticOperationMode">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_CycleEnded">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="R_TRIG_Manual">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="R_TRIG_Automatic">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="R_TRIG_InitialDrive">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="R_TRIG_CycleEnded">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="R_TRIG_Init">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="RS_D2">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_F1">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_D1">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_A5">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_A1">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_D3">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_A2">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <variable name="RS_A6">
+                    <type>
+                      <derived name="RS" />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Betriebsarten
+VAR_INPUT
+	Start, NotStop, Weiter, Fehler, Start_Init : BOOL;
+    Auto_Fertig   : BOOL; // kommt von fbAuto.Automatikbetrieb_Fertig
+    Auto_Stoerung : BOOL; // kommt von fbAuto.Stoerung_erkannt
+	A2_Requested: BOOL;
+	Alt_abort: BOOL;
+	Alt_found: BOOL;
+	D3_Requested: BOOL;
+	Init_reached: BOOL;
+	Cycle_ended: BOOL;
+	//Reset			: BOOL;
+	//Schalter		: BOOL;
+	//Schrittkette_GS : BOOL;
+END_VAR
+VAR_OUTPUT
+	A1 : BOOL; //Initialzustand
+	A2 : BOOL; //Stillstand angefordert am Ende des Zyklus
+//	A3 : BOOL; //Stillstand angefordert in einem bestimmten Zustand
+//	A4 : BOOL; //Erhaltener Stillstand
+	A5 : BOOL; //Vorbereitung zur Wiederaufnahme nach Störung
+	A6 : BOOL; //Fahrt in den Initialzustand
+	F1 : BOOL; //Normalbetrieb
+//	F2 : BOOL; //Anfahren
+//	F3 : BOOL; //Abfahren
+	F4 : BOOL; //Handbetrieb
+//	F5 : BOOL; //Schrittbetrieb
+//	F6 : BOOL; //Testbetrieb
+	D1 : BOOL; //Not-Aus
+	D2 : BOOL; //DIagnose und Störbehandlung
+	D3 : BOOL; //Produktion trotz Störung
+END_VAR
+VAR
+	bFirstScan : BOOL := TRUE;	
+
+	RS_InitialState: RS;	
+	RS_InitialDrive: RS;
+	RS_ManualOperationMode: RS;
+	RS_AutomaticOperationMode: RS;
+	RS_CycleEnded: RS;
+
+	R_TRIG_Manual: R_TRIG;
+	R_TRIG_Automatic: R_TRIG;
+	R_TRIG_InitialDrive: R_TRIG;
+	R_TRIG_CycleEnded: R_TRIG;
+	R_TRIG_Init: R_TRIG;
+	RS_D2: RS;
+	RS_F1: RS;
+	RS_D1: RS;
+	RS_A5: RS;
+	RS_A1: RS;
+
+	RS_D3: RS;
+
+	RS_A2: RS;
+	RS_A6: RS;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <FBD>
+                  <vendorElement localId="10000000000">
+                    <position x="0" y="0" />
+                    <alternativeText>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">FBD Implementation Attributes</xhtml>
+                    </alternativeText>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbd/implementationattributes" handleUnknown="implementation">
+                        <fbdattributes xmlns="">
+                          <attribute name="BoxInputFlagsSupported" value="true" />
+                        </fbdattributes>
+                      </data>
+                    </addData>
+                  </vendorElement>
+                  <inVariable localId="10000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>NOT GVL.NotStopp</expression>
+                  </inVariable>
+                  <inVariable localId="10000000002">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D2</expression>
+                  </inVariable>
+                  <inVariable localId="10000000003">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A5</expression>
+                  </inVariable>
+                  <block localId="10000000004" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="10000000002" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="10000000003" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="10000000005" typeName="RS" instanceName="RS_D1">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="10000000001" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="10000000004" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="10000000006">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="10000000005" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>D1</expression>
+                  </outVariable>
+                  <inVariable localId="20000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>GVL.Start</expression>
+                  </inVariable>
+                  <inVariable localId="20000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A1</expression>
+                  </inVariable>
+                  <block localId="20000000002" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000000" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000001" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="20000000003">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D2</expression>
+                  </inVariable>
+                  <inVariable localId="20000000004">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <inVariable localId="20000000005">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D3</expression>
+                  </inVariable>
+                  <block localId="20000000006" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000003" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000004" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000005" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="20000000007" typeName="RS" instanceName="RS_F1">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000002" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="20000000006" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="20000000008">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="20000000007" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>F1</expression>
+                  </outVariable>
+                  <inVariable localId="30000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D2</expression>
+                  </inVariable>
+                  <inVariable localId="30000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <inVariable localId="30000000002">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>NOT GVL.DiagnoseRequested</expression>
+                  </inVariable>
+                  <block localId="30000000003" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000001" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000002" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="30000000004" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000000" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000003" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="30000000005">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>NOT GVL.Fehler</expression>
+                  </inVariable>
+                  <inVariable localId="30000000006">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>GVL.Weiter</expression>
+                  </inVariable>
+                  <inVariable localId="30000000007">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>GVL.NotStopp</expression>
+                  </inVariable>
+                  <block localId="30000000008" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000004" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000005" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000006" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In4">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000007" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="30000000009">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A6</expression>
+                  </inVariable>
+                  <inVariable localId="30000000010">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <inVariable localId="30000000011">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>NOT GVL.NotStopp</expression>
+                  </inVariable>
+                  <block localId="30000000012" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000010" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000011" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="30000000013" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000009" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000012" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="30000000014" typeName="RS" instanceName="RS_A5">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000008" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="30000000013" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="30000000015">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="30000000014" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>A5</expression>
+                  </outVariable>
+                  <inVariable localId="40000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Auto_Stoerung</expression>
+                  </inVariable>
+                  <inVariable localId="40000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>F1</expression>
+                  </inVariable>
+                  <block localId="40000000002" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000000" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000001" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="40000000003">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>GVL.DiagnoseRequested</expression>
+                  </inVariable>
+                  <inVariable localId="40000000004">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <inVariable localId="40000000005">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>GVL.NotStopp</expression>
+                  </inVariable>
+                  <block localId="40000000006" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000003" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000004" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000005" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="40000000007">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D3</expression>
+                  </inVariable>
+                  <inVariable localId="40000000008">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Alt_abort</expression>
+                  </inVariable>
+                  <block localId="40000000009" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000007" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000008" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="40000000010" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000002" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000006" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000009" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="40000000011">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <inVariable localId="40000000012">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>NOT GVL.NotStopp</expression>
+                  </inVariable>
+                  <block localId="40000000013" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000011" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000012" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="40000000014">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D3</expression>
+                  </inVariable>
+                  <inVariable localId="40000000015">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A5</expression>
+                  </inVariable>
+                  <block localId="40000000016" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000013" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000014" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000015" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="40000000017" typeName="RS" instanceName="RS_D2">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000010" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="40000000016" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="40000000018">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="40000000017" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>D2</expression>
+                  </outVariable>
+                  <inVariable localId="50000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D2</expression>
+                  </inVariable>
+                  <inVariable localId="50000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Alt_found</expression>
+                  </inVariable>
+                  <block localId="50000000002" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000000" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000001" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="50000000003">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>F1</expression>
+                  </inVariable>
+                  <inVariable localId="50000000004">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D3_Requested</expression>
+                  </inVariable>
+                  <block localId="50000000005" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000003" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000004" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="50000000006" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000002" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000005" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="50000000007">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A2</expression>
+                  </inVariable>
+                  <inVariable localId="50000000008">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <inVariable localId="50000000009">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D2</expression>
+                  </inVariable>
+                  <block localId="50000000010" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000007" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000008" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000009" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="50000000011" typeName="RS" instanceName="RS_D3">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000006" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="50000000010" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="50000000012">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="50000000011" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>D3</expression>
+                  </outVariable>
+                  <inVariable localId="60000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A6</expression>
+                  </inVariable>
+                  <inVariable localId="60000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Init_reached</expression>
+                  </inVariable>
+                  <block localId="60000000002" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000000" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000001" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="60000000003">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A2</expression>
+                  </inVariable>
+                  <inVariable localId="60000000004">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Init_reached</expression>
+                  </inVariable>
+                  <inVariable localId="60000000005">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Cycle_ended</expression>
+                  </inVariable>
+                  <block localId="60000000006" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000003" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000004" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In3">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000005" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="60000000007" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000002" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000006" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="60000000008">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>F1</expression>
+                  </inVariable>
+                  <inVariable localId="60000000009">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <block localId="60000000010" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000008" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000009" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="60000000011" typeName="RS" instanceName="RS_A1">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000007" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="60000000010" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="60000000012">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="60000000011" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>A1</expression>
+                  </outVariable>
+                  <inVariable localId="70000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D3</expression>
+                  </inVariable>
+                  <inVariable localId="70000000001">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A2_Requested</expression>
+                  </inVariable>
+                  <block localId="70000000002" typeName="AND">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="70000000000" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="70000000001" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="70000000003">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A1</expression>
+                  </inVariable>
+                  <inVariable localId="70000000004">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <block localId="70000000005" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="70000000003" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="70000000004" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="70000000006" typeName="RS" instanceName="RS_A2">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="70000000002" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="70000000005" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="70000000007">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="70000000006" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>A2</expression>
+                  </outVariable>
+                  <inVariable localId="80000000000">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>Start_Init</expression>
+                  </inVariable>
+                  <block localId="80000000001" typeName="R_TRIG" instanceName="R_TRIG_Init">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="CLK">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000000" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="80000000002">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A5</expression>
+                  </inVariable>
+                  <block localId="80000000003" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000001" formalParameter="Q" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000002" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <inVariable localId="80000000004">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>A1</expression>
+                  </inVariable>
+                  <inVariable localId="80000000005">
+                    <position x="0" y="0" />
+                    <connectionPointOut />
+                    <expression>D1</expression>
+                  </inVariable>
+                  <block localId="80000000006" typeName="OR">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="In1">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000004" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="In2">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000005" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Out1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">operator</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="" />
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <block localId="80000000007" typeName="RS" instanceName="RS_A6">
+                    <position x="0" y="0" />
+                    <inputVariables>
+                      <variable formalParameter="SET">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000003" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                      <variable formalParameter="RESET1">
+                        <connectionPointIn>
+                          <connection refLocalId="80000000006" formalParameter="Out1" />
+                        </connectionPointIn>
+                      </variable>
+                    </inputVariables>
+                    <inOutVariables />
+                    <outputVariables>
+                      <variable formalParameter="Q1">
+                        <connectionPointOut />
+                      </variable>
+                    </outputVariables>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                        <CallType xmlns="">functionblock</CallType>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                        <InputParamTypes xmlns="">BOOL BOOL</InputParamTypes>
+                      </data>
+                      <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                        <OutputParamTypes xmlns="">BOOL</OutputParamTypes>
+                      </data>
+                    </addData>
+                  </block>
+                  <outVariable localId="80000000008">
+                    <position x="0" y="0" />
+                    <connectionPointIn>
+                      <connection refLocalId="80000000007" formalParameter="Q1" />
+                    </connectionPointIn>
+                    <expression>A6</expression>
+                  </outVariable>
+                </FBD>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Betriebsarten
+VAR_INPUT
+	Start, NotStop, Weiter, Fehler, Start_Init : BOOL;
+    Auto_Fertig   : BOOL; // kommt von fbAuto.Automatikbetrieb_Fertig
+    Auto_Stoerung : BOOL; // kommt von fbAuto.Stoerung_erkannt
+	A2_Requested: BOOL;
+	Alt_abort: BOOL;
+	Alt_found: BOOL;
+	D3_Requested: BOOL;
+	Init_reached: BOOL;
+	Cycle_ended: BOOL;
+	//Reset			: BOOL;
+	//Schalter		: BOOL;
+	//Schrittkette_GS : BOOL;
+END_VAR
+VAR_OUTPUT
+	A1 : BOOL; //Initialzustand
+	A2 : BOOL; //Stillstand angefordert am Ende des Zyklus
+//	A3 : BOOL; //Stillstand angefordert in einem bestimmten Zustand
+//	A4 : BOOL; //Erhaltener Stillstand
+	A5 : BOOL; //Vorbereitung zur Wiederaufnahme nach Störung
+	A6 : BOOL; //Fahrt in den Initialzustand
+	F1 : BOOL; //Normalbetrieb
+//	F2 : BOOL; //Anfahren
+//	F3 : BOOL; //Abfahren
+	F4 : BOOL; //Handbetrieb
+//	F5 : BOOL; //Schrittbetrieb
+//	F6 : BOOL; //Testbetrieb
+	D1 : BOOL; //Not-Aus
+	D2 : BOOL; //DIagnose und Störbehandlung
+	D3 : BOOL; //Produktion trotz Störung
+END_VAR
+VAR
+	bFirstScan : BOOL := TRUE;	
+
+	RS_InitialState: RS;	
+	RS_InitialDrive: RS;
+	RS_ManualOperationMode: RS;
+	RS_AutomaticOperationMode: RS;
+	RS_CycleEnded: RS;
+
+	R_TRIG_Manual: R_TRIG;
+	R_TRIG_Automatic: R_TRIG;
+	R_TRIG_InitialDrive: R_TRIG;
+	R_TRIG_CycleEnded: R_TRIG;
+	R_TRIG_Init: R_TRIG;
+	RS_D2: RS;
+	RS_F1: RS;
+	RS_D1: RS;
+	RS_A5: RS;
+	RS_A1: RS;
+
+	RS_D3: RS;
+
+	RS_A2: RS;
+	RS_A6: RS;
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>06fb9674-c769-4193-84ea-e1b3e704e56b</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_Diagnose_D2" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="Diagnose_gefordert">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> z. B. D2 aus FB_Betriebsarten</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Diagnose_D2
+VAR_INPUT
+    Diagnose_gefordert         : BOOL;  // z. B. D2 aus FB_Betriebsarten
+END_VAR
+VAR_OUTPUT
+    Diagnose_beendet           : BOOL;  // geht zurück an FB_Betriebsarten
+	Alt_gefunden			   : BOOL := FALSE;
+END_VAR
+VAR
+    // Steuerung/Handshake intern
+    Busy       : BOOL;
+
+    // Flanken + Puls
+    rtReq      : R_TRIG;    // steigende Flanke auf Diagnose_gefordert
+	rtD3 : R_TRIG;
+    tpPulse    : TP;        // kurzer Puls für OPCUA.TriggerD2 (z. B. 100 ms)
+    rtFinished : R_TRIG;    // steigende Flanke auf OPCUA.DiagnoseFinished
+	 rtAck : R_TRIG;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="Diagnose_beendet">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> geht zurück an FB_Betriebsarten</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="Alt_gefunden">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Diagnose_D2
+VAR_INPUT
+    Diagnose_gefordert         : BOOL;  // z. B. D2 aus FB_Betriebsarten
+END_VAR
+VAR_OUTPUT
+    Diagnose_beendet           : BOOL;  // geht zurück an FB_Betriebsarten
+	Alt_gefunden			   : BOOL := FALSE;
+END_VAR
+VAR
+    // Steuerung/Handshake intern
+    Busy       : BOOL;
+
+    // Flanken + Puls
+    rtReq      : R_TRIG;    // steigende Flanke auf Diagnose_gefordert
+	rtD3 : R_TRIG;
+    tpPulse    : TP;        // kurzer Puls für OPCUA.TriggerD2 (z. B. 100 ms)
+    rtFinished : R_TRIG;    // steigende Flanke auf OPCUA.DiagnoseFinished
+	 rtAck : R_TRIG;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="Busy">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Steuerung/Handshake intern</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="rtReq">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> steigende Flanke auf Diagnose_gefordert</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="rtD3">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="tpPulse">
+                    <type>
+                      <derived name="TP" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> kurzer Puls für OPCUA.TriggerD2 (z. B. 100 ms)</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="rtFinished">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> steigende Flanke auf OPCUA.DiagnoseFinished</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="rtAck">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Diagnose_D2
+VAR_INPUT
+    Diagnose_gefordert         : BOOL;  // z. B. D2 aus FB_Betriebsarten
+END_VAR
+VAR_OUTPUT
+    Diagnose_beendet           : BOOL;  // geht zurück an FB_Betriebsarten
+	Alt_gefunden			   : BOOL := FALSE;
+END_VAR
+VAR
+    // Steuerung/Handshake intern
+    Busy       : BOOL;
+
+    // Flanken + Puls
+    rtReq      : R_TRIG;    // steigende Flanke auf Diagnose_gefordert
+	rtD3 : R_TRIG;
+    tpPulse    : TP;        // kurzer Puls für OPCUA.TriggerD2 (z. B. 100 ms)
+    rtFinished : R_TRIG;    // steigende Flanke auf OPCUA.DiagnoseFinished
+	 rtAck : R_TRIG;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// 1) Startflanke erkennen
+rtReq(CLK := Diagnose_gefordert);
+
+// 2) Einmalig triggern (nur wenn noch nicht "Busy"):
+IF rtReq.Q AND NOT Busy THEN
+    Busy := TRUE;
+	Alt_gefunden := FALSE;
+	OPCUA.TriggerD2 := TRUE; 
+	OPCUA.bool1 := TRUE;
+END_IF
+
+  // {attribute 'OPC.UA.DA' := '1'} in der GVL setzen
+
+// 3) Fertigmeldung vom OPC-UA-Client
+//rtFinished(CLK := OPCUA.DiagnoseFinished);
+rtAck(CLK := OPCUA.DiagnoseFinished);
+rtD3(CLK := OPCUA.Alt_found);
+IF rtAck.Q OR rtD3.Q THEN
+    Diagnose_beendet := TRUE;
+    GVL.Weiter := TRUE;
+    Busy := FALSE;
+    OPCUA.TriggerD2 := FALSE;
+	OPCUA.bool2 := FALSE;
+    GVL.Fehler := FALSE;
+    Diagnose_gefordert := FALSE;
+	GVL.DiagnoseRequested := FALSE;
+END_IF
+IF rtD3.Q THEN
+	Alt_gefunden := TRUE;
+END_IF</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK PUBLIC FB_Diagnose_D2
+VAR_INPUT
+    Diagnose_gefordert         : BOOL;  // z. B. D2 aus FB_Betriebsarten
+END_VAR
+VAR_OUTPUT
+    Diagnose_beendet           : BOOL;  // geht zurück an FB_Betriebsarten
+	Alt_gefunden			   : BOOL := FALSE;
+END_VAR
+VAR
+    // Steuerung/Handshake intern
+    Busy       : BOOL;
+
+    // Flanken + Puls
+    rtReq      : R_TRIG;    // steigende Flanke auf Diagnose_gefordert
+	rtD3 : R_TRIG;
+    tpPulse    : TP;        // kurzer Puls für OPCUA.TriggerD2 (z. B. 100 ms)
+    rtFinished : R_TRIG;    // steigende Flanke auf OPCUA.DiagnoseFinished
+	 rtAck : R_TRIG;
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>ed85d8c7-5c77-483c-af2a-609bd70983a9</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_InitFahrt_A6_A2" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="A6">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="A2">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_InitFahrt_A6_A2
+VAR_INPUT
+	A6 : BOOL := FALSE;
+	A2: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	Init_erreicht : BOOL := FALSE;
+END_VAR
+VAR
+	tInit : TON;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="Init_erreicht">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_InitFahrt_A6_A2
+VAR_INPUT
+	A6 : BOOL := FALSE;
+	A2: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	Init_erreicht : BOOL := FALSE;
+END_VAR
+VAR
+	tInit : TON;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="tInit">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_InitFahrt_A6_A2
+VAR_INPUT
+	A6 : BOOL := FALSE;
+	A2: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	Init_erreicht : BOOL := FALSE;
+END_VAR
+VAR
+	tInit : TON;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">IF A6 THEN
+	tInit(IN := A6, PT := T#3S);
+ELSIF A2 THEN
+	tInit(IN := A2, PT := T#5S);
+END_IF
+
+IF tInit.Q THEN
+	Init_erreicht := TRUE;
+ELSE
+	Init_erreicht := FALSE;
+END_IF</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_InitFahrt_A6_A2
+VAR_INPUT
+	A6 : BOOL := FALSE;
+	A2: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	Init_erreicht : BOOL := FALSE;
+END_VAR
+VAR
+	tInit : TON;
+END_VAR
+</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>da7bbf34-3908-4f7b-839e-1689304e1ae1</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_ProduktionMitStoerung_D3" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="ProduktionMitStoerung_Starten">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_ProduktionMitStoerung_D3
+VAR_INPUT
+    ProduktionMitStoerung_Starten : BOOL;
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt3 : BOOL;
+    Schritt4 : BOOL;
+	Zwischen : STRING;
+    tSchritt3 : TON;
+    tSchritt4 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+	z : INT := 0;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <localVars retain="true">
+                  <variable name="lastSkillIsOne">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_ProduktionMitStoerung_D3
+VAR_INPUT
+    ProduktionMitStoerung_Starten : BOOL;
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt3 : BOOL;
+    Schritt4 : BOOL;
+	Zwischen : STRING;
+    tSchritt3 : TON;
+    tSchritt4 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+	z : INT := 0;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+                <outputVars>
+                  <variable name="Fertig">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Stoerung_erkannt">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_ProduktionMitStoerung_D3
+VAR_INPUT
+    ProduktionMitStoerung_Starten : BOOL;
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt3 : BOOL;
+    Schritt4 : BOOL;
+	Zwischen : STRING;
+    tSchritt3 : TON;
+    tSchritt4 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+	z : INT := 0;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="Schritt3">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Schritt4">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Zwischen">
+                    <type>
+                      <string />
+                    </type>
+                  </variable>
+                  <variable name="tSchritt3">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <variable name="tSchritt4">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <variable name="rStart">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="rtStoer">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="rStep1">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                  </variable>
+                  <variable name="z">
+                    <type>
+                      <INT />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="0" />
+                    </initialValue>
+                  </variable>
+                  <variable name="tPer">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Periodentimer</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="rPer">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Flanke bei Periodenende</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="pPer">
+                    <type>
+                      <derived name="TP" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> kurzer Puls für die Störung</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="perEn">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Enable nur wenn die Automatik läuft</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="dbg_Stoerung_Manuell">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> hattest du schon</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="tpRestart">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <variable name="RestartPulseLength">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_ProduktionMitStoerung_D3
+VAR_INPUT
+    ProduktionMitStoerung_Starten : BOOL;
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt3 : BOOL;
+    Schritt4 : BOOL;
+	Zwischen : STRING;
+    tSchritt3 : TON;
+    tSchritt4 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+	z : INT := 0;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">rStart(CLK := ProduktionMitStoerung_Starten);
+IF rStart.Q THEN
+	z := 0;
+END_IF
+
+IF ProduktionMitStoerung_Starten AND NOT (Schritt3 OR Schritt4) AND NOT Stoerung_erkannt THEN
+	Fertig := FALSE;
+	Schritt3 := TRUE;
+	OPCUA.lastExecutedSkill := 'TestSkill3';
+	OPCUA.lastExecutedProcess := 'D3Process';
+	Schritt4 := FALSE;
+END_IF
+
+tSchritt3(IN := Schritt3, PT:=T#10S);
+tSchritt4(IN := Schritt4, PT:=T#10S);
+
+IF tSchritt3.Q THEN
+	Schritt3 := FALSE;
+	z := z+1;
+	IF z &gt; 2 THEN
+		Stoerung_erkannt := TRUE;
+		OPCUA.Alt_abort := TRUE;
+	END_IF
+	IF NOT Stoerung_erkannt THEN
+		Schritt4 := TRUE;
+		OPCUA.lastExecutedSkill := 'TestSkill4';
+	END_IF
+END_IF
+
+IF tSchritt4.Q THEN
+	Schritt4 := FALSE;
+	Schritt3 := TRUE;
+	OPCUA.lastExecutedSkill := 'TestSkill3';
+END_IF
+
+
+
+</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_ProduktionMitStoerung_D3
+VAR_INPUT
+    ProduktionMitStoerung_Starten : BOOL;
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE =&gt; erster Start wird TestSkill3 -&gt; wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt3 : BOOL;
+    Schritt4 : BOOL;
+	Zwischen : STRING;
+    tSchritt3 : TON;
+    tSchritt4 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+	z : INT := 0;
+
+    // &lt;&lt;&lt; NEU &gt;&gt;&gt;
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>6e7fa534-a815-492f-bc55-03fb7955c15f</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="MAIN" pouType="program">
+              <interface>
+                <localVars>
+                  <variable name="fbJob">
+                    <type>
+                      <derived name="FB_Methode1Job" />
+                    </type>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                        <Attributes>
+                          <Attribute Name="OPC.UA.DA" Value="1" />
+                        </Attributes>
+                      </data>
+                    </addData>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> FB mit {attribute 'OPC.UA.DA.JobMethod' := 'M_Methode1'}</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="fbBA">
+                    <type>
+                      <derived name="FB_Betriebsarten" />
+                    </type>
+                  </variable>
+                  <variable name="fbAuto">
+                    <type>
+                      <derived name="FB_Automatikbetrieb_F1" />
+                    </type>
+                  </variable>
+                  <variable name="fbDiag">
+                    <type>
+                      <derived name="FB_Diagnose_D2" />
+                    </type>
+                  </variable>
+                  <variable name="fbNot">
+                    <type>
+                      <derived name="FB_Notaus_D1" />
+                    </type>
+                  </variable>
+                  <variable name="fbInit">
+                    <type>
+                      <derived name="FB_InitFahrt_A6_A2" />
+                    </type>
+                  </variable>
+                  <variable name="fbProStoer">
+                    <type>
+                      <derived name="FB_ProduktionMitStoerung_D3" />
+                    </type>
+                  </variable>
+                  <variable name="Init_start">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="TRUE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="edgeF1">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> F1 -&gt; Start Automatik</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="edgeDone">
+                    <type>
+                      <derived name="R_TRIG" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Diagnose_beendet -&gt; Restart/Weiter</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="alt_abort">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="alt_found">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="Start_eff">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="Weiter_eff">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="A2_angefordert">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="D3_angefordert">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="Init_erreicht">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="Zyklus_beendet">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM MAIN
+VAR
+	{attribute 'OPC.UA.DA' := '1'}       // falls Server im Filter-/Symbolmodus
+    fbJob : FB_Methode1Job;              // FB mit {attribute 'OPC.UA.DA.JobMethod' := 'M_Methode1'}
+    fbBA   : FB_Betriebsarten;
+    fbAuto : FB_Automatikbetrieb_F1;
+    fbDiag : FB_Diagnose_D2;
+	fbNot : FB_Notaus_D1;
+	fbInit : FB_InitFahrt_A6_A2;
+	fbProStoer : FB_ProduktionMitStoerung_D3;
+	
+	Init_start : BOOL := TRUE;
+	
+
+    edgeF1    : R_TRIG;  // F1 -&gt; Start Automatik
+    edgeDone  : R_TRIG;  // Diagnose_beendet -&gt; Restart/Weiter
+	alt_abort : BOOL := FALSE;
+	alt_found : BOOL := FALSE;
+    Start_eff  : BOOL := FALSE;
+    Weiter_eff : BOOL := FALSE;
+	A2_angefordert : BOOL := FALSE;
+	D3_angefordert : BOOL := FALSE;
+	Init_erreicht : BOOL := FALSE;
+	Zyklus_beendet : BOOL := FALSE;
+	
+END_VAR</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Diagnose fertig -&gt; Impuls
+edgeDone(CLK := fbDiag.Diagnose_beendet);
+
+// manuell ODER automatisch (Restart nach Diagnose)
+Start_eff  := GVL.Start  OR edgeDone.Q;
+Weiter_eff := GVL.Weiter OR edgeDone.Q;
+
+// Betriebsarten (RS-F1/RS-D2 sind dort)
+fbBA(
+    Start         := Start_eff,
+    NotStop       := GVL.NotStopp,
+    Weiter        := Weiter_eff,
+    Fehler        := GVL.Fehler,
+	Start_Init 	  := Init_Start,                  
+    Auto_Fertig   := fbAuto.Automatikbetrieb_Fertig,
+    Auto_Stoerung := fbAuto.Stoerung_erkannt,
+	A2_Requested := A2_angefordert,
+	Alt_abort := alt_abort,
+	Alt_found := alt_found,
+	D3_Requested := D3_angefordert,
+	Init_reached := Init_erreicht,
+	Cycle_ended := Zyklus_beendet
+);
+
+// F1-Flanke startet die Automatik
+edgeF1(CLK := fbBA.F1);
+fbAuto(Automatikbetrieb_Starten := edgeF1.Q);
+
+fbNot(D1 := fbBA.D1);
+GVL.DiagnoseRequested := fbNot.Diagnose_gefordert;
+
+fbProStoer(ProduktionMitStoerung_Starten := fbBA.D3);
+alt_abort := fbProStoer.Stoerung_erkannt;
+
+
+fbInit(A6 := fbBA.A6, A2 := fbBA.A2);
+Init_erreicht := fbInit.Init_erreicht;
+
+// D2 fordert die Diagnose an
+fbDiag(Diagnose_gefordert := fbBA.D2);
+alt_found := fbDiag.Alt_gefunden;</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM MAIN
+VAR
+	{attribute 'OPC.UA.DA' := '1'}       // falls Server im Filter-/Symbolmodus
+    fbJob : FB_Methode1Job;              // FB mit {attribute 'OPC.UA.DA.JobMethod' := 'M_Methode1'}
+    fbBA   : FB_Betriebsarten;
+    fbAuto : FB_Automatikbetrieb_F1;
+    fbDiag : FB_Diagnose_D2;
+	fbNot : FB_Notaus_D1;
+	fbInit : FB_InitFahrt_A6_A2;
+	fbProStoer : FB_ProduktionMitStoerung_D3;
+	
+	Init_start : BOOL := TRUE;
+	
+
+    edgeF1    : R_TRIG;  // F1 -&gt; Start Automatik
+    edgeDone  : R_TRIG;  // Diagnose_beendet -&gt; Restart/Weiter
+	alt_abort : BOOL := FALSE;
+	alt_found : BOOL := FALSE;
+    Start_eff  : BOOL := FALSE;
+    Weiter_eff : BOOL := FALSE;
+	A2_angefordert : BOOL := FALSE;
+	D3_angefordert : BOOL := FALSE;
+	Init_erreicht : BOOL := FALSE;
+	Zyklus_beendet : BOOL := FALSE;
+	
+END_VAR</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>ec4ad17e-d8d6-4735-911d-f049336718fa</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_Methode1Job" pouType="functionBlock">
+              <interface>
+                <localVars>
+                  <variable name="running">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="counter">
+                    <type>
+                      <DINT />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="0" />
+                    </initialValue>
+                  </variable>
+                  <variable name="reached">
+                    <type>
+                      <BOOL />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="FALSE" />
+                    </initialValue>
+                  </variable>
+                  <variable name="t20s">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> 20-s-Timer, läuft zyklisch</xhtml>
+                    </documentation>
+                  </variable>
+                  <variable name="y">
+                    <type>
+                      <DINT />
+                    </type>
+                    <initialValue>
+                      <simpleValue value="0" />
+                    </initialValue>
+                    <documentation>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml"> Ergebnis</xhtml>
+                    </documentation>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'OPC.UA.DA.JobMethod' := 'M_Methode1'} // Dieser FB wird als OPC-UA-Job "M_Methode1" veröffentlicht
+FUNCTION_BLOCK FB_Methode1Job
+VAR
+    running : BOOL := FALSE;
+    counter : DINT := 0;
+    reached : BOOL := FALSE;
+    t20s    : TON;        // 20-s-Timer, läuft zyklisch
+    y       : DINT := 0;  // Ergebnis
+END_VAR
+// Wichtig: Bei Job-Methoden deklariert man den Funktionsbaustein mit
+//{attribute 'OPC.UA.DA.JobMethod' := 'NameDerUAMethod'}
+//und markiert die drei PLC-METHODs Start, CheckState, Abort jeweils mit TcRpcEnable. 
+//CheckState besitzt zwingend das Output bBusy, über das der Server erkennt, ob der Job noch läuft. 
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="OPC.UA.DA.JobMethod" Value="M_Methode1" />
+                    </Attributes>
+                  </data>
+                </addData>
+                <documentation>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml"> Dieser FB wird als OPC-UA-Job "M_Methode1" veröffentlicht</xhtml>
+                </documentation>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                  <Method name="Abort" ObjectId="b8dc4be2-eb62-42aa-8107-9c4be6a4bae0">
+                    <interface>
+                      <returnType>
+                        <derived name="HRESULT" />
+                      </returnType>
+                      <addData>
+                        <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                          <Attributes>
+                            <Attribute Name="TcRpcEnable" Value="1" />
+                          </Attributes>
+                        </data>
+                      </addData>
+                    </interface>
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">running := FALSE;
+Abort := 0;</xhtml>
+                      </ST>
+                    </body>
+                    <InterfaceAsPlainText>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC Abort : HRESULT
+// Aufräumen bei Server-Shutdown/Abbruch</xhtml>
+                    </InterfaceAsPlainText>
+                    <addData />
+                  </Method>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                  <Method name="CheckState" ObjectId="5501b2e0-1db9-4ed8-af31-eb8e7df246f0">
+                    <interface>
+                      <returnType>
+                        <derived name="HRESULT" />
+                      </returnType>
+                      <inputVars>
+                        <variable name="hdl">
+                          <type>
+                            <UDINT />
+                          </type>
+                          <documentation>
+                            <xhtml xmlns="http://www.w3.org/1999/xhtml"> vom Server übergeben (wenn genutzt)</xhtml>
+                          </documentation>
+                        </variable>
+                        <addData>
+                          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                            <InterfaceAsPlainText>
+                              <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC CheckState : HRESULT
+VAR_INPUT
+    hdl : UDINT;       // vom Server übergeben (wenn genutzt)
+END_VAR
+VAR_OUTPUT
+    bBusy : BOOL;      // **erforderlich** für Job-Methode
+    yOut  : DINT;      // UA-Output
+END_VAR
+</xhtml>
+                            </InterfaceAsPlainText>
+                          </data>
+                        </addData>
+                      </inputVars>
+                      <outputVars>
+                        <variable name="bBusy">
+                          <type>
+                            <BOOL />
+                          </type>
+                          <documentation>
+                            <xhtml xmlns="http://www.w3.org/1999/xhtml"> **erforderlich** für Job-Methode</xhtml>
+                          </documentation>
+                        </variable>
+                        <variable name="yOut">
+                          <type>
+                            <DINT />
+                          </type>
+                          <documentation>
+                            <xhtml xmlns="http://www.w3.org/1999/xhtml"> UA-Output</xhtml>
+                          </documentation>
+                        </variable>
+                        <addData>
+                          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                            <InterfaceAsPlainText>
+                              <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC CheckState : HRESULT
+VAR_INPUT
+    hdl : UDINT;       // vom Server übergeben (wenn genutzt)
+END_VAR
+VAR_OUTPUT
+    bBusy : BOOL;      // **erforderlich** für Job-Methode
+    yOut  : DINT;      // UA-Output
+END_VAR
+</xhtml>
+                            </InterfaceAsPlainText>
+                          </data>
+                        </addData>
+                      </outputVars>
+                      <addData>
+                        <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                          <Attributes>
+                            <Attribute Name="TcRpcEnable" Value="1" />
+                          </Attributes>
+                        </data>
+                      </addData>
+                    </interface>
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">// Mehrzyklische Job-Logik:
+IF running THEN
+	
+    //counter := counter + 1;
+    //IF counter &gt;= 30 THEN
+        //reached := TRUE;
+    //END_IF; 
+	reached := TRUE;
+
+    // Timer startet erst ab "reached"
+    t20s(IN := reached, PT := T#9S);
+
+    IF reached AND t20s.Q THEN
+        y := 119;
+        running := FALSE;
+    END_IF
+END_IF
+
+bBusy := running;
+yOut  := y;
+CheckState := 0;       // 0 = Good (bei Fehler z. B. BadOutOfRange als HRESULT zurückgeben)</xhtml>
+                      </ST>
+                    </body>
+                    <InterfaceAsPlainText>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC CheckState : HRESULT
+VAR_INPUT
+    hdl : UDINT;       // vom Server übergeben (wenn genutzt)
+END_VAR
+VAR_OUTPUT
+    bBusy : BOOL;      // **erforderlich** für Job-Methode
+    yOut  : DINT;      // UA-Output
+END_VAR
+</xhtml>
+                    </InterfaceAsPlainText>
+                    <addData />
+                  </Method>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+                  <Method name="Start" ObjectId="5cd045ca-5278-41ec-a7cc-dba8d407566c">
+                    <interface>
+                      <returnType>
+                        <derived name="HRESULT" />
+                      </returnType>
+                      <inputVars>
+                        <variable name="x">
+                          <type>
+                            <DINT />
+                          </type>
+                          <documentation>
+                            <xhtml xmlns="http://www.w3.org/1999/xhtml"> Eingabe der UA-Methode</xhtml>
+                          </documentation>
+                        </variable>
+                        <addData>
+                          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                            <InterfaceAsPlainText>
+                              <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC Start : HRESULT
+VAR_INPUT
+    x : DINT;           // Eingabe der UA-Methode
+END_VAR
+VAR_OUTPUT
+    hdl : UDINT;        // optionaler Handle für parallele Aufrufe
+END_VAR
+</xhtml>
+                            </InterfaceAsPlainText>
+                          </data>
+                        </addData>
+                      </inputVars>
+                      <outputVars>
+                        <variable name="hdl">
+                          <type>
+                            <UDINT />
+                          </type>
+                          <documentation>
+                            <xhtml xmlns="http://www.w3.org/1999/xhtml"> optionaler Handle für parallele Aufrufe</xhtml>
+                          </documentation>
+                        </variable>
+                        <addData>
+                          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                            <InterfaceAsPlainText>
+                              <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC Start : HRESULT
+VAR_INPUT
+    x : DINT;           // Eingabe der UA-Methode
+END_VAR
+VAR_OUTPUT
+    hdl : UDINT;        // optionaler Handle für parallele Aufrufe
+END_VAR
+</xhtml>
+                            </InterfaceAsPlainText>
+                          </data>
+                        </addData>
+                      </outputVars>
+                      <addData>
+                        <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                          <Attributes>
+                            <Attribute Name="TcRpcEnable" Value="1" />
+                          </Attributes>
+                        </data>
+                      </addData>
+                    </interface>
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">// Initialisierung
+counter := x;
+reached := FALSE;
+running := TRUE;
+t20s(IN := FALSE, PT := T#9S);   // Timer Reset
+hdl := 0;                         // (einfacher Fall)
+Start := 0;                       // 0 = OPC UA StatusCode "Good"</xhtml>
+                      </ST>
+                    </body>
+                    <InterfaceAsPlainText>
+                      <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC Start : HRESULT
+VAR_INPUT
+    x : DINT;           // Eingabe der UA-Methode
+END_VAR
+VAR_OUTPUT
+    hdl : UDINT;        // optionaler Handle für parallele Aufrufe
+END_VAR
+</xhtml>
+                    </InterfaceAsPlainText>
+                    <addData />
+                  </Method>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'OPC.UA.DA.JobMethod' := 'M_Methode1'} // Dieser FB wird als OPC-UA-Job "M_Methode1" veröffentlicht
+FUNCTION_BLOCK FB_Methode1Job
+VAR
+    running : BOOL := FALSE;
+    counter : DINT := 0;
+    reached : BOOL := FALSE;
+    t20s    : TON;        // 20-s-Timer, läuft zyklisch
+    y       : DINT := 0;  // Ergebnis
+END_VAR
+// Wichtig: Bei Job-Methoden deklariert man den Funktionsbaustein mit
+//{attribute 'OPC.UA.DA.JobMethod' := 'NameDerUAMethod'}
+//und markiert die drei PLC-METHODs Start, CheckState, Abort jeweils mit TcRpcEnable. 
+//CheckState besitzt zwingend das Output bBusy, über das der Server erkennt, ob der Job noch läuft. 
+</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>8998a891-59c5-4b3f-9d7e-bf0f029f5fed</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+            <pou name="FB_Notaus_D1" pouType="functionBlock">
+              <interface>
+                <inputVars>
+                  <variable name="D1">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Notaus_D1
+VAR_INPUT
+	D1 : BOOL;
+END_VAR
+VAR_OUTPUT
+	Notaus_Entriegelt : BOOL;
+	Diagnose_gefordert : BOOL;
+END_VAR
+VAR
+	ton5s : TON;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+                <outputVars>
+                  <variable name="Notaus_Entriegelt">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <variable name="Diagnose_gefordert">
+                    <type>
+                      <BOOL />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Notaus_D1
+VAR_INPUT
+	D1 : BOOL;
+END_VAR
+VAR_OUTPUT
+	Notaus_Entriegelt : BOOL;
+	Diagnose_gefordert : BOOL;
+END_VAR
+VAR
+	ton5s : TON;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </outputVars>
+                <localVars>
+                  <variable name="ton5s">
+                    <type>
+                      <derived name="TON" />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Notaus_D1
+VAR_INPUT
+	D1 : BOOL;
+END_VAR
+VAR_OUTPUT
+	Notaus_Entriegelt : BOOL;
+	Diagnose_gefordert : BOOL;
+END_VAR
+VAR
+	ton5s : TON;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </localVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">IF D1 THEN
+    OPCUA.TriggerD1 := TRUE;         // interne publizierte Variable (kein AT %I*)
+    ton5s(IN := TRUE, PT := T#5S);
+ELSE
+    ton5s(IN := FALSE, PT := T#5S);
+END_IF;
+
+IF ton5s.Q THEN
+    OPCUA.TriggerD1 := FALSE;
+    Diagnose_gefordert := FALSE;
+    GVL.NotStopp := TRUE;
+    GVL.Fehler := FALSE;
+    GVL.Weiter := TRUE;
+END_IF;</xhtml>
+                </ST>
+              </body>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                  <InterfaceAsPlainText>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">FUNCTION_BLOCK FB_Notaus_D1
+VAR_INPUT
+	D1 : BOOL;
+END_VAR
+VAR_OUTPUT
+	Notaus_Entriegelt : BOOL;
+	Diagnose_gefordert : BOOL;
+END_VAR
+VAR
+	ton5s : TON;
+END_VAR
+</xhtml>
+                  </InterfaceAsPlainText>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>9dbb6b7b-4b3e-42a5-9b87-f79403debd35</ObjectId>
+                </data>
+              </addData>
+            </pou>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/libraries" handleUnknown="implementation">
+            <Libraries>
+              <Library Name="#Tc2_Standard" Namespace="Tc2_Standard" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" DefaultResolution="Tc2_Standard, * (Beckhoff Automation GmbH)" />
+              <Library Name="#Tc2_System" Namespace="Tc2_System" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" DefaultResolution="Tc2_System, * (Beckhoff Automation GmbH)" />
+              <Library Name="#Tc3_Module" Namespace="Tc3_Module" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Tc3_Module, * (Beckhoff Automation GmbH)" />
+              <Library Name="#Tc3_GlobalTypes" Namespace="Tc3_GlobalTypes" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="true" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Tc3_GlobalTypes, * (Beckhoff Automation GmbH)" ResolverGuid="9502eb1f-c858-410f-a431-cf1e6abed6ff" />
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                  <ObjectId>3860f4f6-5f8c-43fd-8d10-b752759de62a</ObjectId>
+                </data>
+              </addData>
+            </Libraries>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>ce9dfe47-222e-4df9-ac06-7ff89bc34320</ObjectId>
+          </data>
+        </addData>
+      </resource>
+    </data>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Object Name="Proj1" ObjectId="ce9dfe47-222e-4df9-ac06-7ff89bc34320">
+          <Object Name="Library Manager" ObjectId="3860f4f6-5f8c-43fd-8d10-b752759de62a" />
+          <Folder Name="GVLs">
+            <Object Name="GVL" ObjectId="7ea246ce-2a6d-4b87-aac6-827fdf3c548d" />
+            <Object Name="OPCUA" ObjectId="4b2dc4dc-1434-42ac-98f4-d57f59ad79fa" />
+          </Folder>
+          <Object Name="PlcTask" ObjectId="ce55445f-2a7a-440f-8e17-42151316c6f9" />
+          <Folder Name="POUs">
+            <Object Name="FB_Automatikbetrieb_F1" ObjectId="e4d18b3c-87a4-4b15-8c5f-33bc5a6e60fb" />
+            <Object Name="FB_Betriebsarten" ObjectId="06fb9674-c769-4193-84ea-e1b3e704e56b" />
+            <Object Name="FB_Diagnose_D2" ObjectId="ed85d8c7-5c77-483c-af2a-609bd70983a9" />
+            <Object Name="FB_InitFahrt_A6_A2" ObjectId="da7bbf34-3908-4f7b-839e-1689304e1ae1" />
+            <Object Name="FB_ProduktionMitStoerung_D3" ObjectId="6e7fa534-a815-492f-bc55-03fb7955c15f" />
+            <Object Name="MAIN" ObjectId="ec4ad17e-d8d6-4735-911d-f049336718fa" />
+            <Object Name="FB_Methode1Job" ObjectId="8998a891-59c5-4b3f-9d7e-bf0f029f5fed">
+              <Object Name="Abort" ObjectId="b8dc4be2-eb62-42aa-8107-9c4be6a4bae0" />
+              <Object Name="CheckState" ObjectId="5501b2e0-1db9-4ed8-af31-eb8e7df246f0" />
+              <Object Name="Start" ObjectId="5cd045ca-5278-41ec-a7cc-dba8d407566c" />
+            </Object>
+            <Object Name="FB_Notaus_D1" ObjectId="9dbb6b7b-4b3e-42a5-9b87-f79403debd35" />
+          </Folder>
+        </Object>
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>

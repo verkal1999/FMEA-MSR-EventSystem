@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ProduktionMitStoerung_D3" Id="{6e7fa534-a815-492f-bc55-03fb7955c15f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ProduktionMitStoerung_D3
+VAR_INPUT
+    ProduktionMitStoerung_Starten : BOOL;
+END_VAR
+VAR RETAIN
+    lastSkillIsOne : BOOL := FALSE; // FALSE => erster Start wird TestSkill3 -> wir setzen gleich initial um
+END_VAR
+VAR_OUTPUT
+    Fertig : BOOL;
+    Stoerung_erkannt        : BOOL;
+END_VAR
+VAR
+    Schritt3 : BOOL;
+    Schritt4 : BOOL;
+	Zwischen : STRING;
+    tSchritt3 : TON;
+    tSchritt4 : TON;
+    rStart   : R_TRIG;
+    rtStoer   : R_TRIG;
+	rStep1 : R_TRIG;
+	z : INT := 0;
+
+    // <<< NEU >>>
+    tPer   : TON;      // Periodentimer
+    rPer   : R_TRIG;   // Flanke bei Periodenende
+    pPer   : TP;       // kurzer Puls für die Störung
+    perEn  : BOOL;     // Enable nur wenn die Automatik läuft
+    dbg_Stoerung_Manuell : BOOL; // hattest du schon
+	tpRestart: INT;
+	RestartPulseLength: INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[rStart(CLK := ProduktionMitStoerung_Starten);
+IF rStart.Q THEN
+	z := 0;
+END_IF
+
+IF ProduktionMitStoerung_Starten AND NOT (Schritt3 OR Schritt4) AND NOT Stoerung_erkannt THEN
+	Fertig := FALSE;
+	Schritt3 := TRUE;
+	OPCUA.lastExecutedSkill := 'TestSkill3';
+	OPCUA.lastExecutedProcess := 'D3Process';
+	Schritt4 := FALSE;
+END_IF
+
+tSchritt3(IN := Schritt3, PT:=T#10S);
+tSchritt4(IN := Schritt4, PT:=T#10S);
+
+IF tSchritt3.Q THEN
+	Schritt3 := FALSE;
+	z := z+1;
+	IF z > 2 THEN
+		Stoerung_erkannt := TRUE;
+		OPCUA.Alt_abort := TRUE;
+	END_IF
+	IF NOT Stoerung_erkannt THEN
+		Schritt4 := TRUE;
+		OPCUA.lastExecutedSkill := 'TestSkill4';
+	END_IF
+END_IF
+
+IF tSchritt4.Q THEN
+	Schritt4 := FALSE;
+	Schritt3 := TRUE;
+	OPCUA.lastExecutedSkill := 'TestSkill3';
+END_IF
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

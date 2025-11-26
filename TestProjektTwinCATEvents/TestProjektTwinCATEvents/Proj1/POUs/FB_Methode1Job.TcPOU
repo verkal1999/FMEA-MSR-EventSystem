@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Methode1Job" Id="{8998a891-59c5-4b3f-9d7e-bf0f029f5fed}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.JobMethod' := 'M_Methode1'} // Dieser FB wird als OPC-UA-Job "M_Methode1" veröffentlicht
+FUNCTION_BLOCK FB_Methode1Job
+VAR
+    running : BOOL := FALSE;
+    counter : DINT := 0;
+    reached : BOOL := FALSE;
+    t20s    : TON;        // 20-s-Timer, läuft zyklisch
+    y       : DINT := 0;  // Ergebnis
+END_VAR
+// Wichtig: Bei Job-Methoden deklariert man den Funktionsbaustein mit
+//{attribute 'OPC.UA.DA.JobMethod' := 'NameDerUAMethod'}
+//und markiert die drei PLC-METHODs Start, CheckState, Abort jeweils mit TcRpcEnable. 
+//CheckState besitzt zwingend das Output bBusy, über das der Server erkennt, ob der Job noch läuft. 
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Abort" Id="{b8dc4be2-eb62-42aa-8107-9c4be6a4bae0}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC Abort : HRESULT
+// Aufräumen bei Server-Shutdown/Abbruch]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[running := FALSE;
+Abort := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckState" Id="{5501b2e0-1db9-4ed8-af31-eb8e7df246f0}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC CheckState : HRESULT
+VAR_INPUT
+    hdl : UDINT;       // vom Server übergeben (wenn genutzt)
+END_VAR
+VAR_OUTPUT
+    bBusy : BOOL;      // **erforderlich** für Job-Methode
+    yOut  : DINT;      // UA-Output
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Mehrzyklische Job-Logik:
+IF running THEN
+	
+    //counter := counter + 1;
+    //IF counter >= 30 THEN
+        //reached := TRUE;
+    //END_IF; 
+	reached := TRUE;
+
+    // Timer startet erst ab "reached"
+    t20s(IN := reached, PT := T#9S);
+
+    IF reached AND t20s.Q THEN
+        y := 119;
+        running := FALSE;
+    END_IF
+END_IF
+
+bBusy := running;
+yOut  := y;
+CheckState := 0;       // 0 = Good (bei Fehler z. B. BadOutOfRange als HRESULT zurückgeben)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{5cd045ca-5278-41ec-a7cc-dba8d407566c}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' := '1'}
+METHOD PUBLIC Start : HRESULT
+VAR_INPUT
+    x : DINT;           // Eingabe der UA-Methode
+END_VAR
+VAR_OUTPUT
+    hdl : UDINT;        // optionaler Handle für parallele Aufrufe
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Initialisierung
+counter := x;
+reached := FALSE;
+running := TRUE;
+t20s(IN := FALSE, PT := T#9S);   // Timer Reset
+hdl := 0;                         // (einfacher Fall)
+Start := 0;                       // 0 = OPC UA StatusCode "Good"]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
